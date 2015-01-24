@@ -15,7 +15,7 @@ public class EditorMain {
 			.getScreenSize();
 
 	public static void runEditor() {
-		JFrame frame = new JFrame("LingeringEditor ");
+		JFrame frame = new JFrame("Lingering Editor");
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setSize(SCREEN);

@@ -10,6 +10,10 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
+
 public class CreationPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2315263733853810583L;
 
@@ -18,7 +22,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 	// need to have a list of every type of object...
 
 	JComboBox<String> type;
-	JButton add, remove;
+	JButton add, export;
 
 	// also need to have a bunch of property fields that can be edited.
 
@@ -34,6 +38,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 
 		add = createButton(200, 30, 95, 30, "Add");
 		type = createBox(5, 30, 190, 30, "ROCK", "BUSH", "ETC");
+		export = createButton(0, 0, 300, 30, "EXPORT");
 	}
 
 	private JButton createButton(int a, int b, int c, int d, String s) {
@@ -47,7 +52,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 		return button;
 	}
 
-	private JComboBox<String> createBox(int a, int b, int c, int d, String... opt) {
+	private JComboBox<String> createBox(int a, int b, int c, int d,
+			String... opt) {
 		JComboBox<String> box = new JComboBox<String>(opt);
 		box.setFocusable(false);
 		box.setEditable(true);
@@ -62,6 +68,12 @@ public class CreationPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getSource() == add) {
 			parent.buildQueue.offer("");
+		}
+		else if (evt.getSource() == export) {
+			Json lol = new Json();
+
+			FileHandle fh = Gdx.files.local("first.level");
+			fh.writeString(lol.toJson(parent.level), false);
 		}
 	}
 }
