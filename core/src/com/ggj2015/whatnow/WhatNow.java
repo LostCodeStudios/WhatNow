@@ -12,14 +12,15 @@ public class WhatNow extends Game {
 	public WhatNow() {
 		super();
 		
+		// TODO working title
 		title = "What do we do now?";
 		
 		width = 1280;
 		height = 720;
 		
-		backgroundRed = 0f;
-		backgroundGreen = 0f;
-		backgroundBlue = 0f;
+		backgroundRed = 1f;
+		backgroundGreen = 1f;
+		backgroundBlue = 1f;
 		
 	}
 
@@ -30,7 +31,7 @@ public class WhatNow extends Game {
 		Convert.init(32);
 		LogManager.init(Gdx.app, LogType.ERROR);
 		
-		getScreenManager().addScreen(new MainMenuScreen(this));
+		getScreenManager().addScreen(new MainMenuScreen(this, spriteBatch));
 	}
 
 	@Override

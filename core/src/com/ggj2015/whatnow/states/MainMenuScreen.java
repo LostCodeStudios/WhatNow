@@ -1,14 +1,34 @@
 package com.ggj2015.whatnow.states;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.lostcode.javalib.Game;
-import com.lostcode.javalib.states.InputScreen;
 
-public class MainMenuScreen extends InputScreen {
+public class MainMenuScreen extends DialogScreen {
 
-	public MainMenuScreen(Game game) {
-		super(game);
+	public MainMenuScreen(Game game, SpriteBatch spriteBatch) {
+		super(game, spriteBatch);
+		
+		// TODO write the real main menu with actual title
+		Array<String> text = new Array<String>();
+		text.add("What do we do next?");
+		
+		Array<String> options = new Array<String>();
+		options.add("Play");
+		
+		showDialog(new DialogMenu(text, options) {
+
+			@Override
+			public void onDialogChoice(String choice) {
+				if (choice.equals("Play")) {
+					this.close();
+					MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game));
+				}
+			}
+			
+		});
 	}
 	
 	@Override
@@ -28,7 +48,7 @@ public class MainMenuScreen extends InputScreen {
 	
 	@Override
 	public void render(float delta) {
-		
+		super.render(delta);
 	}
 
 	@Override
