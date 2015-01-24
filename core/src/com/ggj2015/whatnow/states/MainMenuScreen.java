@@ -3,6 +3,7 @@ package com.ggj2015.whatnow.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.ggj2015.whatnow.states.combat.CombatScreen;
 import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.ggj2015.whatnow.states.world.level.DialogNode;
 import com.lostcode.javalib.Game;
@@ -20,6 +21,7 @@ public class MainMenuScreen extends DialogScreen {
 		Array<String> options = new Array<String>();
 		options.add("New Game");
 		options.add("Load Last Save");
+		options.add("Test fight"); // TODO remove this
 		options.add("Options");
 		options.add("Quit");
 		
@@ -41,6 +43,9 @@ public class MainMenuScreen extends DialogScreen {
 				if (choice.equals("Load Last Save")) {
 					// TODO make the world for real
 					MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game));
+				}
+				else if (choice.equals("Test fight")) {
+					MainMenuScreen.this.game.getScreenManager().addScreen(new CombatScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch));
 				}
 				else if (choice.equals("Options")) {
 					// TODO make an options screen

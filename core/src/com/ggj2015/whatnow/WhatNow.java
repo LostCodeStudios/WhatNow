@@ -27,16 +27,8 @@ public class WhatNow extends Game {
 
 	boolean editing = false;
 	public WhatNow(boolean b) {
-		super();
+		this();
 
-		title = "Lingering";
-		
-		width = 1280;
-		height = 720;
-		
-		backgroundRed = 1f;
-		backgroundGreen = 1f;
-		backgroundBlue = 1f;
 		this.editing = true;
 	}
 
