@@ -13,6 +13,7 @@ import com.lostcode.javalib.states.InputScreen;
  */
 public class DialogScreen extends InputScreen {
 
+
 	protected SpriteBatch spriteBatch;
 	protected ShapeRenderer shapeRenderer = new ShapeRenderer();
 	

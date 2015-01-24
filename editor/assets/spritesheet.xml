@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SpriteSheet>
+	<texture>data/Textures/spritesheet.png</texture>	
+
+	<rect key="GreenArrow">73, 235, 8, 8</rect>
+	<rect key="WarningSign">82, 235, 8, 8</rect>
+
+	<rect key="PotionDialog">11, 233, 48, 12</rect>
+	
+	<rect key="TinyStar0">2, 92, 1, 1</rect>
+	<rect key="TinyStar1">4, 92, 1, 1</rect>
+	<rect key="SmallStar0">10, 91, 17, 8</rect>
+	<rect key="SmallStar1">28, 91, 17, 8</rect>
+
+	<rect key="Floor">1, 154, 8, 8</rect>
+	<rect key="FloorVent">10, 154, 8, 8</rect>
+	<rect key="FloorGrate">19, 154, 8, 8</rect>
+	<rect key="FloorLight">28, 154, 8, 8</rect>
+	<rect key="FloorHole">19, 172, 8, 8</rect>
+	<rect key="FloorGreen">37, 154, 8, 8</rect>
+	<rect key="FloorGreenDoor">1, 172, 8, 8</rect>
+	<rect key="FloorDamaged0">73, 154, 8, 8</rect>
+	<rect key="FloorDamaged1">82, 154, 8, 8</rect>
+	<rect key="FloorDamaged2">91, 154, 8, 8</rect>
+	<rect key="FloorDamaged3">100, 154, 8, 8</rect>
+	<rect key="FloorPotionPad">46, 154, 8, 8</rect>
+	
+	<rect key="WhiteWallVertical">1, 136, 8, 8</rect>
+	<rect key="WhiteWallVentEast">10, 136, 8, 8</rect>
+	<rect key="WhiteWallVentWest">19, 136, 8, 8</rect>
+	<rect key="WhiteWallGreenLightEast">28, 136, 8, 8</rect>
+	<rect key="WhiteWallGreenLightWest">37, 136, 8, 8</rect>
+	<rect key="WhiteWallRedLightEast">46, 136, 8, 8</rect>
+	<rect key="WhiteWallRedLightWest">55, 136, 8, 8</rect>
+	<rect key="WhiteWallVerticalDamaged">73, 136, 8, 8</rect>
+
+	<rect key="PlayerRun">91, 1, 17, 8</rect>
+	<rect key="PlayerStationary">82, 1, 8, 8</rect>
+	<rect key="PlayerDead">109, 1, 8, 8</rect>
+	<rect key="PlayerGhost">100, 91, 17, 8</rect>
+	
+	<rect key="View">96, 236, 20, 15</rect>
+	
+	<rect key="Potion">1, 235, 8, 8</rect>
+	<rect key="Coin">46, 91, 7, 7</rect>
+</SpriteSheet>
