@@ -33,6 +33,10 @@ public class CombatScreen extends DialogScreen {
 		startState(CombatState.PlayerChoice);
 	}
 	
+	public Game getGame() {
+		return this.game;
+	}
+	
 	@Override
 	public void dispose() {
 		super.dispose();

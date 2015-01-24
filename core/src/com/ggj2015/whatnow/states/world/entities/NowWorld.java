@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
 import com.lostcode.javalib.entities.EntityWorld;
 
@@ -32,9 +33,9 @@ public class NowWorld extends EntityWorld {
 		this.spriteSheet = level.getSpriteSheet();
 		
 		//Initialize the game objects or entities :)
-//		for(GameObject obj : level.getGameObjects()){
-//			
-//		}
+		for(GameObject obj : level.getGameObjects()){
+			
+		}
 		
 		
 		

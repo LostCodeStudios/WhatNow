@@ -7,7 +7,7 @@ import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.world.level.DialogNode;
 
-public class CombatDialog extends DialogMenu {
+public class ItemDialog extends DialogMenu {
 
 	CombatScreen screen;
 	
@@ -18,35 +18,28 @@ public class CombatDialog extends DialogMenu {
 	private static final DialogStyle style = DialogStyle.DEFAULT;
 	
 	static {
-		options.add("Attack");
-		options.add("Spell");
-		options.add("Item");
-		options.add("Run");
+		options.add("Throw rock");
 		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);
 		}
 		
-		style.bounds = new Rectangle(1280 / 2, 40, 1280 / 3, 250);
+		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 250);
 	}
-	
-	public CombatDialog(CombatScreen screen) {
-		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
+	public ItemDialog(CombatScreen screen) {
+		super(style, new DialogNode(text, options, optionsEnabled));
 		
 		this.screen = screen;
 	}
 
 	@Override
 	public void onDialogChoice(String choice) {
-		if (choice.equals("Attack")) {
-			screen.setPlayerChoice("Attack");
+		if (choice.equals("__CANCEL__")) {
+			screen.showDialog(new CombatDialog(screen));
+		} else if (choice.equals("Throw rock")) {
+			screen.setPlayerChoice("Throw rock");
 			screen.startState(CombatState.PlayerAction);
-		} else if (choice.equals("Spell")) {
-			screen.showDialog(new SpellDialog(screen));
-		} else if (choice.equals("Item")) {
-			screen.showDialog(new ItemDialog(screen));
-		} else if (choice.equals("Run")) {
-			screen.showDialog(new RunDialog(screen));
 		}
 	}
+
 }
