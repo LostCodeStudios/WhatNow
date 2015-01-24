@@ -4,18 +4,20 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * The general level abstraction for tiles, etc.
+ * 
  * @author u0847773
  *
  */
 public class GameObject {
-	//FIELDS
+	// FIELDS
 	Vector3 position;
 	String spriteKey;
 	String tag;
 	String group;
 	String type;
-	
-	//Object Oriented Obligations
+	float scale = 1.0f;
+
+	// Object Oriented Obligations
 	public GameObject(Vector3 position, String spriteKey, String tag,
 			String group, String type) {
 		super();
@@ -34,7 +36,8 @@ public class GameObject {
 	}
 
 	/**
-	 * @param position the position to set
+	 * @param position
+	 *        the position to set
 	 */
 	public void setPosition(Vector3 position) {
 		this.position = position;
@@ -48,7 +51,8 @@ public class GameObject {
 	}
 
 	/**
-	 * @param spriteKey the spriteKey to set
+	 * @param spriteKey
+	 *        the spriteKey to set
 	 */
 	public void setSpriteKey(String spriteKey) {
 		this.spriteKey = spriteKey;
@@ -62,7 +66,8 @@ public class GameObject {
 	}
 
 	/**
-	 * @param tag the tag to set
+	 * @param tag
+	 *        the tag to set
 	 */
 	public void setTag(String tag) {
 		this.tag = tag;
@@ -76,7 +81,8 @@ public class GameObject {
 	}
 
 	/**
-	 * @param group the group to set
+	 * @param group
+	 *        the group to set
 	 */
 	public void setGroup(String group) {
 		this.group = group;
@@ -90,13 +96,26 @@ public class GameObject {
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *        the type to set
 	 */
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
+
+	/**
+	 * @return the type
+	 */
+	public float getScale() {
+		return scale;
+	}
+
+	/**
+	 * @param type
+	 *        the type to set
+	 */
+	public void setScale(float scale) {
+		this.scale = scale;
+	}
 
 }

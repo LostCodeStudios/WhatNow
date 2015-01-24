@@ -6,7 +6,7 @@ package com.ggj2015.whatnow.states.world.level;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.lostcode.javalib.utils.SpriteSheet;
@@ -32,7 +32,7 @@ public class Level {
 	 * @param cameraInitial initial position of the camera.
 	 */
 	public Level(String name, Rectangle bounds, Vector2 gravity,
-			String spriteSheet, Vector2 cameraInitial) {
+			String spriteSheet, Vector2 cameraInitial, boolean mode) {
 		super();
 		this.name = name;
 		this.bounds = bounds;
@@ -106,7 +106,7 @@ public class Level {
 	public void setSpriteSheet(String spriteSheet) {
 		this.spriteSheetFile = spriteSheet;
 		try {
-			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
+			this.spriteSheet = SpriteSheet.fromXML(new FileHandle(spriteSheet));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
