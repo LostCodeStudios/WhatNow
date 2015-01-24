@@ -116,6 +116,4 @@ public class Level {
 		return this.spriteSheetFile;
 	}
 	
-	
-	
 }
