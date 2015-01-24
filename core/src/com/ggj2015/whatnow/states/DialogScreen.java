@@ -13,8 +13,8 @@ import com.lostcode.javalib.states.InputScreen;
  */
 public class DialogScreen extends InputScreen {
 
-	SpriteBatch spriteBatch;
-	ShapeRenderer shapeRenderer = new ShapeRenderer();
+	protected SpriteBatch spriteBatch;
+	protected ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
 	Array<DialogMenu> dialogs = new Array<DialogMenu>();
 	
