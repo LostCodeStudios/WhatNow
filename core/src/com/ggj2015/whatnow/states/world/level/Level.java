@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 /**
@@ -21,7 +22,7 @@ public class Level {
 	Rectangle bounds;
 	Vector2 gravity;
 	String spriteSheetFile;
-	Vector2 cameraInitial;
+	Vector3 cameraInitial;
 	SpriteSheet spriteSheet;
 	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	/**
@@ -32,7 +33,7 @@ public class Level {
 	 * @param cameraInitial initial position of the camera.
 	 */
 	public Level(String name, Rectangle bounds, Vector2 gravity,
-			String spriteSheet, Vector2 cameraInitial) {
+			String spriteSheet, Vector3 cameraInitial) {
 		super();
 		this.name = name;
 		this.bounds = bounds;
@@ -85,13 +86,13 @@ public class Level {
 	/**
 	 * @return the cameraInitial
 	 */
-	public Vector2 getCameraInitial() {
+	public Vector3 getCameraInitial() {
 		return cameraInitial;
 	}
 	/**
 	 * @param cameraInitial the cameraInitial to set
 	 */
-	public void setCameraInitial(Vector2 cameraInitial) {
+	public void setCameraInitial(Vector3 cameraInitial) {
 		this.cameraInitial = cameraInitial;
 	}
 	/**
