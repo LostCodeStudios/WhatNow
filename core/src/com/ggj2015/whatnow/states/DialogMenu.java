@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -86,11 +87,12 @@ public abstract class DialogMenu implements InputProcessor {
 		for (int i = 0; i < node.text.size; i++) {
 			String line = node.text.get(i);
 			
-			// TODO wrap paragraphs
+			TextBounds size = textFont.drawWrapped(spriteBatch, line, 
+					x, y, style.bounds.width - 2 * style.textMargin);
 			
-			textFont.draw(spriteBatch, line, x, y);
+			y -= size.height;
 			
-			y -= i < node.text.size - 1 ? textFont.getLineHeight() : optionFont.getLineHeight();
+			y -= textFont.getLineHeight();
 			
 			// beneath all text entries, line break with option text size for better aesthetic appeal
 		}

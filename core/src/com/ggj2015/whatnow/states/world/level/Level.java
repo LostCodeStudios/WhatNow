@@ -108,7 +108,6 @@ public class Level {
 		try {
 			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
