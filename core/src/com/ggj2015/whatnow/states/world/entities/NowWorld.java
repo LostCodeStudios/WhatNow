@@ -10,13 +10,21 @@ public class NowWorld extends EntityWorld {
 
 	private Rectangle bounds;
 	
-	public NowWorld(InputMultiplexer input, Camera camera) {
+	public NowWorld(InputMultiplexer input, Camera camera, String levelData) {
+		
+		buildLevelData();
+		
 		super(input, camera, Vector2.Zero.cpy());
 		
 		// TODO form proper bounds around map
 		bounds = new Rectangle(-20, -12, 40, 24); // close to screen size
 	}
 
+	
+	protected void buildLevelData(){
+		
+	}
+	
 	@Override
 	protected void buildSystems() {
 		super.buildSystems();
