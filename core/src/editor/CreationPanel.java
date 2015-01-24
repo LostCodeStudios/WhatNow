@@ -36,9 +36,9 @@ public class CreationPanel extends JPanel implements ActionListener {
 		setMinimumSize(new Dimension(300, EditorMain.SCREEN.height));
 		setMaximumSize(new Dimension(300, EditorMain.SCREEN.height));
 
-		add = createButton(200, 30, 95, 30, "Add");
-		type = createBox(5, 30, 190, 30, "ROCK", "BUSH", "ETC");
-		export = createButton(0, 0, 300, 30, "EXPORT");
+		add = createButton(200, 36, 95, 30, "Add");
+		type = createBox(5, 36, 190, 30, "ROCK", "BUSH", "ETC");
+		export = createButton(5, 5, 290, 30, "EXPORT");
 	}
 
 	private JButton createButton(int a, int b, int c, int d, String s) {

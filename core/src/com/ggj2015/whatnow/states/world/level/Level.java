@@ -23,7 +23,6 @@ public class Level {
 	String spriteSheetFile;
 	Vector2 cameraInitial;
 	SpriteSheet spriteSheet;
-	boolean mode;
 	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
 	/**
@@ -39,14 +38,13 @@ public class Level {
 	 *        initial position of the camera.
 	 */
 	public Level(String name, Rectangle bounds, Vector2 gravity,
-			String spriteSheet, Vector2 cameraInitial, boolean mode) {
+			String spriteSheet, Vector2 cameraInitial) {
 		super();
 		this.name = name;
 		this.bounds = bounds;
 		this.gravity = gravity;
 		setSpriteSheet(spriteSheet);
 		this.cameraInitial = cameraInitial;
-		this.mode = mode;
 	}
 	/**
 	 * @return the name
@@ -119,15 +117,10 @@ public class Level {
 	public void setSpriteSheet(String spriteSheet) {
 		this.spriteSheetFile = spriteSheet;
 		try {
-			if (mode)
-				this.spriteSheet =
-						SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
-			else
 				this.spriteSheet =
 						SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
 		} catch (IOException e) {
 			e.printStackTrace();
-			
 		}
 	}
 

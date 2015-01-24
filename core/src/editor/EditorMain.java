@@ -16,7 +16,7 @@ public class EditorMain {
 
 	public static void runEditor() {
 		JFrame frame = new JFrame("Lingering Editor");
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setSize(SCREEN);
 
@@ -26,7 +26,7 @@ public class EditorMain {
 						new Rectangle(0, 0, 100, 100),
 						new Vector2(0, 0),
 						"spritesheet.xml",
-						new Vector2(0f, 0f), false);
+						new Vector2(0f, 0f));
 		EditorPanel ep = new EditorPanel(base);
 
 		frame.add(ep, BorderLayout.CENTER);
