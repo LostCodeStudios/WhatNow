@@ -6,7 +6,7 @@ package com.ggj2015.whatnow.states.world.level;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.lostcode.javalib.utils.SpriteSheet;
@@ -121,11 +121,13 @@ public class Level {
 		try {
 			if (mode)
 				this.spriteSheet =
-						SpriteSheet.fromXML(new FileHandle(spriteSheet));
+						SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
 			else
-				this.spriteSheet = SpriteSheet.fromXML(spriteSheet);
+				this.spriteSheet =
+						SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
 		} catch (IOException e) {
 			e.printStackTrace();
+			
 		}
 	}
 

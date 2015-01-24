@@ -7,6 +7,8 @@ import com.lostcode.javalib.utils.Convert;
 import com.lostcode.javalib.utils.LogManager;
 import com.lostcode.javalib.utils.LogManager.LogType;
 
+import editor.EditorMain;
+
 public class WhatNow extends Game {
 	
 	public WhatNow() {
@@ -23,6 +25,21 @@ public class WhatNow extends Game {
 		
 	}
 
+	boolean editing = false;
+	public WhatNow(boolean b) {
+		super();
+
+		title = "Lingering";
+		
+		width = 1280;
+		height = 720;
+		
+		backgroundRed = 1f;
+		backgroundGreen = 1f;
+		backgroundBlue = 1f;
+		this.editing = true;
+	}
+
 	@Override
 	public void create() {
 		super.create();
@@ -31,6 +48,9 @@ public class WhatNow extends Game {
 		LogManager.init(Gdx.app, LogType.ERROR);
 		
 		getScreenManager().addScreen(new MainMenuScreen(this, spriteBatch));
+		
+		if(editing)
+			EditorMain.runEditor();
 	}
 
 	@Override

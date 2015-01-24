@@ -1,4 +1,4 @@
-package main;
+package editor;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -41,13 +41,14 @@ public class EditorPanel extends JPanel implements MouseListener,
 	public EditorPanel(Level l) {
 		this.level = l;
 
-//		init();
+		init();
 	}
 
 	private void init() {
 		BufferedImage full = null;
 		try {
-			full = ImageIO.read(new File(level.getSpriteSheetFile()));
+			System.out.println("C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"+level.getSpriteSheetFile());
+			full = ImageIO.read(new File("C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"+level.getSpriteSheetFile()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -86,7 +87,6 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		// draw pressed stuff
 
-		
 		// and pressing mechanism
 		if (startPress != null) {
 			g.setColor(selectColor);
