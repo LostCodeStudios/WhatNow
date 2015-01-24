@@ -1,5 +1,6 @@
 package com.ggj2015.whatnow.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -11,20 +12,36 @@ public class MainMenuScreen extends DialogScreen {
 	public MainMenuScreen(Game game, SpriteBatch spriteBatch) {
 		super(game, spriteBatch);
 		
-		// TODO write the real main menu with actual title
+		// TODO polish: add sprites, large title, stylization etc.
+		
 		Array<String> text = new Array<String>();
-		text.add("What do we do next?");
+		text.add("Lingering");
 		
 		Array<String> options = new Array<String>();
-		options.add("Play");
+		options.add("New Game");
+		options.add("Load Last Save");
+		options.add("Options");
+		options.add("Quit");
 		
-		showDialog(new DialogMenu(text, options) {
+		Array<Boolean> optionsEnabled = new Array<Boolean>();
+		optionsEnabled.add(false); // disable new game
+		for (int i = 1; i < options.size; i++) {
+			optionsEnabled.add(true);
+		}
+		
+		showDialog(new DialogMenu(text, options, optionsEnabled) {
 
 			@Override
 			public void onDialogChoice(String choice) {
-				if (choice.equals("Play")) {
-					this.close();
+				if (choice.equals("Load Last Save")) {
+					// TODO make the world for real
 					MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game));
+				}
+				else if (choice.equals("Options")) {
+					// TODO make an options screen
+				}
+				else if (choice.equals("Quit")) {
+					Gdx.app.exit();
 				}
 			}
 			
@@ -64,16 +81,6 @@ public class MainMenuScreen extends DialogScreen {
 	@Override
 	public void resume() {
 		
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO make a real menu
-		if (keycode == Keys.SPACE) {
-			game.getScreenManager().addScreen(new WorldScreen(game));
-		}
-		
-		return false;
 	}
 
 }

@@ -41,6 +41,7 @@ public class DialogScreen extends InputScreen {
 	
 	public void showDialog(DialogMenu dialog) {
 		dialogs.add(dialog);
+		dialog.show(game.getInput());
 	}
 	
 	@Override

@@ -11,9 +11,8 @@ public class WhatNow extends Game {
 	
 	public WhatNow() {
 		super();
-		
-		// TODO working title
-		title = "What do we do now?";
+
+		title = "Lingering";
 		
 		width = 1280;
 		height = 720;
