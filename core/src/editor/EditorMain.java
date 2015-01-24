@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -15,11 +16,10 @@ public class EditorMain {
 
 	public static void runEditor() {
 		JFrame frame = new JFrame("LingeringEditor ");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setSize(SCREEN);
 
-		
 		Level base =
 				new Level(
 						"Untitled",
@@ -29,7 +29,8 @@ public class EditorMain {
 						new Vector2(0f, 0f), false);
 		EditorPanel ep = new EditorPanel(base);
 
-		frame.add(ep);
+		frame.add(ep, BorderLayout.CENTER);
+		frame.add(ep.side_panel, BorderLayout.EAST);
 
 		frame.setVisible(true);
 	}
