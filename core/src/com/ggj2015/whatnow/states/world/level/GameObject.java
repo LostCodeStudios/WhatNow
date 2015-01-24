@@ -16,24 +16,55 @@ public class GameObject {
 	String group;
 	String type;
 	String template;
+	int layer = 0;
 	float scale = 1.0f;
 
 	// Object Oriented Obligations
+	/**
+	 * @param position
+	 * @param spriteKey
+	 * @param tag
+	 * @param group
+	 * @param type
+	 * @param template
+	 * @param layer
+	 * @param scale
+	 */
 	public GameObject(Vector3 position, String spriteKey, String tag,
-			String group, String type) {
+			String group, String type, String template, int layer, float scale) {
 		super();
 		this.position = position;
 		this.spriteKey = spriteKey;
 		this.tag = tag;
 		this.group = group;
 		this.type = type;
+		this.template = template;
+		this.layer = layer;
+		this.scale = scale;
 	}
-
+	
+	//GETTERSETTER
 	/**
 	 * @return the position
 	 */
 	public Vector3 getPosition() {
 		return position;
+	}
+
+
+
+	/**
+	 * @return the layer
+	 */
+	public int getLayer() {
+		return layer;
+	}
+
+	/**
+	 * @param layer the layer to set
+	 */
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 
 	/**
@@ -109,6 +140,8 @@ public class GameObject {
 	public String getType() {
 		return type;
 	}
+	
+
 
 	/**
 	 * @param type
