@@ -10,9 +10,7 @@ public class NowWorld extends EntityWorld {
 
 	private Rectangle bounds;
 	
-	public NowWorld(InputMultiplexer input, Camera camera, String levelData) {
-		
-		buildLevelData();
+	public NowWorld(InputMultiplexer input, Camera camera) {
 		
 		super(input, camera, Vector2.Zero.cpy());
 		

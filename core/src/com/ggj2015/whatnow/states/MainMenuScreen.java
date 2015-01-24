@@ -1,10 +1,10 @@
 package com.ggj2015.whatnow.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.ggj2015.whatnow.states.world.WorldScreen;
+import com.ggj2015.whatnow.states.world.level.DialogNode;
 import com.lostcode.javalib.Game;
 
 public class MainMenuScreen extends DialogScreen {
@@ -29,7 +29,12 @@ public class MainMenuScreen extends DialogScreen {
 			optionsEnabled.add(true);
 		}
 		
-		showDialog(new DialogMenu(text, options, optionsEnabled) {
+		DialogNode menuNode = new DialogNode();
+		menuNode.text.addAll(text);
+		menuNode.options.addAll(options);
+		menuNode.optionsEnabled.addAll(optionsEnabled);
+		
+		showDialog(new DialogMenu(DialogStyle.DEFAULT, menuNode) {
 
 			@Override
 			public void onDialogChoice(String choice) {

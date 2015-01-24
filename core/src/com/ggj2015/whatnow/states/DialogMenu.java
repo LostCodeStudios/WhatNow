@@ -11,8 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
+import com.ggj2015.whatnow.states.world.level.DialogNode;
 
 /**
  * An interactive dialog box
@@ -22,55 +21,38 @@ import com.badlogic.gdx.utils.Array;
 public abstract class DialogMenu implements InputProcessor {
 	
 	InputMultiplexer input;
-	Rectangle bounds;
 	
-	Array<String> text = new Array<String>();
-	Array<String> menuOptions = new Array<String>(); // TODO combine 3 into 1 dialog node
-	Array<Boolean> optionsEnabled = new Array<Boolean>();
+	DialogNode node;
+	DialogStyle style;
 	
 	int selectedIndex = 0;
 	
-	BitmapFont font;
+	BitmapFont textFont;
+	BitmapFont optionFont;
 	
 	boolean closed = false;
 	
-	// TODO make these either customizable or constant
-	Color backgroundColor = Color.GRAY;
-	Color borderColor = Color.BLACK;
-	float borderWidth = 4f;
-	float textMargin = 8f;
-	Color textColor = Color.BLACK;
-	Color optionColor = Color.WHITE;
-	Color optionColorDisabled = Color.DARK_GRAY;
-	Color optionColorSelected = Color.YELLOW;
-	int textSize = 24;
-	
-	public DialogMenu(Array<String> text, Array<String> options, Array<Boolean> optionsEnabled) {
-		bounds = new Rectangle(50, 50, 300, 400); // TODO variable bounds
+	public DialogMenu(DialogStyle style, DialogNode node) {
+		this.style = style;
 		
-		this.text.addAll(text);
-		this.menuOptions.addAll(options);
-		this.optionsEnabled.addAll(optionsEnabled);
+		this.node = node;
 		
-		if (optionsEnabled.size > 0) {
-			while (!optionsEnabled.get(selectedIndex)) {
+		if (node.optionsEnabled.size > 0) {
+			while (!node.optionsEnabled.get(selectedIndex)) {
 				selectedIndex++; // don't let the selection start on a disabled menu item
 			}
 		}
 		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ARJULIAN.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = textSize;
-		font = generator.generateFont(parameter); // font size 12 pixels
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!
-	}
-	
-	public DialogMenu(Array<String> text, Array<String> options) {
-		this(text, options, new Array<Boolean>());
 		
-		for (int i = 0; i < options.size; i++) {
-			optionsEnabled.add(true); // default all enabled
-		}
+		parameter.size = style.textSize;
+		textFont = generator.generateFont(parameter);
+		
+		parameter.size = style.optionTextSize;
+		optionFont = generator.generateFont(parameter);
+		
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 	
 	public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
@@ -78,60 +60,64 @@ public abstract class DialogMenu implements InputProcessor {
 		shapeRenderer.begin();
 		
 		// render dialog background
-		shapeRenderer.setColor(backgroundColor);
+		shapeRenderer.setColor(style.backgroundColor);
 		shapeRenderer.set(ShapeType.Filled);
 		
-		shapeRenderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.bounds.width, style.bounds.height);
 		
 		// render dialog border
-		shapeRenderer.setColor(borderColor);
+		shapeRenderer.setColor(style.borderColor);
 		shapeRenderer.set(ShapeType.Filled);
 		
-		shapeRenderer.rect(bounds.x, bounds.y, bounds.width, borderWidth); // bottom
-		shapeRenderer.rect(bounds.x, bounds.y, borderWidth, bounds.height); // left
-		shapeRenderer.rect(bounds.x, bounds.y + bounds.height - borderWidth, bounds.width, borderWidth); // top
-		shapeRenderer.rect(bounds.x + bounds.width - borderWidth, bounds.y, borderWidth, bounds.height); // right
+		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.bounds.width, style.borderWidth); // bottom
+		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.borderWidth, style.bounds.height); // left
+		shapeRenderer.rect(style.bounds.x, style.bounds.y + style.bounds.height - style.borderWidth, style.bounds.width, style.borderWidth); // top
+		shapeRenderer.rect(style.bounds.x + style.bounds.width - style.borderWidth, style.bounds.y, style.borderWidth, style.bounds.height); // right
 		
 		shapeRenderer.end();
 		
 		spriteBatch.begin();
 		
 		// render dialog text
-		float x = bounds.x + borderWidth + textMargin;
-		float y = bounds.y + bounds.height - borderWidth - textMargin;
-		font.setColor(textColor);
+		float x = style.bounds.x + style.borderWidth + style.textMargin;
+		float y = style.bounds.y + style.bounds.height - style.borderWidth - style.textMargin;
+		textFont.setColor(style.textColor);
 		
-		for (String line : text) {
+		for (int i = 0; i < node.text.size; i++) {
+			String line = node.text.get(i);
+			
 			// TODO wrap paragraphs
 			
-			font.draw(spriteBatch, line, x, y);
+			textFont.draw(spriteBatch, line, x, y);
 			
-			y -= font.getLineHeight();
+			y -= i < node.text.size - 1 ? textFont.getLineHeight() : optionFont.getLineHeight();
+			
+			// beneath all text entries, line break with option text size for better aesthetic appeal
 		}
 		
-		y -= font.getLineHeight(); // an extra line break
+		y -= optionFont.getLineHeight(); // an extra line break
 		
-		x += 2 * textMargin; // options indented
+		x += 2 * style.textMargin; // options indented
 		
-		for (int i = 0; i < menuOptions.size; i++) {
-			String option = menuOptions.get(i);
-			Color color = optionColor;
+		for (int i = 0; i < node.options.size; i++) {
+			String option = node.options.get(i);
+			Color color = style.optionColor;
 			
-			if (!optionsEnabled.get(i)) {
-				color = optionColorDisabled;
+			if (!node.optionsEnabled.get(i)) {
+				color = style.optionColorDisabled;
 			}
 			
 			if (selectedIndex == i) {
-				color = optionColorSelected;
+				color = style.optionColorSelected;
 			}
 			
-			font.setColor(color);
-			font.draw(spriteBatch, option, x, y);
+			optionFont.setColor(color);
+			optionFont.draw(spriteBatch, option, x, y);
 			
-			y -= font.getLineHeight();
+			y -= optionFont.getLineHeight();
 		}
 		
-		// TODO render a selection next to the current option
+		// TODO polish: render a selection next to the current option
 		
 		spriteBatch.end();
 	}
@@ -151,9 +137,9 @@ public abstract class DialogMenu implements InputProcessor {
 	}
 	
 	void loopSelection() {
-		if (selectedIndex < 0) selectedIndex = menuOptions.size - 1;
+		if (selectedIndex < 0) selectedIndex = node.options.size - 1;
 		else
-			selectedIndex = selectedIndex % menuOptions.size; // loop around the menu
+			selectedIndex = selectedIndex % node.options.size; // loop around the menu
 	}
 	
 	@Override
@@ -163,7 +149,7 @@ public abstract class DialogMenu implements InputProcessor {
 			do {
 				selectedIndex++;
 				loopSelection();
-			} while (!optionsEnabled.get(selectedIndex));
+			} while (!node.optionsEnabled.get(selectedIndex));
 			
 			return true;
 		}
@@ -172,13 +158,13 @@ public abstract class DialogMenu implements InputProcessor {
 			do {
 				selectedIndex--;
 				loopSelection();
-			} while (!optionsEnabled.get(selectedIndex));
+			} while (!node.optionsEnabled.get(selectedIndex));
 			
 			return true;
 		}
 		
 		if (keycode == Keys.SPACE || keycode == Keys.ENTER) {
-			onDialogChoice(menuOptions.get(selectedIndex)); // fire the input event
+			onDialogChoice(node.options.get(selectedIndex)); // fire the input event
 			
 			// and close this dialog
 			close();
