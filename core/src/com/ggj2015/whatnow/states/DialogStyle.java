@@ -30,4 +30,6 @@ public class DialogStyle {
 	public Color optionColorDisabled = Color.DARK_GRAY;
 	public Color optionColorSelected = Color.YELLOW;
 	
+	public boolean allowCancel = false;
+	
 }

@@ -174,6 +174,15 @@ public abstract class DialogMenu implements InputProcessor {
 			return true;
 		}
 		
+		// special cancel event when "ESCAPE" is pressed
+		if (keycode == Keys.ESCAPE && style.allowCancel) {
+			onDialogChoice("__CANCEL__");
+			
+			close();
+			
+			return true;
+		}
+		
 		return false;
 	}
 
