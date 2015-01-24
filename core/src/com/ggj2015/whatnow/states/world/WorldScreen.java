@@ -14,7 +14,7 @@ public class WorldScreen extends GameScreen {
 		super(game);
 		
 		OrthographicCamera camera = new OrthographicCamera(1280, 720);
-		world = new NowWorld(game.getInput(), camera, "lol.asd");
+		world = new NowWorld(game.getInput(), camera, "intro.level");
 	}
 	
 	@Override
