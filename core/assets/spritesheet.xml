@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SpriteSheet>
-	<texture>data/Textures/spritesheet.png</texture>	
+	<texture>Textures/spritesheet.png</texture>	
 
 	<rect key="GreenArrow">73, 235, 8, 8</rect>
 	<rect key="WarningSign">82, 235, 8, 8</rect>
