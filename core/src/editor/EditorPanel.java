@@ -51,6 +51,9 @@ public class EditorPanel extends JPanel implements MouseListener,
 	public EditorPanel(Level l) {
 		this.level = l;
 
+		for (GameObject o : l.getGameObjects())
+			data.put(o, new GObjEditData());
+
 		side_panel = new CreationPanel(this);
 		eye = new EditEye(EditorMain.SCREEN);
 
