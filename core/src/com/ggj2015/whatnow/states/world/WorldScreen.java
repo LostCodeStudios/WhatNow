@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.world.entities.NowWorld;
 import com.lostcode.javalib.Game;
+import com.lostcode.javalib.states.ScreenManager;
 import com.lostcode.javalib.utils.SoundManager;
 
 public class WorldScreen extends DialogScreen {
@@ -25,8 +26,16 @@ public class WorldScreen extends DialogScreen {
 		}
 	}
 	
+	public Game getGame() {
+		return game;
+	}
+	
 	public SpriteBatch getSpriteBatch() {
 		return spriteBatch;
+	}
+	
+	public ScreenManager screenManager() {
+		return game.getScreenManager();
 	}
 	
 	@Override

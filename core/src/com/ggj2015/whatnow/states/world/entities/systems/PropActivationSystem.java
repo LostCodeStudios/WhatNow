@@ -5,6 +5,9 @@ package com.ggj2015.whatnow.states.world.entities.systems;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
+import com.ggj2015.whatnow.states.combat.CombatScreen;
+import com.ggj2015.whatnow.states.world.WorldScreen;
+import com.ggj2015.whatnow.states.world.entities.NowWorld;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.components.physical.Sensor;
 import com.lostcode.javalib.entities.systems.InputSystem;
@@ -39,9 +42,13 @@ public class PropActivationSystem extends InputSystem {
 				Entity e = entities.get(i);
 				if(e != null){
 					Sensor s = (Sensor) e.getComponent(Sensor.class);
-					if(s.contains(e))
-						 //TODO: ACTIVATE CUNT
+					if(s.contains(e)) {
+						WorldScreen screen = ((NowWorld) world).getMyScreen();
+						screen.screenManager().addScreen(
+								new CombatScreen(screen.getGame(), screen.getSpriteBatch(), e.getTag(), false, false, 400));
+
 						return false;
+					}
 				}
 			}
 		}

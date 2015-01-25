@@ -29,6 +29,7 @@ import com.lostcode.javalib.Game;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.entities.systems.generic.TrackingCameraSystem;
+import com.lostcode.javalib.states.GameScreen;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 public class NowWorld extends EntityWorld {
@@ -92,7 +93,9 @@ public class NowWorld extends EntityWorld {
 
 	public boolean closeFlag = false;
 
-	
+	public WorldScreen getMyScreen() {
+		return myScreen;
+	}
 	
 	@Override
 	public void process() {
