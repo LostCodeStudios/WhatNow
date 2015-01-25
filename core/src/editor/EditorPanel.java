@@ -239,9 +239,10 @@ public class EditorPanel extends JPanel implements MouseListener,
 		startPress = null;
 
 		if (e.getClickCount() == 2 && !e.isMetaDown()) {
+			System.out.println("ADDING");
 			String str = (String) side_panel.type.getSelectedItem();
 
-			GameObject obj = new GameObject(str, "Tile");
+			GameObject obj = new GameObject("Tile", str);
 
 			obj.setPosition(eye.pick(e.getX(), e.getY()));
 			if (side_panel.align.isSelected()) {

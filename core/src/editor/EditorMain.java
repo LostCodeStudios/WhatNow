@@ -28,6 +28,7 @@ public class EditorMain {
 						"spritesheet.xml",
 						new Vector2(0f, 0f),
 						true);
+
 		EditorPanel ep = new EditorPanel(base);
 
 		frame.add(ep, BorderLayout.CENTER);
