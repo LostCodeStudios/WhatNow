@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.lostcode.javalib.utils.SoundManager;
 
 /**
  * An interactive dialog box
@@ -219,6 +220,8 @@ public abstract class DialogMenu implements InputProcessor {
 				loopSelection();
 			} while (!node.optionsEnabled.get(selectedIndex));
 			
+			SoundManager.playSound("button-select");
+			
 			return true;
 		}
 		
@@ -228,11 +231,15 @@ public abstract class DialogMenu implements InputProcessor {
 				loopSelection();
 			} while (!node.optionsEnabled.get(selectedIndex));
 			
+			SoundManager.playSound("button-select");
+			
 			return true;
 		}
 		
 		if (keycode == Keys.SPACE || keycode == Keys.ENTER) {
 			onDialogChoice(node.options.get(selectedIndex)); // fire the input event
+			
+			SoundManager.playSound("button-press");
 			
 			// and close this dialog
 			close();

@@ -63,7 +63,7 @@ public class PlayerControlSystem extends InputSystem {
 					
 					elapsedWalk -= 0.6f;
 					
-					SoundManager.playSound("footstep", 1f);
+					SoundManager.playSound("footsteps");
 				}
 			} else {
 				elapsedWalk = 0f;

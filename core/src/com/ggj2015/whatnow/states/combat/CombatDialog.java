@@ -7,6 +7,7 @@ import com.ggj2015.whatnow.states.dialog.DialogMenu;
 import com.ggj2015.whatnow.states.dialog.DialogNode;
 import com.ggj2015.whatnow.states.dialog.DialogStyle;
 import com.lostcode.javalib.utils.Random;
+import com.lostcode.javalib.utils.SoundManager;
 
 public class CombatDialog extends DialogMenu {
 	
@@ -57,6 +58,8 @@ public class CombatDialog extends DialogMenu {
 			screen.damageEnemy(dmg);
 			screen.setPlayerChoice(damageText);
 			screen.startState(CombatState.PlayerAction);
+			
+			SoundManager.playSound("sword");
 		} 
 		else if (choice.equals("Spell")) {
 			screen.showDialog(new SpellDialog(screen, enemyName, enemyInvincible));
