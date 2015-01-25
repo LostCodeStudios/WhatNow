@@ -53,7 +53,6 @@ public class Level {
 		this.gravity = Vector2.Zero.cpy();
 		this.spriteSheet = null;
 		this.cameraInitial= Vector2.Zero.cpy();
-		this.mode = false;
 	}
 	/**
 	 * @return the name
