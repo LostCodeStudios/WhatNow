@@ -97,7 +97,7 @@ public class CombatScreen extends DialogScreen {
 			
 			if (enemyName.equals("dragon-in-battle")) {
 				// start cave
-				getGame().getScreenManager().addScreen(new WorldScreen(getGame(), spriteBatch, "cave.lol"));
+				getGame().getScreenManager().addScreen(new WorldScreen(getGame(), spriteBatch, "overworld.lol"));
 			}
 		}
 	}
