@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.world.entities.NowWorld;
 import com.lostcode.javalib.Game;
+import com.lostcode.javalib.utils.SoundManager;
 
 public class WorldScreen extends DialogScreen {
 
@@ -16,6 +17,12 @@ public class WorldScreen extends DialogScreen {
 		OrthographicCamera camera = new OrthographicCamera(1280, 720);
 		world = new NowWorld(game.getInput(), camera, level, game);
 		world.myScreen = this;
+		
+		if (level.equals("overworld.lol")) {
+			SoundManager.playSong("Walk", 1f, true);
+		} else if (level.equals("shop.lol")) {
+			SoundManager.playSong("Shop", 1f, true);
+		}
 	}
 	
 	public SpriteBatch getSpriteBatch() {
