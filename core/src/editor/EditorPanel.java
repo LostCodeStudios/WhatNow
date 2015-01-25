@@ -217,7 +217,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 			side_panel.properties.update();
 		}
 
-		if (!e.isMetaDown()) {
+		if (!e.isMetaDown() && dragType == 1) {
 			for (GameObject o : level.getGameObjects()) {
 				GObjEditData dat = data.get(o);
 
