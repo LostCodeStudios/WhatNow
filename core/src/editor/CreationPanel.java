@@ -192,8 +192,119 @@ public class CreationPanel extends JPanel implements ActionListener {
 			posYSpin.setEnabled(b && objects.size() == 1);
 			posZSpin.setEnabled(b && objects.size() == 1);
 
-		}
+			if (objects == null || objects.isEmpty())
+				return;
 
+			// Sprite keys
+			String consensus = null;
+			for (GameObject o : objects)
+				if (consensus == null)
+					consensus = o.getSpriteKey();
+				else if (!o.getSpriteKey().equals(consensus)) {
+					consensus = "<Assorted>";
+					break;
+				}
+			spriteKField.setText(consensus);
+
+			// Tags
+			consensus = null;
+			for (GameObject o : objects)
+				if (consensus == null)
+					consensus = o.getTag();
+				else if (!o.getTag().equals(consensus)) {
+					consensus = "<Assorted>";
+					break;
+				}
+			tagField.setText(consensus);
+
+			// Groups
+			consensus = null;
+			for (GameObject o : objects)
+				if (consensus == null)
+					consensus = o.getGroup();
+				else if (!o.getGroup().equals(consensus)) {
+					consensus = "<Assorted>";
+					break;
+				}
+			groupField.setText(consensus);
+
+			// Types
+			consensus = null;
+			for (GameObject o : objects)
+				if (consensus == null)
+					consensus = o.getType();
+				else if (!o.getType().equals(consensus)) {
+					consensus = "<Assorted>";
+					break;
+				}
+			typeField.setText(consensus);
+
+			// Templates
+			consensus = null;
+			for (GameObject o : objects)
+				if (consensus == null)
+					consensus = o.getTemplate();
+				else if (!o.getTemplate().equals(consensus)) {
+					consensus = "<Assorted>";
+					break;
+				}
+			templateField.setText(consensus);
+
+			// Layer
+			int cons = -999;
+			for (GameObject o : objects)
+				if (cons == -999)
+					cons = o.getLayer();
+				else if (o.getLayer() != cons) {
+					cons = Integer.MIN_VALUE;
+					break;
+				}
+			layerSpin.setValue(((Integer)cons).doubleValue());
+
+			// Scale
+			float conse = -999;
+			for (GameObject o : objects)
+				if (conse == -999)
+					conse = o.getScale();
+				else if (o.getScale() != cons) {
+					conse = Float.NaN;
+					break;
+				}
+			
+			layerSpin.setValue(((Float)conse).doubleValue());
+
+
+			// posX
+			conse = -999;
+			for (GameObject o : objects)
+				if (conse == -999)
+					conse = o.getPosition().x;
+				else if (o.getPosition().x != cons) {
+					conse = Float.NaN;
+					break;
+				}
+
+			// posY
+			conse = -999;
+			for (GameObject o : objects)
+				if (conse == -999)
+					conse = o.getPosition().y;
+				else if (o.getPosition().y != cons) {
+					conse = Float.NaN;
+					break;
+				}
+
+			// posZ
+			conse = -999;
+			for (GameObject o : objects)
+				if (conse == -999)
+					conse = o.getPosition().z;
+				else if (o.getPosition().z != cons) {
+					conse = Float.NaN;
+					break;
+				}
+
+		}
 		private JLabel makeLabel(int a, int b, int c, int d, String s) {
 			JLabel lab = new JLabel(s);
 			lab.setBounds(a, b, c, d);
@@ -226,7 +337,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 						Double.POSITIVE_INFINITY,
 						0.5));
 
-//			js.setEditor(makeField(0, 0, 0, 0, "err"));
+			// js.setEditor(makeField(0, 0, 0, 0, "err"));
 			js.setBounds(a, b, c, d);
 			add(js);
 			js.addChangeListener(this);
@@ -252,7 +363,6 @@ public class CreationPanel extends JPanel implements ActionListener {
 				for (GameObject obj : objects)
 					obj.setTemplate(src.getText());
 
-			System.out.println("YAY!");
 			src.setBackground(color);
 		}
 
