@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SpriteSheet>
+<texture>sprites\sprite_sheet.png</texture>
+<rect key="fuck-fence">355, 874, 83, 340</rect>
+<rect key="volcano">148, 347, 127, 129</rect>
+<rect key="wood-floor">297, 348, 128, 128</rect>
+<rect key="lava">4, 350, 128, 128</rect>
+<rect key="grass">4, 205, 128, 128</rect>
+<rect key="tree-trunk">203, 888, 135, 156</rect>
+<rect key="brick">290, 206, 128, 128</rect>
+<rect key="bush">40, 879, 152, 160</rect>
+<rect key="rock">512, 956, 103, 96</rect>
+<rect key="dirt">148, 204, 128, 128</rect>
+<rect key="smoke">489, 1070, 159, 144</rect>
+<rect key="tree-top">825, 175, 579, 493</rect>
+</SpriteSheet>
