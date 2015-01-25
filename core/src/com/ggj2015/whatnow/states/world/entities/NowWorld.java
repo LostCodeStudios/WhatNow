@@ -9,10 +9,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.PlayerControlSystem;
+import com.ggj2015.whatnow.states.world.entities.templates.AnimalTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.TileTemplate;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
+import com.lostcode.javalib.Game;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.utils.SpriteSheet;
@@ -20,10 +24,14 @@ import com.lostcode.javalib.utils.SpriteSheet;
 public class NowWorld extends EntityWorld {
 
 	private Rectangle bounds;
-	
-	public NowWorld(InputMultiplexer input, Camera camera, String levelData) {
+	private Game game;
+
+
+	public NowWorld(InputMultiplexer input, Camera camera, String levelData, Game game) {
 		super(input, camera, Vector2.Zero.cpy());
+		this.game = game;
 		buildLevel(levelData);
+		
 		
 	}
 
@@ -56,8 +64,21 @@ public class NowWorld extends EntityWorld {
 		super.buildSystems();
 		
 		debugView.enabled = true;
+		systems.addSystem(new PlayerControlSystem(this.input));
+		systems.addSystem(new AnimalSystem());
 	}
 
+	public boolean closeFlag = false;
+
+	
+	
+	@Override
+	public void process() {
+		super.process();
+		
+		if (closeFlag)
+			getGame().getScreenManager().closeActiveScreen();
+	}
 
 
 	@Override
@@ -67,6 +88,8 @@ public class NowWorld extends EntityWorld {
 		this.addTemplate("Player", new PlayerTemplate());
 
 		this.addTemplate("Tile", new TileTemplate());
+		this.addTemplate("Animal", new AnimalTemplate());
+		this.addTemplate("Portal", new PortalTemplate());
 	}
 
 
@@ -74,10 +97,13 @@ public class NowWorld extends EntityWorld {
 	@Override
 	protected void buildEntities() {
 		super.buildEntities();
+
 	}
 
-
-
+	public Game getGame() {
+		return game;
+	}
+	
 	@Override
 	protected void buildSpriteSheet() {
 		

@@ -3,6 +3,7 @@
  */
 package com.ggj2015.whatnow.states.world.entities.templates;
 
+
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -10,20 +11,22 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
-import com.lostcode.javalib.entities.components.ComponentManager;
 import com.lostcode.javalib.entities.components.physical.Body;
-import com.lostcode.javalib.entities.components.physical.Collidable;
 import com.lostcode.javalib.entities.components.render.Sprite;
+import com.lostcode.javalib.entities.processes.DelayProcess;
+import com.lostcode.javalib.entities.processes.Process;
+import com.lostcode.javalib.entities.processes.ProcessState;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
 import com.lostcode.javalib.utils.Convert;
+import com.lostcode.javalib.utils.Random;
 
 /**
  * @author MadcowD
- * The general player template.
- * https://gist.github.com/MadcowD/469ba7cf50d178100d2c
+ * The entity template for a wild animal.
  */
-public class PlayerTemplate implements EntityTemplate {
+public class AnimalTemplate implements EntityTemplate {
 
+	static Random r = new Random();
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.utils.Disposable#dispose()
 	 */
@@ -43,7 +46,7 @@ public class PlayerTemplate implements EntityTemplate {
 		float scale = (Float)args[2];
 		int layer = (Integer)args[3];
 
-		
+		//BODY STUFF
 		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,1));
 
 		BodyDef bd = new BodyDef();
@@ -52,27 +55,11 @@ public class PlayerTemplate implements EntityTemplate {
 		bd.allowSleep = false;
 		bd.fixedRotation = true;
 		
-		
-		
 		FixtureDef fd = new FixtureDef();
 		fd.shape = new CircleShape();
 		fd.shape.setRadius(Convert.pixelsToMeters(spr.getWidth()/2f));
 		
 		e.addComponent(new Body(world,e,bd,fd));
-		
-		e.addComponent(new Collidable(){
-
-			@Override
-			public void onAdd(ComponentManager container) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onRemove(ComponentManager container) {
-				// TODO Auto-generated method stub
-				
-			}});
 
 		return e;
 	}
