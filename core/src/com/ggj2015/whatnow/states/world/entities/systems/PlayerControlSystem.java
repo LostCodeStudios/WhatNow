@@ -58,10 +58,11 @@ public class PlayerControlSystem extends InputSystem {
 				// play sound effect
 				elapsedWalk += deltaSeconds();
 				
-				if (elapsedWalk >= 0.6f) {
+				float interval = 1.1f;
+				if (elapsedWalk >= interval) {
 					// walk sound interval
 					
-					elapsedWalk -= 0.6f;
+					elapsedWalk -= interval;
 					
 					SoundManager.playSound("footsteps");
 				}
