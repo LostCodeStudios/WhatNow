@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.world.WorldScreen;
+import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.Game;
 import com.lostcode.javalib.utils.SpriteSheet;
 
@@ -185,9 +186,13 @@ public class CombatScreen extends DialogScreen {
 	
 	public void damageEnemy(int amount) {
 		enemyHealth -= amount;
-		//TODO Add results of killing enemy
 		
 		if (enemyHealth < 0) {
+			if (enemyName.equals("Well"))
+				Player.addItem("Filled Bucket");
+			if (enemyName.equals("Farm") && enemyHealth > -4000)
+				Player.addItem("Food");			
+			
 			showDialog(new ActionDialog(this, "You have defeated the enemy!", CombatState.Over));
 		}
 	}
