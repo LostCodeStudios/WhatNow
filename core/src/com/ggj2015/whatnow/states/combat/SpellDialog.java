@@ -82,6 +82,7 @@ public class SpellDialog extends DialogMenu {
 			int dmg = RAND.nextInt(spell.minDamage, spell.maxDamage);
 			//if (Enemy.invincible) { dmg = 0; }
 			//if (Enemy.name.equals("farm") && spell.name.equals("Fireball") { dmg = 2 * RAND.nextInt(spell.minDamage, spell.maxDamage) }
+			//if (Enemy.name.equals("bucketWell") && spell.name.equals("Magic Missile") {dmg = 5; Player.addItem("Filled Bucket");}
 			screen.damageEnemy(dmg);
 			spell.description += ", dealing " + dmg + " damage!";
 			screen.showDialog(new ActionDialog(screen, spell.description, CombatState.EnemyAction));

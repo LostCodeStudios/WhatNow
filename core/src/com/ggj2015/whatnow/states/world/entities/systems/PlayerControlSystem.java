@@ -20,7 +20,6 @@ public class PlayerControlSystem extends InputSystem {
 		keyMap.put(Keys.D, false);
 	}
 	
-	
 	@Override
 	protected void process(Entity e) {
 		Body bd = e.getComponent(Body.class);
