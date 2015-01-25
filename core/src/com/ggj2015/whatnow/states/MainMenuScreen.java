@@ -42,7 +42,10 @@ public class MainMenuScreen extends DialogScreen {
 		menuNode.options.addAll(options);
 		menuNode.optionsEnabled.addAll(optionsEnabled);
 		
-		showDialog(new DialogMenu(DialogStyle.DEFAULT, menuNode) {
+		DialogStyle d = DialogStyle.DEFAULT.cpy();
+		d.bounds.y =400/8f;
+		
+		showDialog(new DialogMenu(d, menuNode) {
 
 			@Override
 			public void onDialogChoice(String choice) {
@@ -84,7 +87,7 @@ public class MainMenuScreen extends DialogScreen {
 	@Override
 	public void render(float delta) {
 		sb.begin();
-		sb.draw()
+		sb.draw(bg, 0,0, 1280,720);
 		sb.end();
 		super.render(delta);
 	}
