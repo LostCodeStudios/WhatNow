@@ -12,9 +12,8 @@ public class WorldScreen extends GameScreen {
 	// TODO this constructor will take world arguments to create the desired sub-world
 	public WorldScreen(Game game, String level) {
 		super(game);
-		
 		OrthographicCamera camera = new OrthographicCamera(1280, 720);
-		world = new NowWorld(game.getInput(), camera, level);
+		world = new NowWorld(game.getInput(), camera, level, game);
 	}
 	
 	@Override

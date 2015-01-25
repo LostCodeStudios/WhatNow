@@ -20,7 +20,7 @@ public class DialogStyle {
 	public Color borderColor = Color.BLACK;
 	
 	public float borderWidth = 4f;
-	public float textMargin = 8f;
+	public float textMargin = 16f;
 
 	public int textSize = 24;
 	public int optionTextSize = 24;

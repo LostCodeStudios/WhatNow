@@ -10,7 +10,9 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
+import com.lostcode.javalib.entities.components.ComponentManager;
 import com.lostcode.javalib.entities.components.physical.Body;
+import com.lostcode.javalib.entities.components.physical.Collidable;
 import com.lostcode.javalib.entities.components.render.Sprite;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
 import com.lostcode.javalib.utils.Convert;
@@ -58,7 +60,19 @@ public class PlayerTemplate implements EntityTemplate {
 		
 		e.addComponent(new Body(world,e,bd,fd));
 		
-		
+		e.addComponent(new Collidable(){
+
+			@Override
+			public void onAdd(ComponentManager container) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onRemove(ComponentManager container) {
+				// TODO Auto-generated method stub
+				
+			}});
 
 		return e;
 	}
