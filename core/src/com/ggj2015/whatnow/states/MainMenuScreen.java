@@ -45,7 +45,12 @@ public class MainMenuScreen extends DialogScreen {
 		Json json = new Json();
 		System.out.println(json.prettyPrint(menuNode));
 		
-		DialogTree tree = new DialogTree("text.json");
+		DialogTree tree = new DialogTree("wizard.json"){
+			@Override
+			public void onFinished() {
+				MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game, "overworld.lol"));
+			}
+		};
 		tree.run(this);
 		
 //		showDialog(new DialogMenu(DialogStyle.DEFAULT, menuNode) {

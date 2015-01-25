@@ -19,9 +19,9 @@ public class WhatNow extends Game {
 		width = 1280;
 		height = 720;
 		
-		backgroundRed = 1f;
-		backgroundGreen = 1f;
-		backgroundBlue = 1f;
+		backgroundRed = 0f;
+		backgroundGreen = 0f;
+		backgroundBlue = 0f;
 		
 	}
 

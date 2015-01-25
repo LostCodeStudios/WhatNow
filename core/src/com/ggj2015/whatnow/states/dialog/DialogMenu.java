@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,7 +35,15 @@ public abstract class DialogMenu implements InputProcessor {
 	
 	boolean closed = false;
 	
+	TextureRegion borderCorner;
+	TextureRegion borderMid;
+	TextureRegion paper;
+	
 	public DialogMenu(DialogStyle style, DialogNode node) {
+		borderCorner = new TextureRegion(new Texture(Gdx.files.internal("sprites/border_corner.png")), 1, 1, 32, 32);
+		borderMid = new TextureRegion(new Texture(Gdx.files.internal("sprites/border_mid.png")), 1, 1, 32, 32);
+		paper = new TextureRegion(new Texture(Gdx.files.internal("sprites/dialogue_paper.png")), 1, 1, 32, 32);
+		
 		this.style = style;
 		
 		this.node = node;
@@ -62,31 +72,83 @@ public abstract class DialogMenu implements InputProcessor {
 	}
 	
 	public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-		shapeRenderer.setAutoShapeType(true);
-		shapeRenderer.begin();
-		
-		// render dialog background
-		shapeRenderer.setColor(style.backgroundColor);
-		shapeRenderer.set(ShapeType.Filled);
-		
-		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.bounds.width, style.bounds.height);
-		
-		// render dialog border
-		shapeRenderer.setColor(style.borderColor);
-		shapeRenderer.set(ShapeType.Filled);
-		
-		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.bounds.width, style.borderWidth); // bottom
-		shapeRenderer.rect(style.bounds.x, style.bounds.y, style.borderWidth, style.bounds.height); // left
-		shapeRenderer.rect(style.bounds.x, style.bounds.y + style.bounds.height - style.borderWidth, style.bounds.width, style.borderWidth); // top
-		shapeRenderer.rect(style.bounds.x + style.bounds.width - style.borderWidth, style.bounds.y, style.borderWidth, style.bounds.height); // right
-		
-		shapeRenderer.end();
-		
 		spriteBatch.begin();
 		
+		// render dialog bg
+		
+		float y = style.bounds.y;
+		float x = 0;
+		for (int i = 0; i < style.bounds.height / 32; i++) {
+			
+			x = style.bounds.x;
+			for (int j = 0; j < style.bounds.width / 32; j++) {
+				
+				//bottom
+				spriteBatch.draw(paper, x, y);
+				
+				x += 32;
+				
+				if (x + 32 > style.bounds.x + style.bounds.width) {
+					x -= (x + 32) - (style.bounds.x + style.bounds.width);
+				}
+			}
+			
+			y += 32;
+			
+			if (y + 32 > style.bounds.y + style.bounds.height) {
+				y -= (y + 32) - (style.bounds.y + style.bounds.height);
+			}
+			
+		}
+		
+		// render dialog border
+		
+		// edges
+		
+		y = style.bounds.y;
+		for (int i = 0; i < style.bounds.height / 32; i++) {
+			
+			//left
+			spriteBatch.draw(borderMid, style.bounds.x - 12, y);
+			
+			//right
+			spriteBatch.draw(borderMid, style.bounds.x + style.bounds.width - 20, y, 16, 16, 32, 32, 1f, 1f, 180f);
+			
+			y += 32;
+			
+			if (y + 32 > style.bounds.y + style.bounds.height) {
+				y -= (y + 32) - (style.bounds.y + style.bounds.height);
+			}
+		}
+		
+		x = style.bounds.x;
+		for (int i = 0; i < style.bounds.width / 32; i++) {
+			
+			//bottom
+			spriteBatch.draw(borderMid, x, style.bounds.y - 12, 16, 16, 32, 32, 1f, 1f, 90f);
+			
+			//top
+			spriteBatch.draw(borderMid, x, style.bounds.y + style.bounds.height - 20, 16, 16, 32, 32, 1f, 1f, 270f);
+			
+			x += 32;
+			
+			if (x + 32 > style.bounds.x + style.bounds.width) {
+				x -= (x + 32) - (style.bounds.x + style.bounds.width);
+			}
+		}
+		
+		// corners 
+		spriteBatch.draw(borderCorner, style.bounds.x - 12, style.bounds.y - 20 + style.bounds.height, 16, 16, 32, 32, 1f, 1f, 0f);
+		spriteBatch.draw(borderCorner, style.bounds.x + style.bounds.width - 20,
+				style.bounds.y - 20 + style.bounds.height, 16, 16, 32, 32, 1f, 1f, 270f);
+		spriteBatch.draw(borderCorner, style.bounds.x - 12,
+				style.bounds.y - 12, 16, 16, 32, 32, 1f, 1f, 90f);
+		spriteBatch.draw(borderCorner, style.bounds.x + style.bounds.width - 20,
+				style.bounds.y - 12, 16, 16, 32, 32, 1f, 1f, 180f);
+		
 		// render dialog text
-		float x = style.bounds.x + style.borderWidth + style.textMargin;
-		float y = style.bounds.y + style.bounds.height - style.borderWidth - style.textMargin;
+		x = style.bounds.x + style.borderWidth + style.textMargin;
+		y = style.bounds.y + style.bounds.height - style.borderWidth - style.textMargin;
 		textFont.setColor(style.textColor);
 		
 		for (int i = 0; i < node.text.size; i++) {
@@ -119,9 +181,9 @@ public abstract class DialogMenu implements InputProcessor {
 			}
 			
 			optionFont.setColor(color);
-			optionFont.draw(spriteBatch, option, x, y);
+			TextBounds size = optionFont.drawWrapped(spriteBatch, option, x, y, style.bounds.width - 4 * style.textMargin);
 			
-			y -= optionFont.getLineHeight();
+			y -= size.height;
 		}
 		
 		// TODO polish: render a selection next to the current option
