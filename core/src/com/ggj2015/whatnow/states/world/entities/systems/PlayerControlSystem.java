@@ -69,7 +69,7 @@ public class PlayerControlSystem extends InputSystem {
 				elapsedWalk = 0f;
 			}
 			
-			vel.scl(5);
+			vel.nor().scl(5);
 			bd.setLinearVelocity(vel);
 		}
 		//TODO: Interaction section

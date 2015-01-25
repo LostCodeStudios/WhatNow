@@ -27,7 +27,7 @@ public class AnimateSpriteSystem extends ComponentSystem {
 
 		as.animating = b.getLinearVelocity().len() > 0.05f;
 		float speed = b.getLinearVelocity().len() * 1.2f;
-		float h2 = as.getBase().getWidth() / 2, offset = 30f;
+		float h2 = as.getBase().getWidth() / 2.2f, offsetx = 30f, offsety = 25f, fff = 20f;
 
 		if (as.animating) {
 			as.elapsedSec += deltaSeconds();
@@ -44,20 +44,20 @@ public class AnimateSpriteSystem extends ComponentSystem {
 					(float) (Math.sin((as.elapsedSec * speed) - 0.5)
 							* as.getBase().getHeight() / 2);
 
-			as.lFootSprite.setOrigin(new Vector2(-h2 / 2, s1 + offset));
-			as.rFootSprite.setOrigin(new Vector2( h2 / 2, s2 + offset));
-			as.lHandSprite.setOrigin(new Vector2(-h2,s3 ));
-			as.rHandSprite.setOrigin(new Vector2(h2, s4 ));
+			as.lFootSprite.setOrigin(new Vector2(h2 / 2+offsety, s1 + offsetx));
+			as.rFootSprite.setOrigin(new Vector2(- h2 / 2+offsety, s2 + offsetx));
+			as.lHandSprite.setOrigin(new Vector2(h2+fff,s3 ));
+			as.rHandSprite.setOrigin(new Vector2(-h2+fff, s4 ));
 
 			as.rotationTo =
 					(float)( Math.toRadians(b.getLinearVelocity().angle()) - Math.PI/2.0f);
 
 		}
 		else {
-			as.lFootSprite.setOrigin(new Vector2( -h2 / 2, +offset));
-			as.rFootSprite.setOrigin(new Vector2( h2 / 2, +offset));
-			as.lHandSprite.setOrigin(new Vector2( -h2,0));
-			as.rHandSprite.setOrigin(new Vector2( h2,0));
+			as.lFootSprite.setOrigin(new Vector2( h2 / 2+offsety, +offsetx));
+			as.rFootSprite.setOrigin(new Vector2( -h2 / 2+offsety, +offsetx));
+			as.lHandSprite.setOrigin(new Vector2( h2+fff,0));
+			as.rHandSprite.setOrigin(new Vector2( -h2+fff,0));
 		}
 
 		while (as.rotationTo - as.rotation > Math.PI)
