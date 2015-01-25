@@ -56,20 +56,11 @@ public class AnimatedSprite extends MultiRenderable {
 	@Override
 	public void setScale(float scaleX, float scaleY) {
 		super.setScale(scaleX, scaleY);
-<<<<<<< HEAD
 
 		lHandSprite.setScale(scaleX, scaleY);
 		rHandSprite.setScale(scaleX, scaleY);
 		rFootSprite.setScale(scaleX, scaleY);
 		lFootSprite.setScale(scaleX, scaleY);
-=======
-		
-		handSprite.setScale(scaleX, scaleY);
-		footSprite.setScale(scaleX, scaleY);
-//		movingHandSprites.get(false).setScale(scaleX, scaleY);
-//		movingHandSprites.get(true).setScale(scaleX, scaleY);
-//		movingHandSprites.get(false).setScale(scaleX, scaleY);
-//		movingHandSprites.get(true).setScale(scaleX, scaleY);
->>>>>>> 0ed3458806dcc2b8f35d42fbfad9178219c3473b
+
 	}
 }
