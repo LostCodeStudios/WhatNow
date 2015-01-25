@@ -129,7 +129,7 @@ public class CombatScreen extends DialogScreen {
 		return "Nothing interesting happens!"; //Catch-all
 	}
 
-	Vector2 playerFieldPos = new Vector2(128, -50); // TODO adjust this
+	Vector2 playerFieldPos = new Vector2(-10, -110); // TODO adjust this
 	Vector2 enemyFieldPos = new Vector2(1280 - 128 - 580, 720 - 300); // TODO adjust this
 
 	boolean looping = false;
