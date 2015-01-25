@@ -140,7 +140,7 @@ public class NowWorld extends EntityWorld {
 	@Override
 	protected void buildSpriteSheet() {
 		try {
-			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal("sprite_sheet.xml"));
+			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal("spritesheet.xml"));
 			feetSheet = SpriteSheet.fromXML(Gdx.files.internal("feet.xml"));
 			handsSheet = SpriteSheet.fromXML(Gdx.files.internal("hands.xml"));
 			bodiesSheet = SpriteSheet.fromXML(Gdx.files.internal("bodies.xml"));
