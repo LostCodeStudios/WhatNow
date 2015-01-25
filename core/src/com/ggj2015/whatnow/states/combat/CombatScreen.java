@@ -52,10 +52,10 @@ public class CombatScreen extends DialogScreen {
 			this.showDialog(new CombatDialog(this));
 			break;
 		case PlayerAction:
-			// TODO carry out the player's choice
+			this.showDialog(new ActionDialog(this, playerChoice, CombatState.EnemyAction));
 			break;
 		case EnemyAction:
-			// TODO carry out the enemy turn
+			this.showDialog(new ActionDialog(this, "Enemy attack", CombatState.PlayerChoice));
 			break;
 		}
 	}
@@ -88,6 +88,10 @@ public class CombatScreen extends DialogScreen {
 		spriteBatch.draw(battlefieldTexture, position.x, position.y, battlefieldTexture.getWidth() * fieldScale, battlefieldTexture.getHeight() * fieldScale);
 		
 		spriteBatch.end();
+	}
+	
+	public void damageEnemy(int amount) {
+		// TODO damage enemy!
 	}
 
 }

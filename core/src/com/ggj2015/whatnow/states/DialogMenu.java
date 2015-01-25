@@ -23,7 +23,7 @@ public abstract class DialogMenu implements InputProcessor {
 	
 	InputMultiplexer input;
 	
-	DialogNode node;
+	protected DialogNode node;
 	DialogStyle style;
 	
 	int selectedIndex = 0;
