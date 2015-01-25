@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -23,11 +25,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.level.GameObject;
+import com.ggj2015.whatnow.states.world.level.Level;
 
 public class CreationPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2315263733853810583L;
@@ -38,7 +42,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 
 	JComboBox<String> type;
 	JCheckBox align;
-	JButton add, export;
+	JButton load, export;
 
 	JTextField title, boundX, boundY, boundW, boundH, spriteSheetFile;
 
@@ -52,6 +56,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 	public CreationPanel(EditorPanel ep) {
 		setLayout(null);
 
+		setBorder(new LineBorder(Color.GRAY, 2));
+
 		this.parent = ep;
 
 		properties = new PropertyPanel(parent.selected);
@@ -61,32 +67,52 @@ public class CreationPanel extends JPanel implements ActionListener {
 		setMinimumSize(new Dimension(300, EditorMain.SCREEN.height));
 		setMaximumSize(new Dimension(300, EditorMain.SCREEN.height));
 
-		add = createButton(200, 36, 95, 30, "Add");
+		makeLabel(5, 5, 290, 25, "Level Name:");
+		title = makeField(105, 5, 190, 25, "TITLE");
 
-		Set<String> set = parent.level.getSpriteSheet().getRegions("")
-				.keySet();
+		makeLabel(5, 30, 290, 25, "World Bounds: (x,y,width, height)");
 
-		type = createBox(5, 36, 190, 30, set.toArray(new String[set.size()]));
-		export =
-				createButton(5, EditorMain.SCREEN.height - 40, 290, 30,
-						"EXPORT");
-		align = createCheckBox(25, 70, 100, 25, "Snap to Grid");
+		boundX = makeField(10, 55, 70, 25, "BOUND_X");
+		boundY = makeField(80, 55, 70, 25, "BOUND_Y");
+		boundW = makeField(150, 55, 70, 25, "BOUND_W");
+		boundH = makeField(220, 55, 70, 25, "BOUND_H");
 
-		title = makeField(5, 5, 290, 25, "TITLE");
+		makeLabel(5, 85, 290, 25, "Sprite Sheet File:");
+		spriteSheetFile = makeField(20, 110, 200, 25, "SPRITE_SHEET");
 
-		JLabel boundLabel = new JLabel("World Bounds: (x,y,width, height)");
-		boundLabel.setBounds(0, 95, 300, 25);
-		boundLabel.setFont(new Font("SANS_SERIF", Font.BOLD, 15));
-		add(boundLabel);
-
-		boundX = makeField(10, 120, 70, 25, "BOUND_X");
-		boundY = makeField(80, 120, 70, 25, "BOUND_Y");
-		boundW = makeField(150, 120, 70, 25, "BOUND_W");
-		boundH = makeField(220, 120, 70, 25, "BOUND_H");
-
-		properties.setBounds(20, 300, 250, 310);
+		properties.setBounds(20, 150, 250, 300);
 		properties.update();
 		add(properties);
+
+		align = createCheckBox(25, 560, 100, 25, "Snap to Grid");
+		Set<String> set = parent.level.getSpriteSheet().getRegions("").keySet();
+		type = createBox(5, 600, 190, 30, set.toArray(new String[set.size()]));
+
+		export = createButton(105, EditorMain.SCREEN.height - 40,
+				190, 30, "EXPORT");
+		load = createButton(5, EditorMain.SCREEN.height - 40,
+				100, 30, "IMPORT");
+
+	}
+
+	public void updateFields() {
+		boundX.setText(parent.level.getBounds().x + "");
+		boundY.setText(parent.level.getBounds().y + "");
+		boundW.setText(parent.level.getBounds().width + "");
+		boundH.setText(parent.level.getBounds().height + "");
+
+		title.setText(parent.level.getName());
+
+		spriteSheetFile.setText(parent.level.getSpriteSheetFile());
+	}
+
+	private JLabel makeLabel(int a, int b, int c, int d, String txt) {
+		JLabel label = new JLabel(txt);
+		label.setBounds(a, b, c, d);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		label.setFont(new Font("SANS_SERIF", Font.BOLD, 15));
+		add(label);
+		return label;
 	}
 
 	private JTextField makeField(int a, int b, int c, int d, String action) {
@@ -142,12 +168,42 @@ public class CreationPanel extends JPanel implements ActionListener {
 		if (parent.level.getBounds() == null)
 			parent.level.setBounds(new Rectangle());
 
-		if (evt.getSource() == add) {
-			parent.buildQueue.offer((String) type.getSelectedItem());
-		} else if (evt.getSource() == export) {
-			Json lol = new Json();
-			FileHandle fh = Gdx.files.local("first.level");
-			fh.writeString(lol.toJson(parent.level), false);
+		if (evt.getSource() == export) {
+			JFileChooser jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File("..\\core\\assets"));
+			
+			if (jfc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
+				FileHandle fh =
+						Gdx.files.getFileHandle(jfc.getSelectedFile()
+								.getAbsolutePath(), FileType.Absolute);
+				Json jsonObject = new Json();
+				fh.writeString(jsonObject.toJson(parent.level), false);
+			}
+		} else if (evt.getSource() == load) {
+			JFileChooser jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File("..\\core\\assets"));
+
+			if (jfc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
+				FileHandle fh =
+						Gdx.files.getFileHandle(jfc.getSelectedFile()
+								.getAbsolutePath(), FileType.Absolute);
+				Json json = new Json();
+
+				
+				Level lvl = json.fromJson(Level.class, fh);
+				
+				// ***************** TODO: GET THIS TO WORK via other thread.
+				lvl.setSpriteSheet(lvl.getSpriteSheetFile());
+				
+				parent.selected.clear();
+				parent.data.clear();
+				for(GameObject obj : lvl.getGameObjects())
+					parent.data.put(obj, new GObjEditData());
+				parent.level = lvl;
+
+				this.updateFields();
+			}
+
 		} else if (evt.getSource() == title) {
 			parent.level.setName(title.getText());
 			title.setBackground(Color.ORANGE);
@@ -163,8 +219,13 @@ public class CreationPanel extends JPanel implements ActionListener {
 			parent.level.getBounds().width = Float.parseFloat(boundW.getText());
 			boundW.setBackground(Color.ORANGE);
 		} else if (evt.getSource() == boundH) {
-			parent.level.getBounds().height = Float.parseFloat(boundH.getText());
+			parent.level.getBounds().height =
+					Float.parseFloat(boundH.getText());
 			boundH.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == spriteSheetFile) {
+			parent.level.setSpriteSheet(spriteSheetFile.getText());
+			parent.initImage();
+			spriteSheetFile.setBackground(Color.ORANGE);
 		}
 	}
 
@@ -435,16 +496,17 @@ public class CreationPanel extends JPanel implements ActionListener {
 		public void stateChanged(ChangeEvent e) {
 			if (e.getSource() == layerSpin) {
 				for (GameObject obj : objects)
-					obj.setLayer(((Double) layerSpin.getValue()).intValue());
+					obj.setLayer((int) Float.parseFloat(layerSpin.getValue()
+							.toString()));
 			}
 		}
 	}
 
 	private class ColorTyper extends KeyAdapter {
-//		Color clr;
+		// Color clr;
 
 		ColorTyper(Color c) {
-//			this.clr = c;
+			// this.clr = c;
 		}
 
 		public void keyTyped(KeyEvent e) {

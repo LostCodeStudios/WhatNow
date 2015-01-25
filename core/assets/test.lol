@@ -1,0 +1,1 @@
+{name:Untitled,bounds:{width:100,height:100},spriteSheetFile:sprite_sheet.xml,gameObjects:[{position:{x:21.905846,y:18.874607,z:0.5},spriteKey:bowl,template:bowl},{position:{x:24.218346,y:10.812107,z:0.5},spriteKey:bowl,template:bowl},{position:{x:15.593346,y:11.280857,z:0.5},spriteKey:bowl,template:bowl}]}

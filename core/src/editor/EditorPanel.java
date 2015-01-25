@@ -1,8 +1,11 @@
 package editor;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -11,9 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -29,7 +30,8 @@ public class EditorPanel extends JPanel implements MouseListener,
 		MouseMotionListener, Runnable {
 	private static final long serialVersionUID = 1982999939519987834L;
 
-	Color selectColor = new Color(255, 205, 160, 100);
+	Color selectColor = new Color(150, 250, 180, 100);
+
 	BufferedImage fullImage;
 	Point startPress, endPress;
 	EditEye eye;
@@ -37,8 +39,6 @@ public class EditorPanel extends JPanel implements MouseListener,
 	Vector3 frozenCamera;// for scrolling purpose
 
 	HashSet<GameObject> selected = new HashSet<GameObject>();
-	Queue<String> buildQueue = new LinkedList<String>();
-
 	// all of the data lives here.
 	Level level;
 	// ... except the data that secretly lives here
@@ -59,10 +59,12 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		new Thread(this).start();
 
-		init();
+		side_panel.updateFields();
+
+		initImage();
 	}
 
-	private void init() {
+	public void initImage() {
 		BufferedImage full = null;
 		try {
 			System.out.println(new File(
@@ -92,8 +94,12 @@ public class EditorPanel extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public void paintComponent(Graphics gg) {
+		super.paintComponent(gg);
+
+		Graphics2D g = (Graphics2D) gg;
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		SpriteSheet ss = level.getSpriteSheet();
 
@@ -113,12 +119,6 @@ public class EditorPanel extends JPanel implements MouseListener,
 					new Vector3(b.x + b.width, j, 0);
 			Point s1 = eye.toScreen(p1), s2 = eye.toScreen(p2);
 			g.drawLine(s1.x, s1.y, s2.x, s2.y);
-		}
-
-		for (String s : buildQueue) {
-			g.setColor(Color.RED);
-			g.drawOval(10 + offset, 5, 25, 25);
-			offset += 30;
 		}
 
 		for (GameObject o : level.getGameObjects()) {
@@ -142,8 +142,10 @@ public class EditorPanel extends JPanel implements MouseListener,
 			data.get(o).drawY = p.y;
 
 			if (selected.contains(o)) {
-				g.setColor(Methods.getColor(selectColor, 200));
-				g.fillOval(p.x - 5, p.y - 5, 10, 10);
+				g.setColor(Methods.getColor(selectColor, 30));
+				g.fillOval(p.x - 45, p.y - 45, 90, 90);
+				g.setColor(Methods.getColor(selectColor, 255));
+				g.drawOval(p.x - 45, p.y - 45, 90, 90);
 			}
 		}
 
@@ -151,14 +153,15 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		// and pressing mechanism
 		if (startPress != null && endPress != null && frozenCamera == null) {
-			g.setColor(Methods.getColor(selectColor, 255));
 			int a = Math.min(startPress.x, endPress.x), q =
 					Math.min(startPress.y, endPress.y), c =
 					Math.abs(startPress.x - endPress.x), d =
 					Math.abs(startPress.y - endPress.y);
-			g.drawRoundRect(a, q, c, d, 10, 10);
 			g.setColor(selectColor);
+			g.setStroke(new BasicStroke(2));
 			g.fillRoundRect(a, q, c, d, 10, 10);
+			g.setColor(Methods.getColor(selectColor, 255));
+			g.drawRoundRect(a, q, c, d, 10, 10);
 		}
 
 	}
@@ -212,8 +215,8 @@ public class EditorPanel extends JPanel implements MouseListener,
 		frozenCamera = null;
 		startPress = null;
 
-		if (!buildQueue.isEmpty()) {
-			String str = buildQueue.poll();
+		if (e.getClickCount() == 2 && !e.isMetaDown()) {
+			String str = (String) side_panel.type.getSelectedItem();
 
 			GameObject obj = new GameObject(str, str);
 

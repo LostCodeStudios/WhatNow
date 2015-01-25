@@ -6,12 +6,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Json;
-import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
 
 public class EditorMain {
@@ -29,7 +25,7 @@ public class EditorMain {
 						"Untitled",
 						new Rectangle(0, 0, 100, 100),
 						new Vector2(0, 0),
-						"spritesheet.xml",
+						"sprite_sheet.xml",
 						new Vector2(0f, 0f));
 		EditorPanel ep = new EditorPanel(base);
 
@@ -37,27 +33,5 @@ public class EditorMain {
 		frame.add(ep.side_panel, BorderLayout.EAST);
 
 		frame.setVisible(true);
-	}
-
-	public static void generateTestLevel() {
-		Level base =
-				new Level(
-						"Test Level",
-						new Rectangle(0, 0, 100, 100),
-						new Vector2(0, 0),
-						"spritesheet.xml",
-						new Vector2(0f, 0f));
-
-		base.getGameObjects().add(
-				new GameObject("Player", "Player"));
-
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-				base.getGameObjects().add(
-						new GameObject("Tile", "Tile"));
-
-		Json lol = new Json();
-		FileHandle fh = Gdx.files.local("intro.level");
-		fh.writeString(lol.toJson(base), false);
 	}
 }
