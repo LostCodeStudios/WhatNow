@@ -186,12 +186,9 @@ public class EditorPanel extends JPanel implements MouseListener,
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		for (GameObject o : level.getGameObjects()) {
-			GObjEditData dat = data.get(o);
-			if (e.getPoint().distance(dat.drawX, dat.drawY) < 30)
-				selected.add(o);
-		}
+
 	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		dragType = 1;
@@ -204,6 +201,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 			if (e.getPoint().distance(dat.drawX, dat.drawY) < 30) {
 				dragType = 10;
 				dat.frozen = o.getPosition();
+				selected.add(o);
 			}
 		}
 
@@ -211,7 +209,6 @@ public class EditorPanel extends JPanel implements MouseListener,
 			frozenCamera = eye.pos.cpy();
 			dragType = 2;
 		}
-
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -239,7 +236,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		startPress = null;
 
 		if (e.getClickCount() == 2 && !e.isMetaDown()) {
-			System.out.println("ADDING");
+			selected.clear();
 			String str = (String) side_panel.type.getSelectedItem();
 
 			GameObject obj = new GameObject("Tile", str);
