@@ -31,7 +31,6 @@ public class AnimateSpriteSystem extends ComponentSystem {
 
 		if (as.animating) {
 			as.elapsedSec += deltaSeconds();
-
 			float s1 =
 					(float) (Math.sin(as.elapsedSec * speed)
 							* as.getBase().getWidth() / 3);
