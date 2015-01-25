@@ -15,7 +15,7 @@ import com.lostcode.javalib.Game;
 
 public class MainMenuScreen extends DialogScreen {
 
-	public MainMenuScreen(Game game, SpriteBatch spriteBatch) {
+	public MainMenuScreen(Game game, final SpriteBatch spriteBatch) {
 		super(game, spriteBatch);
 		
 		// TODO polish: add sprites, large title, stylization etc.
@@ -48,7 +48,7 @@ public class MainMenuScreen extends DialogScreen {
 		DialogTree tree = new DialogTree("wizard.json"){
 			@Override
 			public void onFinished() {
-				MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game, "overworld.lol"));
+				MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game, spriteBatch,"overworld.lol"));
 			}
 		};
 		tree.run(this);

@@ -5,17 +5,11 @@ package com.ggj2015.whatnow.states.world.entities.templates;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
-import com.lostcode.javalib.entities.components.ComponentManager;
-import com.lostcode.javalib.entities.components.physical.Body;
-import com.lostcode.javalib.entities.components.physical.Collidable;
 import com.lostcode.javalib.entities.components.physical.Particle;
 import com.lostcode.javalib.entities.components.render.Sprite;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
-import com.lostcode.javalib.utils.Convert;
 
 public class DragonTemplate implements EntityTemplate {
 
