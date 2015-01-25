@@ -1,6 +1,7 @@
 package com.ggj2015.whatnow.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.ggj2015.whatnow.states.combat.CombatScreen;
@@ -12,9 +13,11 @@ import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.lostcode.javalib.Game;
 
 public class MainMenuScreen extends DialogScreen {
-
+	SpriteBatch sb = new SpriteBatch();
+	Texture bg;
 	public MainMenuScreen(Game game, final SpriteBatch spriteBatch) {
 		super(game, spriteBatch);
+		bg = new Texture(Gdx.files.internal("bgfucker.png"));
 		
 		// TODO polish: add sprites, large title, stylization etc.
 		
@@ -80,6 +83,9 @@ public class MainMenuScreen extends DialogScreen {
 	
 	@Override
 	public void render(float delta) {
+		sb.begin();
+		sb.draw()
+		sb.end();
 		super.render(delta);
 	}
 
