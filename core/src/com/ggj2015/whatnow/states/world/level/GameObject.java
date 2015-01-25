@@ -38,7 +38,7 @@ public class GameObject {
 	
 	protected GameObject(){
 		this.spriteKey = "";
-		this.template = "":
+		this.template = "";
 	}
 	
 	//GETTERSETTER
