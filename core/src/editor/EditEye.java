@@ -6,7 +6,7 @@ import java.awt.Point;
 import com.badlogic.gdx.math.Vector3;
 
 public class EditEye {
-	public static final float FACTOR = 32.0f;
+	public static final float FACTOR = 128.0f;
 
 	Dimension screen;
 	Vector3 pos, posTo;
