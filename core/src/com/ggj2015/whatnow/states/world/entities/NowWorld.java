@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.PlayerControlSystem;
+import com.ggj2015.whatnow.states.world.entities.templates.AnimalTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.TileTemplate;
 import com.ggj2015.whatnow.states.world.level.GameObject;
@@ -56,6 +59,8 @@ public class NowWorld extends EntityWorld {
 		super.buildSystems();
 		
 		debugView.enabled = true;
+		systems.addSystem(new PlayerControlSystem(this.input));
+		systems.addSystem(new AnimalSystem());
 	}
 
 
@@ -67,6 +72,7 @@ public class NowWorld extends EntityWorld {
 		this.addTemplate("Player", new PlayerTemplate());
 
 		this.addTemplate("Tile", new TileTemplate());
+		this.addTemplate("Animal", new AnimalTemplate());
 	}
 
 
@@ -74,6 +80,7 @@ public class NowWorld extends EntityWorld {
 	@Override
 	protected void buildEntities() {
 		super.buildEntities();
+
 	}
 
 
