@@ -1,0 +1,37 @@
+node0
+{
+	text: [
+		"Priest: My hometown is not too far North of here.  But you know my services are needed all across Staemor."
+	],
+	options: [
+		"Okay, then..."
+	],
+	next: [
+		"node1"
+	]
+}
+---node0
+{
+	text: [
+		"Priest: ...Maybe we'll meet again sometime."
+	],
+	options: [
+		"Oh yeah, sure."
+	],
+	next: [
+		"node2"
+	]
+}
+---node1
+{
+	text: [
+		"Priest: Farewell!"
+	],
+	options: [
+		"..."
+	],
+	next: [
+		
+	]
+}
+---node2

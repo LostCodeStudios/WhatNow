@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -31,8 +32,6 @@ public class EditorPanel extends JPanel implements MouseListener,
 	BufferedImage fullImage;
 	Point startPress, endPress;
 	EditEye eye;
-
-	ArrayList<GameObject> selected = new ArrayList<GameObject>();
 
 	Queue<String> buildQueue = new LinkedList<String>();
 
@@ -50,7 +49,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		side_panel = new CreationPanel(this);
 		eye = new EditEye(EditorMain.SCREEN);
 
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
@@ -65,7 +64,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 			full =
 					ImageIO.read(new File(
 							"C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"
-									+ level.getSpriteSheetFile()));
+									+ level.getSpriteSheet().getTexturePath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -91,6 +90,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		SpriteSheet ss = level.getSpriteSheet();
 
 		int offset = 0;
+
 		for (String s : buildQueue) {
 			g.setColor(Color.RED);
 			g.fillOval(10 + offset, 5, 25, 25);
@@ -101,18 +101,23 @@ public class EditorPanel extends JPanel implements MouseListener,
 			Point p = eye.toScreen(o.getPosition());
 			TextureRegion r = ss.getRegion(o.getSpriteKey());
 			float s = o.getScale();
-			s = 10;
 			int w = r.getRegionWidth(), h = r.getRegionHeight();
+			int x = r.getRegionX(), y = r.getRegionY();
 
-			System.out.printf("%d, %d, %d, %d\n", p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
-
-			g.fillRect(p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
 			g.drawImage(fullImage, p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h),
-					r.getRegionX(), r.getRegionY(), w, h, this);
+					- (int) (s * h / 2), p.x + (int) (s * w / 2), p.y
+					+ (int) (s * h / 2),
+					x, y, x + w, y + h, this);
 			// draw region from sprite sheet
+
+			data.get(o).drawX = p.x;
+			data.get(o).drawY = p.y;
+
+			if (data.get(o).selected)
+			{
+				g.setColor(Methods.getColor(selectColor, 200));
+				g.fillOval(p.x - 5, p.y - 5, 10, 10);
+			}
 		}
 
 		// draw pressed stuff
@@ -138,19 +143,10 @@ public class EditorPanel extends JPanel implements MouseListener,
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (!buildQueue.isEmpty()) {
-			String str = buildQueue.poll();
 
-//			GameObject obj =
-//					new GameObject(eye.pick(e.getX(), e.getY()), str, "TAG?",
-//							"Group?", "Type?");
-//			level.getGameObjects().add(obj);
-		}
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -160,10 +156,38 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		if (!e.isMetaDown()) {
+			for (GameObject o : level.getGameObjects()) {
+				GObjEditData dat = data.get(o);
+
+				if (Methods.in(dat.drawX, startPress.x, endPress.x)
+						&& Methods.in(dat.drawY, startPress.y, endPress.y))
+				{
+					dat.selected = true;
+				}
+			}
+		}
+
 		endPress = null;
 		startPress = null;
-	}
 
+		if (!buildQueue.isEmpty()) {
+			String str = buildQueue.poll();
+
+			GameObject obj = new GameObject(str, str);
+
+			obj.setPosition(eye.pick(e.getX(), e.getY()));
+			if (side_panel.align.isSelected()) {
+				obj.getPosition().x = (int) Math.round(obj.getPosition().x);
+				obj.getPosition().y = (int) Math.round(obj.getPosition().y);
+			}
+
+			GObjEditData datum = new GObjEditData();
+			data.put(obj, datum);
+
+			level.getGameObjects().add(obj);
+		}
+	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub

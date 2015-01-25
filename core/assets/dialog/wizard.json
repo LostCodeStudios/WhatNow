@@ -1,0 +1,13 @@
+node0
+{
+	text: [
+		"Wizard: As the citizens of Staemor are free, now you are free to choose your own path.  But remember, happiness is a choice, not a condition."
+	],
+	options: [
+		"...grumbles..."
+	],
+	next: [
+		
+	]
+}
+---node0

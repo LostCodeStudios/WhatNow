@@ -1,0 +1,49 @@
+node0
+{
+	text: [
+		"Priest: The Evil One Kovinth has been slain. The people of Staemor are finally free from his tyrannical rule."
+	],
+	options: [
+		"After all these years, I can’t believe it’s finally over."
+	],
+	next: [
+		"node1"
+	]
+}
+---node0
+{
+	text: [
+		"Priest: This is a glorious moment. How do you feel? You should be beaming, but you seem downtrodden."
+	],
+	options: [
+		"I’ve been chasing this dragon for so long, and now I feel so..."
+	],
+	next: [
+		"node2"
+	]
+}
+---node1
+{
+	text: [
+		"Wizard: So...?"
+	],
+	options: [
+		"...So empty. What do we do now?"
+	],
+	next: [
+		"node3"
+	]
+}
+---node2
+{
+	text: [
+		"Wizard: Consider yourself a hero.  You’ve done the world a great favor, but now it's time for you to retire your sword and return home."
+	],
+	options: [
+		"Alright, I suppose..."
+	],
+	next: [
+		
+	]
+}
+---node3
