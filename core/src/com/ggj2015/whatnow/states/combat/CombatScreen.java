@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
+import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.lostcode.javalib.Game;
 import com.lostcode.javalib.utils.SpriteSheet;
 
@@ -88,7 +89,12 @@ public class CombatScreen extends DialogScreen {
 			this.showDialog(new ActionDialog(this, "The enemy fights back!", CombatState.PlayerChoice));
 			break;
 		case Over:
-			getGame().getScreenManager().closeActiveScreen();
+			getGame().getScreenManager().closeActiveScreen(); // close this
+			
+			if (enemyName.equals("dragon-in-battle")) {
+				// start cave
+				getGame().getScreenManager().addScreen(new WorldScreen(getGame(), spriteBatch, "cave.lol"));
+			}
 		}
 	}
 	Vector2 playerFieldPos = new Vector2(128, -50); // TODO adjust this
