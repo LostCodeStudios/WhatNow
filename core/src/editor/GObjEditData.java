@@ -1,5 +1,8 @@
 package editor;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class GObjEditData {
-	int drawX, drawY;
+	public int drawX, drawY;
+	public Vector3 frozen;
 }

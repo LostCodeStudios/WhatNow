@@ -37,6 +37,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 	EditEye eye;
 
 	Vector3 frozenCamera;// for scrolling purpose
+	int dragType = -1;
 
 	HashSet<GameObject> selected = new HashSet<GameObject>();
 	// all of the data lives here.
@@ -102,19 +103,16 @@ public class EditorPanel extends JPanel implements MouseListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		SpriteSheet ss = level.getSpriteSheet();
-
-		int offset = 0;
-
 		Rectangle b = level.getBounds();
 
-		for (int i = (int) b.x; i < b.width + b.x; i++)
+		for (int i = (int) b.x; i <= b.width + b.x; i++)
 		{
 			Vector3 p1 = new Vector3(i, b.y, 0), p2 =
 					new Vector3(i, b.y + b.height, 0);
 			Point s1 = eye.toScreen(p1), s2 = eye.toScreen(p2);
 			g.drawLine(s1.x, s1.y, s2.x, s2.y);
 		}
-		for (int j = (int) b.y; j < b.height + b.y; j++) {
+		for (int j = (int) b.y; j <= b.height + b.y; j++) {
 			Vector3 p1 = new Vector3(b.x, j, 0), p2 =
 					new Vector3(b.x + b.width, j, 0);
 			Point s1 = eye.toScreen(p1), s2 = eye.toScreen(p2);
@@ -152,7 +150,8 @@ public class EditorPanel extends JPanel implements MouseListener,
 		// draw pressed stuff
 
 		// and pressing mechanism
-		if (startPress != null && endPress != null && frozenCamera == null) {
+		if (startPress != null && endPress != null && frozenCamera == null
+				&& dragType == 1) {
 			int a = Math.min(startPress.x, endPress.x), q =
 					Math.min(startPress.y, endPress.y), c =
 					Math.abs(startPress.x - endPress.x), d =
@@ -168,11 +167,18 @@ public class EditorPanel extends JPanel implements MouseListener,
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		endPress = e.getPoint();
-		if (e.isMetaDown())
+		if (dragType == 2)
 			eye.posTo =
 					frozenCamera.cpy().sub((endPress.x - startPress.x)
 							/ EditEye.FACTOR,
 							(endPress.y - startPress.y) / EditEye.FACTOR, 0);
+		else if (dragType == 10) {
+			for (GameObject o : selected)
+				o.setPosition(data.get(o).frozen.cpy().add(
+						(endPress.x - startPress.x)
+								/ EditEye.FACTOR,
+						(endPress.y - startPress.y) / EditEye.FACTOR, 0));
+		}
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
@@ -184,13 +190,22 @@ public class EditorPanel extends JPanel implements MouseListener,
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-
 		startPress = e.getPoint();
 		endPress = e.getPoint();
-		if (e.isMetaDown())
-			frozenCamera = eye.pos.cpy();
-	}
 
+		for (GameObject o : level.getGameObjects()) {
+			GObjEditData dat = data.get(o);
+			if (e.getPoint().distance(dat.drawX, dat.drawY) < 30) {
+				dragType = 10;
+				dat.frozen = o.getPosition();
+			}
+		}
+
+		if (e.isMetaDown()) {
+			frozenCamera = eye.pos.cpy();
+			dragType = 2;
+		}
+	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (!e.isMetaDown() && !e.isAltDown()) {
@@ -213,6 +228,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		endPress = null;
 		frozenCamera = null;
+		dragType = -1;
 		startPress = null;
 
 		if (e.getClickCount() == 2 && !e.isMetaDown()) {
