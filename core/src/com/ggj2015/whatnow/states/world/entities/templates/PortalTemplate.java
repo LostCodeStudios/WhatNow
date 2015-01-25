@@ -61,7 +61,7 @@ public class PortalTemplate implements EntityTemplate {
 				{
 					if(e.getType().equalsIgnoreCase("entrance"))
 						nw.getGame().getScreenManager().addScreen(
-								new WorldScreen(nw.getGame(), e.getTag() + ".lol"));
+								new WorldScreen(nw.getGame(), nw.getSpriteBatch(), e.getTag() + ".lol"));
 					else
 						nw.closeFlag = true;
 				}

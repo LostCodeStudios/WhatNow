@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.lostcode.javalib.utils.AbstractSpriteSheet;
 import com.lostcode.javalib.utils.SpriteSheet;
+
+import editor.NonGLSpriteSheet;
 
 /**
  * @author u0847773
@@ -22,7 +25,7 @@ public class Level {
 	Vector2 gravity;
 	String spriteSheetFile;
 	Vector2 cameraInitial;
-	transient SpriteSheet spriteSheet;
+	transient AbstractSpriteSheet spriteSheet;
 	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
 	/**
@@ -38,21 +41,21 @@ public class Level {
 	 *        initial position of the camera.
 	 */
 	public Level(String name, Rectangle bounds, Vector2 gravity,
-			String spriteSheet, Vector2 cameraInitial) {
+			String spriteSheet, Vector2 cameraInitial, boolean mode) {
 		super();
 		this.name = name;
 		this.bounds = bounds;
 		this.gravity = gravity;
-		setSpriteSheet(spriteSheet);
+		setSpriteSheet(spriteSheet, mode);
 		this.cameraInitial = cameraInitial;
 	}
-	
-	public Level(){
+
+	public Level() {
 		this.name = "";
 		this.bounds = new Rectangle();
 		this.gravity = Vector2.Zero.cpy();
 		this.spriteSheet = null;
-		this.cameraInitial= Vector2.Zero.cpy();
+		this.cameraInitial = Vector2.Zero.cpy();
 	}
 	/**
 	 * @return the name
@@ -115,20 +118,25 @@ public class Level {
 	/**
 	 * @return the spriteSheet
 	 */
-	public SpriteSheet getSpriteSheet() {
+	public AbstractSpriteSheet getSpriteSheet() {
 		return spriteSheet;
 	}
 	/**
 	 * @param spriteSheet
 	 *        the spriteSheet to set
 	 */
-	public void setSpriteSheet(String spriteSheet) {
+	public void setSpriteSheet(String spriteSheet, boolean mode) {
 		this.spriteSheetFile = spriteSheet;
 		try {
+			if (mode)
 				this.spriteSheet =
 						SpriteSheet.fromXML(Gdx.files.internal(spriteSheet));
-		} catch (IOException e) {
-			e.printStackTrace();
+			else
+				this.spriteSheet =
+						NonGLSpriteSheet.fromXML("..\\core\\assets\\"
+								+ spriteSheet);
+		} catch (IOException ee) {
+			ee.printStackTrace();
 		}
 	}
 
