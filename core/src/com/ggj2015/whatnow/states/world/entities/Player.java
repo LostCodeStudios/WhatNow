@@ -3,7 +3,6 @@
  */
 package com.ggj2015.whatnow.states.world.entities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
