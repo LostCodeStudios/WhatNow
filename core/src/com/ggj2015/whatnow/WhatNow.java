@@ -36,7 +36,7 @@ public class WhatNow extends Game {
 	public void create() {
 		super.create();
 
-		Convert.init(32);
+		Convert.init(128);
 		LogManager.init(Gdx.app, LogType.ERROR);
 		
 		getScreenManager().addScreen(new MainMenuScreen(this, spriteBatch));
