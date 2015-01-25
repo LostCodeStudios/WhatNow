@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.border.LineBorder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.level.GameObject;
 
 public class CreationPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2315263733853810583L;
@@ -26,6 +28,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 	JComboBox<String> type;
 	JCheckBox align;
 	JButton add, export;
+
+	HashMap<GameObject, PropertyPanel> props = new HashMap<GameObject, PropertyPanel>();
 
 	// also need to have a bunch of property fields that can be edited.
 
@@ -45,14 +49,16 @@ public class CreationPanel extends JPanel implements ActionListener {
 				.keySet();
 
 		type = createBox(5, 36, 190, 30, set.toArray(new String[set.size()]));
-		export = createButton(5, 5, 290, 30, "EXPORT");
+		export =
+				createButton(5, EditorMain.SCREEN.height - 40, 290, 30,
+						"EXPORT");
 		align = createCheckBox(25, 70, 100, 25, "Snap to Grid");
 	}
 
 	private JCheckBox createCheckBox(int a, int b, int c, int d, String s) {
 		JCheckBox button = new JCheckBox(s);
 		button.setFocusPainted(false);
-//		button.setForeground(Color.ORANGE);
+		// button.setForeground(Color.ORANGE);
 		button.setOpaque(false);
 		button.setBounds(a, b, c, d);
 		button.addActionListener(this);
@@ -93,5 +99,10 @@ public class CreationPanel extends JPanel implements ActionListener {
 			FileHandle fh = Gdx.files.local("first.level");
 			fh.writeString(lol.toJson(parent.level), false);
 		}
+	}
+
+	private class PropertyPanel extends JPanel {
+		private static final long serialVersionUID = -4977325514786287885L;
+
 	}
 }
