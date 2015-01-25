@@ -44,4 +44,10 @@
 	<rect key="brick-pillow">857, 2960, 70, 138</rect>
 	<rect key="bed">1112, 2926, 224, 351</rect>
 	<rect key="carpet">1430, 2937, 215, 247</rect>
+	<rect key="fighter-young-body">206, 1300, 110, 63</rect>
+	<rect key="generic-body">787, 1289, 131, 84</rect>
+	<rect key="thief-body">402, 1305, 103, 69</rect>
+	<rect key="fighter-old-body">1289, 1338, 91, 61</rect>
+	<rect key="wizard-body">577, 1292, 114, 75</rect>
+	<rect key="priest-body">59, 1298, 101, 61</rect>
 </SpriteSheet>

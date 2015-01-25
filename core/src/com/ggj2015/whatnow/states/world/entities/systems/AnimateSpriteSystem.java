@@ -27,37 +27,37 @@ public class AnimateSpriteSystem extends ComponentSystem {
 
 		as.animating = b.getLinearVelocity().len() > 0.05f;
 		float speed = b.getLinearVelocity().len() * 1.2f;
-		float h2 = as.getBase().getHeight() / 2, offset = 30f;
+		float h2 = as.getBase().getWidth() / 2, offset = 30f;
 
 		if (as.animating) {
 			as.elapsedSec += deltaSeconds();
 			float s1 =
 					(float) (Math.sin(as.elapsedSec * speed)
-							* as.getBase().getWidth() / 3);
+							* as.getBase().getHeight() / 3);
 			float s2 =
 					(float) (Math.sin((as.elapsedSec * speed) + Math.PI)
-							* as.getBase().getWidth() / 3);
+							* as.getBase().getHeight() / 3);
 			float s3 =
 					(float) (Math.sin((as.elapsedSec * speed) + Math.PI + 0.5)
-							* as.getBase().getWidth() / 2);
+							* as.getBase().getHeight() / 2);
 			float s4 =
 					(float) (Math.sin((as.elapsedSec * speed) - 0.5)
-							* as.getBase().getWidth() / 2);
+							* as.getBase().getHeight() / 2);
 
-			as.lFootSprite.setOrigin(new Vector2(s1 + offset, -h2 / 2));
-			as.rFootSprite.setOrigin(new Vector2(s2 + offset, h2 / 2));
-			as.lHandSprite.setOrigin(new Vector2(s3, -h2));
-			as.rHandSprite.setOrigin(new Vector2(s4, h2));
+			as.lFootSprite.setOrigin(new Vector2(-h2 / 2, s1 + offset));
+			as.rFootSprite.setOrigin(new Vector2( h2 / 2, s2 + offset));
+			as.lHandSprite.setOrigin(new Vector2(-h2,s3 ));
+			as.rHandSprite.setOrigin(new Vector2(h2, s4 ));
 
 			as.rotationTo =
-					(float) Math.toRadians(b.getLinearVelocity().angle());
+					(float)( Math.toRadians(b.getLinearVelocity().angle()) - Math.PI/2.0f);
 
 		}
 		else {
-			as.lFootSprite.setOrigin(new Vector2(+offset, -h2 / 2));
-			as.rFootSprite.setOrigin(new Vector2(+offset, h2 / 2));
-			as.lHandSprite.setOrigin(new Vector2(0, -h2));
-			as.rHandSprite.setOrigin(new Vector2(0, h2));
+			as.lFootSprite.setOrigin(new Vector2( -h2 / 2, +offset));
+			as.rFootSprite.setOrigin(new Vector2( h2 / 2, +offset));
+			as.lHandSprite.setOrigin(new Vector2( -h2,0));
+			as.rHandSprite.setOrigin(new Vector2( h2,0));
 		}
 
 		while (as.rotationTo - as.rotation > Math.PI)
