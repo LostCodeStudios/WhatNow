@@ -10,7 +10,6 @@ import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.dialog.DialogMenu;
 import com.ggj2015.whatnow.states.dialog.DialogNode;
 import com.ggj2015.whatnow.states.dialog.DialogStyle;
-import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.utils.Random;
 
 public class SpellDialog extends DialogMenu {
