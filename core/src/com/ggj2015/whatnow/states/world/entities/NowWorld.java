@@ -65,6 +65,7 @@ public class NowWorld extends EntityWorld {
 			if(!this.containsTemplate(template))
 				template = "Tile";
 			
+			System.out.println(obj.getSpriteKey());
 			Entity e = this.createEntity(template,
 					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer(), obj.getTag(), obj.getGroup(), obj.getType());
 			e.init(obj.getTag(), obj.getGroup(),obj.getType());
