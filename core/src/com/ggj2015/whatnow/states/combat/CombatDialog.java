@@ -51,7 +51,8 @@ public class CombatDialog extends DialogMenu {
 	public void onDialogChoice(String choice) {
 		if (choice.equals("Attack")) {
 			int dmg = RAND.nextInt(14000, 20000);
-			//If (Enemy.invincible) {dmg = 0;}
+			if (enemyInvincible)
+				dmg = 0;
 			String damageText = "You swing your sword, dealing " + dmg + " damage! (Critical strike!!)";
 			screen.damageEnemy(dmg);
 			screen.setPlayerChoice(damageText);
