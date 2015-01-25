@@ -77,10 +77,10 @@ public class SpellDialog extends DialogMenu {
 	@Override
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else if (choice.equals("Cancel")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else {
 			SpellData spell = spells.get(choice);

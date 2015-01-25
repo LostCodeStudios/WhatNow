@@ -35,10 +35,10 @@ public class AnimatedSprite extends MultiRenderable {
 		as.handSprite = new Sprite(world.handsSheet, handKeyStub + "1");
 		as.footSprite = new Sprite(world.feetSheet, feetKeyStub + "1");
 		
-		as.movingHandSprites.put(false, new Sprite(world.handsSheet, handKeyStub + "2"));
-		as.movingHandSprites.put(true, new Sprite(world.handsSheet, handKeyStub + "3"));
-		as.movingFootSprites.put(false, new Sprite(world.feetSheet, feetKeyStub + "2"));
-		as.movingFootSprites.put(true, new Sprite(world.feetSheet, feetKeyStub + "3"));
+//		as.movingHandSprites.put(false, new Sprite(world.handsSheet, handKeyStub + "2"));
+//		as.movingHandSprites.put(true, new Sprite(world.handsSheet, handKeyStub + "3"));
+//		as.movingFootSprites.put(false, new Sprite(world.feetSheet, feetKeyStub + "2"));
+//		as.movingFootSprites.put(true, new Sprite(world.feetSheet, feetKeyStub + "3"));
 		
 		return as;
 	}
@@ -49,10 +49,10 @@ public class AnimatedSprite extends MultiRenderable {
 		
 		handSprite.setScale(scaleX, scaleY);
 		footSprite.setScale(scaleX, scaleY);
-		movingHandSprites.get(false).setScale(scaleX, scaleY);
-		movingHandSprites.get(true).setScale(scaleX, scaleY);
-		movingHandSprites.get(false).setScale(scaleX, scaleY);
-		movingHandSprites.get(true).setScale(scaleX, scaleY);
+//		movingHandSprites.get(false).setScale(scaleX, scaleY);
+//		movingHandSprites.get(true).setScale(scaleX, scaleY);
+//		movingHandSprites.get(false).setScale(scaleX, scaleY);
+//		movingHandSprites.get(true).setScale(scaleX, scaleY);
 	}
 	
 }

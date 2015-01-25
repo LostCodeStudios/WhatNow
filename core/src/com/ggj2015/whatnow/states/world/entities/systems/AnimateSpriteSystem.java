@@ -31,14 +31,14 @@ public class AnimateSpriteSystem extends ComponentSystem {
 		if (as.animating) {
 			as.elapsedSec += deltaSeconds();
 			
-			if (as.elapsedSec > as.frameTime) {
-				as.elapsedSec -= as.frameTime;
-				
-				as.frame = !as.frame;
-			}
+//			if (as.elapsedSec > as.frameTime) {
+//				as.elapsedSec -= as.frameTime;
+//				
+//				as.frame = !as.frame;
+//			}
 			
-			as.addChild(as.movingFootSprites.get(as.frame));
-			as.addChild(as.movingHandSprites.get(as.frame));
+//			as.addChild(as.movingFootSprites.get(as.frame));
+//			as.addChild(as.movingHandSprites.get(as.frame));
 		} else {
 			as.addChild(as.footSprite);
 			as.addChild(as.handSprite);
