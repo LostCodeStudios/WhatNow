@@ -48,7 +48,7 @@ public class CombatScreen extends DialogScreen {
 
 		super(game, spriteBatch);
 
-		enemyScales.put("dragon-in-battle", 0.25f);
+		enemyScales.put("dragon-in-battle", .7f);
 		
 		battlefieldTexture = new Texture(Gdx.files.internal("sprites/battlefield.png"));
 		
@@ -58,7 +58,7 @@ public class CombatScreen extends DialogScreen {
 		this.fullParty = fullParty;
 		
 		try {
-			sheet = SpriteSheet.fromXML(Gdx.files.internal("spritesheet.xml"));
+			sheet = SpriteSheet.fromXML(Gdx.files.internal("master-sheet.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
