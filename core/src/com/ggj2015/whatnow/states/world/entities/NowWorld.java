@@ -64,7 +64,7 @@ public class NowWorld extends EntityWorld {
 				template = "Tile";
 			
 			Entity e = this.createEntity(template,
-					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer());
+					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer(), obj.getTag(), obj.getGroup(), obj.getType());
 			e.init(obj.getTag(), obj.getGroup(),obj.getType());
 			if(e.getTag() == null)
 				System.out.println("FUCK");
