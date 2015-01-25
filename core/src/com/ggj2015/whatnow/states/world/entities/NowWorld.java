@@ -1,5 +1,7 @@
 package com.ggj2015.whatnow.states.world.entities;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
@@ -7,10 +9,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
+import com.ggj2015.whatnow.states.world.entities.templates.TileTemplate;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
+import com.lostcode.javalib.utils.SpriteSheet;
 
 public class NowWorld extends EntityWorld {
 
@@ -31,7 +36,12 @@ public class NowWorld extends EntityWorld {
 		this.camera.position.set(new Vector3(level.getCameraInitial(),0));
 		this.physicsWorld.setGravity(level.getGravity());
 		this.bounds = level.getBounds();
-		this.spriteSheet = level.getSpriteSheet();
+		try {
+			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal(level.getSpriteSheetFile()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//Initialize the game objects or entities :)
 		for(GameObject obj : level.getGameObjects()){
@@ -53,6 +63,10 @@ public class NowWorld extends EntityWorld {
 	@Override
 	protected void buildTemplates() {
 		super.buildTemplates();
+
+		this.addTemplate("Player", new PlayerTemplate());
+
+		this.addTemplate("Tile", new TileTemplate());
 	}
 
 

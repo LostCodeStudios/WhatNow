@@ -5,23 +5,18 @@ package com.ggj2015.whatnow.states.world.entities.templates;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
-import com.lostcode.javalib.entities.components.physical.Body;
+import com.lostcode.javalib.entities.components.physical.Particle;
 import com.lostcode.javalib.entities.components.render.Sprite;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
-import com.lostcode.javalib.utils.Convert;
 
 /**
  * @author MadcowD
  * The general player template.
  * https://gist.github.com/MadcowD/469ba7cf50d178100d2c
  */
-public class PlayerTemplate implements EntityTemplate {
+public class TileTemplate implements EntityTemplate {
 
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.utils.Disposable#dispose()
@@ -45,21 +40,11 @@ public class PlayerTemplate implements EntityTemplate {
 		System.out.println(pos);
 		System.out.println(spriteKey);
 		
-		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,1));
+		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,layer));
 
-		BodyDef bd = new BodyDef();
-		bd.position.set(pos.x,pos.y);
-		bd.type = BodyType.DynamicBody;
-		bd.allowSleep = false;
-		bd.fixedRotation = true;
-		
-		
-		
-		FixtureDef fd = new FixtureDef();
-		fd.shape = new CircleShape();
-		fd.shape.setRadius(Convert.pixelsToMeters(spr.getWidth()/2f));
-		
-		e.addComponent(new Body(world,e,bd,fd));
+
+		e.addComponent(new Particle(e,new Vector2(pos.x,pos.y),0f));
+
 		
 		
 
