@@ -16,6 +16,7 @@ import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.TileTemplate;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
+import com.lostcode.javalib.Game;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.utils.SpriteSheet;
@@ -23,10 +24,14 @@ import com.lostcode.javalib.utils.SpriteSheet;
 public class NowWorld extends EntityWorld {
 
 	private Rectangle bounds;
-	
-	public NowWorld(InputMultiplexer input, Camera camera, String levelData) {
+	private Game game;
+
+
+	public NowWorld(InputMultiplexer input, Camera camera, String levelData, Game game) {
 		super(input, camera, Vector2.Zero.cpy());
+		this.game = game;
 		buildLevel(levelData);
+		
 		
 	}
 
@@ -63,6 +68,17 @@ public class NowWorld extends EntityWorld {
 		systems.addSystem(new AnimalSystem());
 	}
 
+	public boolean closeFlag = false;
+
+	
+	
+	@Override
+	public void process() {
+		super.process();
+		
+		if (closeFlag)
+			getGame().getScreenManager().closeActiveScreen();
+	}
 
 
 	@Override
@@ -73,6 +89,7 @@ public class NowWorld extends EntityWorld {
 
 		this.addTemplate("Tile", new TileTemplate());
 		this.addTemplate("Animal", new AnimalTemplate());
+		this.addTemplate("Portal", new PortalTemplate());
 	}
 
 
@@ -83,8 +100,10 @@ public class NowWorld extends EntityWorld {
 
 	}
 
-
-
+	public Game getGame() {
+		return game;
+	}
+	
 	@Override
 	protected void buildSpriteSheet() {
 		
