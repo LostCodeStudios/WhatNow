@@ -47,14 +47,13 @@ public class NowWorld extends EntityWorld {
 		Json jsonParser = new Json();
 		Level level = jsonParser.fromJson(Level.class, Gdx.files.internal(levelDataFile));
 		
-		//Establish basic world charactersitics.
+		//Establish basic world characteristics.
 		this.camera.position.set(new Vector3(level.getCameraInitial(),0));
 		this.physicsWorld.setGravity(level.getGravity());
 		this.bounds = level.getBounds();
 		try {
 			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal(level.getSpriteSheetFile()));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

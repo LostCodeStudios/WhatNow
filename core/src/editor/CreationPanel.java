@@ -92,7 +92,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
 		delete = createButton(120, 455, 150, 25, "Delete Selected Objects");
 		delete.setBackground(properties.color);
-		jiggle = createButton(20, 455, 110, 25, "Separate");
+		jiggle = createButton(20, 455, 100, 25, "Separate");
 		jiggle.setBackground(properties.color);
 		makeLabel(5, 600, 100, 30, "Object types");
 		type =
