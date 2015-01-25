@@ -22,6 +22,9 @@ public class CombatDialog extends DialogMenu {
 	
 	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
 	
+	private String enemyName;
+	private boolean enemyInvincible;
+	
 	static {
 		options.add("Attack");
 		options.add("Spell");
@@ -35,10 +38,12 @@ public class CombatDialog extends DialogMenu {
 		style.bounds = new Rectangle(1280 / 2, 40, 1280 / 3, 250);
 	}
 	
-	public CombatDialog(CombatScreen screen) {
+	public CombatDialog(CombatScreen screen, String enemyName, boolean enemyInvincible) {
 
 		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
 		this.screen = screen;
+		this.enemyName = enemyName;
+		this.enemyInvincible = enemyInvincible;
 	}
 
 	@Override
@@ -52,10 +57,10 @@ public class CombatDialog extends DialogMenu {
 			screen.startState(CombatState.PlayerAction);
 		} 
 		else if (choice.equals("Spell")) {
-			screen.showDialog(new SpellDialog(screen));
+			screen.showDialog(new SpellDialog(screen, enemyName, enemyInvincible));
 		} 
 		else if (choice.equals("Item")) {
-			screen.showDialog(new ItemDialog(screen));
+			screen.showDialog(new ItemDialog(screen, enemyName, enemyInvincible));
 		}
 		else if (choice.equals("Run")) {
 			screen.showDialog(new RunDialog(screen));
