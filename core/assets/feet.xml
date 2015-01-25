@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SpriteSheet>
+<texture>sprites\feet.png</texture>
+<rect key="feet3">837, 864, 435, 392</rect>
+<rect key="feet2">846, 466, 428, 351</rect>
+<rect key="wizard-feet1">458, 46, 311, 332</rect>
+<rect key="wizard-feet3">407, 872, 424, 370</rect>
+<rect key="feet1">882, 41, 349, 358</rect>
+<rect key="wizard-feet2">420, 469, 403, 337</rect>
+</SpriteSheet>

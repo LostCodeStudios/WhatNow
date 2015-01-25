@@ -10,9 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.AnimateSpriteSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.PlayerControlSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.PropActivationSystem;
 import com.ggj2015.whatnow.states.world.entities.templates.AnimalTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
+import com.ggj2015.whatnow.states.world.entities.templates.PortalTemplate;
+import com.ggj2015.whatnow.states.world.entities.templates.PropTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.TileTemplate;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
@@ -31,8 +35,6 @@ public class NowWorld extends EntityWorld {
 		super(input, camera, Vector2.Zero.cpy());
 		this.game = game;
 		buildLevel(levelData);
-		
-		
 	}
 
 	
@@ -66,6 +68,8 @@ public class NowWorld extends EntityWorld {
 		debugView.enabled = true;
 		systems.addSystem(new PlayerControlSystem(this.input));
 		systems.addSystem(new AnimalSystem());
+		systems.addSystem(new PropActivationSystem(this.input));
+		systems.addSystem(new AnimateSpriteSystem());
 	}
 
 	public boolean closeFlag = false;
@@ -90,6 +94,8 @@ public class NowWorld extends EntityWorld {
 		this.addTemplate("Tile", new TileTemplate());
 		this.addTemplate("Animal", new AnimalTemplate());
 		this.addTemplate("Portal", new PortalTemplate());
+		this.addTemplate("Prop", new PropTemplate());
+		
 	}
 
 
@@ -104,9 +110,20 @@ public class NowWorld extends EntityWorld {
 		return game;
 	}
 	
+	public SpriteSheet feetSheet;
+	public SpriteSheet handsSheet;
+	public SpriteSheet bodiesSheet;
+	
 	@Override
 	protected void buildSpriteSheet() {
-		
+		try {
+			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal("sprite_sheet.xml"));
+			feetSheet = SpriteSheet.fromXML(Gdx.files.internal("feet.xml"));
+			handsSheet = SpriteSheet.fromXML(Gdx.files.internal("hands.xml"));
+			bodiesSheet = SpriteSheet.fromXML(Gdx.files.internal("bodies.xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

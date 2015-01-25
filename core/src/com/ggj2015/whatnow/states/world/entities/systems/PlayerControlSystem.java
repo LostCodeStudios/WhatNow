@@ -24,18 +24,21 @@ public class PlayerControlSystem extends InputSystem {
 	protected void process(Entity e) {
 		Body bd = e.getComponent(Body.class);
 		if(bd != null){
-		//MOVEMENT
-		Vector2 vel = new Vector2(0,0);
-		if(keyMap.get(Keys.W)== true)
-			vel.add(0, 1);
-		if(keyMap.get(Keys.A) == true)
-			vel.add(-1, 0);
-		if(keyMap.get(Keys.S) == true)
-			vel.add(0, -1);
-		if(keyMap.get(Keys.D) == true)
-			vel.add(1, 0);
-		vel.scl(5);
-		bd.setLinearVelocity(vel);
+			//MOVEMENT
+			Vector2 vel = new Vector2(0,0);
+			if(keyMap.get(Keys.W)== true)
+				vel.add(0, 1);
+			if(keyMap.get(Keys.A) == true)
+				vel.add(-1, 0);
+			if(keyMap.get(Keys.S) == true)
+				vel.add(0, -1);
+			if(keyMap.get(Keys.D) == true)
+				vel.add(1, 0);
+			vel.scl(5);
+			bd.setLinearVelocity(vel);
+			
+			if (vel.len() > 0.05f)
+				bd.setRotation((float)Math.toRadians(vel.angle()));
 		}
 		//TODO: Interaction section
 		

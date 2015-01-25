@@ -5,29 +5,34 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.level.GameObject;
+import com.ggj2015.whatnow.states.world.level.Level;
 
 public class CreationPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2315263733853810583L;
@@ -38,10 +43,14 @@ public class CreationPanel extends JPanel implements ActionListener {
 
 	JComboBox<String> type;
 	JCheckBox align;
-	JButton add, export;
+	JButton load, export;
+
+	JTextField title, boundX, boundY, boundW, boundH, spriteSheetFile;
 
 	HashMap<GameObject, PropertyPanel> props =
 			new HashMap<GameObject, PropertyPanel>();
+
+	private Set<String> sprite_keys;
 
 	public PropertyPanel properties;
 
@@ -50,28 +59,84 @@ public class CreationPanel extends JPanel implements ActionListener {
 	public CreationPanel(EditorPanel ep) {
 		setLayout(null);
 
+		setBorder(new LineBorder(Color.GRAY, 2));
+
 		this.parent = ep;
+
+		properties = new PropertyPanel(parent.selected);
 
 		// we REALLY want to be this size...
 		setPreferredSize(new Dimension(300, EditorMain.SCREEN.height));
 		setMinimumSize(new Dimension(300, EditorMain.SCREEN.height));
 		setMaximumSize(new Dimension(300, EditorMain.SCREEN.height));
 
-		add = createButton(200, 36, 95, 30, "Add");
+		makeLabel(5, 5, 290, 25, "Level Name:");
+		title = makeField(105, 5, 190, 25, "TITLE");
 
-		Set<String> set = parent.level.getSpriteSheet().getRegions("")
-				.keySet();
+		makeLabel(5, 30, 290, 25, "World Bounds: (x,y,width, height)");
 
-		type = createBox(5, 36, 190, 30, set.toArray(new String[set.size()]));
-		export =
-				createButton(5, EditorMain.SCREEN.height - 40, 290, 30,
-						"EXPORT");
-		align = createCheckBox(25, 70, 100, 25, "Snap to Grid");
+		boundX = makeField(10, 55, 70, 25, "BOUND_X");
+		boundY = makeField(80, 55, 70, 25, "BOUND_Y");
+		boundW = makeField(150, 55, 70, 25, "BOUND_W");
+		boundH = makeField(220, 55, 70, 25, "BOUND_H");
 
-		properties = new PropertyPanel(parent.selected);
-		properties.setBounds(20, 300, 250, 310);
+		makeLabel(5, 85, 290, 25, "Sprite Sheet File:");
+		spriteSheetFile = makeField(20, 110, 200, 25, "SPRITE_SHEET");
+
+		properties.setBounds(20, 150, 250, 300);
 		properties.update();
 		add(properties);
+
+		align = createCheckBox(25, 560, 100, 25, "Snap to Grid");
+
+		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
+		makeLabel(5, 600, 100, 30, "Object types");
+		type =
+				createBox(105, 600, 190, 30,
+						sprite_keys.toArray(new String[sprite_keys.size()]));
+
+		export = createButton(105, EditorMain.SCREEN.height - 40,
+				190, 30, "EXPORT");
+		load = createButton(5, EditorMain.SCREEN.height - 40,
+				100, 30, "IMPORT");
+
+	}
+
+	public void updateFields() {
+		boundX.setText(parent.level.getBounds().x + "");
+		boundY.setText(parent.level.getBounds().y + "");
+		boundW.setText(parent.level.getBounds().width + "");
+		boundH.setText(parent.level.getBounds().height + "");
+
+		title.setText(parent.level.getName());
+		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
+		type.setModel(new DefaultComboBoxModel<String>(sprite_keys
+				.toArray(new String[sprite_keys.size()])));
+
+		spriteSheetFile.setText(parent.level.getSpriteSheetFile());
+	}
+
+	private JLabel makeLabel(int a, int b, int c, int d, String txt) {
+		JLabel label = new JLabel(txt);
+		label.setBounds(a, b, c, d);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		label.setFont(new Font("SANS_SERIF", Font.BOLD, 15));
+		add(label);
+		return label;
+	}
+
+	private JTextField makeField(int a, int b, int c, int d, String action) {
+		JTextField fld = new JTextField();
+		fld.setBounds(a, b, c, d);
+		fld.setBackground(Color.ORANGE);
+		fld.setHorizontalAlignment(JLabel.CENTER);
+		fld.setFont(new Font("SANS_SERIF", Font.BOLD, 15));
+		add(fld);
+		fld.setActionCommand(action);
+		fld.addActionListener(this);
+		fld.addKeyListener(new ColorTyper(Color.ORANGE));
+		fld.setBorder(new LineBorder(Color.BLACK));
+		return fld;
 	}
 
 	private JCheckBox createCheckBox(int a, int b, int c, int d, String s) {
@@ -110,18 +175,71 @@ public class CreationPanel extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if (evt.getSource() == add) {
-			parent.buildQueue.offer((String) type.getSelectedItem());
+		if (parent.level.getBounds() == null)
+			parent.level.setBounds(new Rectangle());
+
+		if (evt.getSource() == export) {
+			JFileChooser jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File("..\\core\\assets"));
+
+			if (jfc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
+				FileHandle fh =
+						Gdx.files.getFileHandle(jfc.getSelectedFile()
+								.getAbsolutePath(), FileType.Absolute);
+				Json jsonObject = new Json();
+				fh.writeString(jsonObject.toJson(parent.level), false);
+			}
+		} else if (evt.getSource() == load) {
+			JFileChooser jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File("..\\core\\assets"));
+
+			if (jfc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
+				FileHandle fh =
+						Gdx.files.getFileHandle(jfc.getSelectedFile()
+								.getAbsolutePath(), FileType.Absolute);
+				Json json = new Json();
+
+				Level lvl = json.fromJson(Level.class, fh);
+
+				// ***************** TODO: GET THIS TO WORK via other thread.
+				lvl.setSpriteSheet(lvl.getSpriteSheetFile());
+
+				parent.selected.clear();
+				parent.data.clear();
+				for (GameObject obj : lvl.getGameObjects())
+					parent.data.put(obj, new GObjEditData());
+				parent.level = lvl;
+
+				this.updateFields();
+			}
+
+		} else if (evt.getSource() == title) {
+			parent.level.setName(title.getText());
+			title.setBackground(Color.ORANGE);
 		}
-		else if (evt.getSource() == export) {
-			Json lol = new Json();
-			FileHandle fh = Gdx.files.local("first.level");
-			fh.writeString(lol.toJson(parent.level), false);
+
+		else if (evt.getSource() == boundX) {
+			parent.level.getBounds().x = Float.parseFloat(boundX.getText());
+			boundX.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == boundY) {
+			parent.level.getBounds().y = Float.parseFloat(boundY.getText());
+			boundY.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == boundW) {
+			parent.level.getBounds().width = Float.parseFloat(boundW.getText());
+			boundW.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == boundH) {
+			parent.level.getBounds().height =
+					Float.parseFloat(boundH.getText());
+			boundH.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == spriteSheetFile) {
+			parent.level.setSpriteSheet(spriteSheetFile.getText());
+			parent.initImage();
+			spriteSheetFile.setBackground(Color.ORANGE);
 		}
 	}
 
 	class PropertyPanel extends JPanel implements ActionListener,
-			KeyListener, ChangeListener {
+			ChangeListener {
 		private static final long serialVersionUID = -4977325514786287885L;
 
 		/*
@@ -135,8 +253,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 		 * float scale = 1.0f;
 		 */
 		JTextField spriteKField, tagField, groupField, typeField,
-				templateField;
-		JSpinner layerSpin, scaleSpin, posXSpin, posYSpin, posZSpin;
+				templateField, scaleField, posXField, posYField, posZField;
+		JSpinner layerSpin;
 
 		Collection<? extends GameObject> objects;
 		Color color;
@@ -145,10 +263,9 @@ public class CreationPanel extends JPanel implements ActionListener {
 			this.objects = obj;
 			setLayout(null);
 
-			color = new Color(255, 200, 180);
+			color = new Color(150, 250, 180);
 
-			this.setBorder(new TitledBorder(new LineBorder(Color.black, 3),
-					"Properties"));
+			this.setBorder(new LineBorder(Color.black, 3));
 			this.setBackground(color);
 
 			this.setPreferredSize(new Dimension(250, 310));
@@ -162,10 +279,11 @@ public class CreationPanel extends JPanel implements ActionListener {
 			templateField = makeField(105, 115, 130, 23, "TEMPLATE");
 
 			layerSpin = makeSpinner(105, 140, 130, 23, true);
-			scaleSpin = makeSpinner(105, 165, 130, 23, false);
-			posXSpin = makeSpinner(105, 210, 130, 23, false);
-			posYSpin = makeSpinner(105, 233, 130, 23, false);
-			posZSpin = makeSpinner(105, 256, 130, 23, false);
+
+			scaleField = makeField(105, 165, 130, 23, "SCALE");
+			posXField = makeField(105, 210, 130, 23, "POS_X");
+			posYField = makeField(105, 233, 130, 23, "POS_Y");
+			posZField = makeField(105, 256, 130, 23, "POS_Z");
 
 			makeLabel(5, 15, 90, 23, "Sprite Key:");
 			makeLabel(5, 40, 90, 23, "Tag:");
@@ -181,16 +299,17 @@ public class CreationPanel extends JPanel implements ActionListener {
 			boolean b = objects != null;
 
 			layerSpin.setEnabled(b && !objects.isEmpty());
-			scaleSpin.setEnabled(b && !objects.isEmpty());
+			scaleField.setEnabled(b && !objects.isEmpty());
 			spriteKField.setEnabled(b && !objects.isEmpty());
 			tagField.setEnabled(b && !objects.isEmpty());
 			groupField.setEnabled(b && !objects.isEmpty());
 			typeField.setEnabled(b && !objects.isEmpty());
 			templateField.setEnabled(b && !objects.isEmpty());
 
-			posXSpin.setEnabled(b && objects.size() == 1);
-			posYSpin.setEnabled(b && objects.size() == 1);
-			posZSpin.setEnabled(b && objects.size() == 1);
+			posZField.setEnabled(b && !objects.isEmpty());
+
+			posXField.setEnabled(b && objects.size() == 1);
+			posYField.setEnabled(b && objects.size() == 1);
 
 			if (objects == null || objects.isEmpty())
 				return;
@@ -259,7 +378,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 					cons = Integer.MIN_VALUE;
 					break;
 				}
-			layerSpin.setValue(((Integer)cons).doubleValue());
+			layerSpin.setValue(((Integer) cons).doubleValue());
 
 			// Scale
 			float conse = -999;
@@ -270,9 +389,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 					conse = Float.NaN;
 					break;
 				}
-			
-			layerSpin.setValue(((Float)conse).doubleValue());
 
+			scaleField.setText("" + conse);
 
 			// posX
 			conse = -999;
@@ -284,6 +402,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 					break;
 				}
 
+			posXField.setText("" + conse);
+
 			// posY
 			conse = -999;
 			for (GameObject o : objects)
@@ -293,6 +413,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 					conse = Float.NaN;
 					break;
 				}
+			posYField.setText("" + conse);
 
 			// posZ
 			conse = -999;
@@ -303,8 +424,10 @@ public class CreationPanel extends JPanel implements ActionListener {
 					conse = Float.NaN;
 					break;
 				}
+			posZField.setText("" + conse);
 
 		}
+
 		private JLabel makeLabel(int a, int b, int c, int d, String s) {
 			JLabel lab = new JLabel(s);
 			lab.setBounds(a, b, c, d);
@@ -323,7 +446,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 			add(fld);
 			fld.setActionCommand(action);
 			fld.addActionListener(this);
-			fld.addKeyListener(this);
+			fld.addKeyListener(new ColorTyper(color));
 			return fld;
 		}
 
@@ -362,43 +485,45 @@ public class CreationPanel extends JPanel implements ActionListener {
 			else if (e.getActionCommand().equals("TEMPLATE"))
 				for (GameObject obj : objects)
 					obj.setTemplate(src.getText());
+			else if (e.getActionCommand().equals("SCALE"))
+				for (GameObject obj : objects)
+					obj.setScale(Float.parseFloat(src.getText()));
+			else if (e.getActionCommand().equals("POS_X"))
+				for (GameObject obj : objects)
+					obj.getPosition().x = Float.parseFloat(src.getText());
+			else if (e.getActionCommand().equals("POS_Y"))
+				for (GameObject obj : objects)
+					obj.getPosition().y = Float.parseFloat(src.getText());
+			else if (e.getActionCommand().equals("POS_Z"))
+				for (GameObject obj : objects)
+					obj.getPosition().z = Float.parseFloat(src.getText());
 
 			src.setBackground(color);
 		}
 
 		@Override
+		public void stateChanged(ChangeEvent e) {
+			if (e.getSource() == layerSpin) {
+				for (GameObject obj : objects)
+					obj.setLayer((int) Float.parseFloat(layerSpin.getValue()
+							.toString()));
+			}
+		}
+	}
+
+	private class ColorTyper extends KeyAdapter {
+		// Color clr;
+
+		ColorTyper(Color c) {
+			// this.clr = c;
+		}
+
 		public void keyTyped(KeyEvent e) {
 			if (e.getKeyChar() != '\n')
-				((JTextField) e.getSource()).setBackground(new Color(255, 150,
+				((JTextField) e.getSource()).setBackground(new Color(250, 150,
 						150));
 
 		}
-		public void keyPressed(KeyEvent e) {}
-		public void keyReleased(KeyEvent e) {}
 
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			// JSpinner spin = (JSpinner) e.getSource();
-
-			if (e.getSource() == posXSpin) {
-				for (GameObject obj : objects)
-					obj.getPosition().x =
-							((Double) posXSpin.getValue()).floatValue();
-			} else if (e.getSource() == posYSpin) {
-				for (GameObject obj : objects)
-					obj.getPosition().y =
-							((Double) posXSpin.getValue()).floatValue();
-			} else if (e.getSource() == posZSpin) {
-				for (GameObject obj : objects)
-					obj.getPosition().z =
-							((Double) posXSpin.getValue()).floatValue();
-			} else if (e.getSource() == layerSpin) {
-				for (GameObject obj : objects)
-					obj.setLayer(((Double) posXSpin.getValue()).intValue());
-			} else if (e.getSource() == scaleSpin) {
-				for (GameObject obj : objects)
-					obj.setScale(((Double) scaleSpin.getValue()).floatValue());
-			}
-		}
 	}
 }
