@@ -8,7 +8,6 @@ import com.ggj2015.whatnow.states.dialog.DialogMenu;
 import com.ggj2015.whatnow.states.dialog.DialogNode;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.dialog.DialogStyle;
-import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.lostcode.javalib.Game;
 
 public class MainMenuScreen extends DialogScreen {
