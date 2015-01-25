@@ -56,7 +56,7 @@ public class WhatNow extends Game {
 		SoundManager.addSong("Walk", Gdx.files.internal("music/Walk_Back.wav"));
 		
 		SoundManager.addSound("dragon", Gdx.files.internal("sounds/DragonDie.wav"));
-		SoundManager.addSound("steps", Gdx.files.internal("sounds/footsteps.wav"));
+		SoundManager.addSound("footsteps", Gdx.files.internal("sounds/footsteps.wav"));
 		SoundManager.addSound("button-press", Gdx.files.internal("sounds/menu-button.wav"));
 		SoundManager.addSound("button-select", Gdx.files.internal("sounds/menu-select.wav"));
 		SoundManager.addSound("sword", Gdx.files.internal("sounds/SWORDSFX.wav"));
