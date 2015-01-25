@@ -14,10 +14,11 @@ public class EditEye {
 	public EditEye(Dimension screen) {
 		this.screen = screen;
 		this.pos = new Vector3(0, 0, 1);
+		this.posTo = new Vector3(0,0,1);
 	}
 	
 	public void update() {
-		pos.lerp(posTo, 0.05f);
+		pos.lerp(posTo, 0.3f);
 	}
 
 	public Point toScreen(Vector3 v) {
