@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.lostcode.javalib.Game;
+import com.lostcode.javalib.utils.SoundManager;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 public class CombatScreen extends DialogScreen {
@@ -34,6 +35,8 @@ public class CombatScreen extends DialogScreen {
 	CombatState state = CombatState.PlayerChoice;
 	
 	Texture battlefieldTexture;
+	
+	private float elapsed = 0f;
 	
 	private String enemyName;
 	private boolean enemyInvincible;
@@ -64,6 +67,8 @@ public class CombatScreen extends DialogScreen {
 		}
 		
 		startState(CombatState.PlayerChoice);
+		SoundManager.playSong("Combat-intro", 1f, false);
+		
 	}
 	
 	public Game getGame() {
@@ -125,8 +130,17 @@ public class CombatScreen extends DialogScreen {
 	Vector2 playerFieldPos = new Vector2(128, -50); // TODO adjust this
 	Vector2 enemyFieldPos = new Vector2(1280 - 128 - 580, 720 - 300); // TODO adjust this
 
+	boolean looping = false;
 	@Override
 	public void render(float delta) {
+		elapsed += Gdx.graphics.getDeltaTime();
+		
+		if (elapsed > 3f && !looping) {
+			// start loop song
+			SoundManager.playSong("Combat", 1f, true);
+			looping = true;
+		}
+		
 		renderBackground();
 		
 		
