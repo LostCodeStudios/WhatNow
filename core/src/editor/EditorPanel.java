@@ -33,7 +33,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 	EditEye eye;
 
 	ArrayList<GameObject> selected = new ArrayList<GameObject>();
-	
+
 	Queue<String> buildQueue = new LinkedList<String>();
 
 	// all of the data lives here.
@@ -46,7 +46,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 	public EditorPanel(Level l) {
 		this.level = l;
-		
+
 		side_panel = new CreationPanel(this);
 		eye = new EditEye(EditorMain.SCREEN);
 
@@ -90,12 +90,25 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		SpriteSheet ss = level.getSpriteSheet();
 
+		int offset = 0;
+		for (String s : buildQueue) {
+			g.setColor(Color.RED);
+			g.fillOval(10 + offset, 5, 25, 25);
+			offset += 30;
+		}
+
 		for (GameObject o : level.getGameObjects()) {
 			Point p = eye.toScreen(o.getPosition());
 			TextureRegion r = ss.getRegion(o.getSpriteKey());
 			float s = o.getScale();
+			s = 10;
 			int w = r.getRegionWidth(), h = r.getRegionHeight();
 
+			System.out.printf("%d, %d, %d, %d\n", p.x - (int) (s * w / 2), p.y
+					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
+
+			g.fillRect(p.x - (int) (s * w / 2), p.y
+					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
 			g.drawImage(fullImage, p.x - (int) (s * w / 2), p.y
 					- (int) (s * h / 2), (int) (s * w), (int) (s * h),
 					r.getRegionX(), r.getRegionY(), w, h, this);
@@ -130,18 +143,24 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (!buildQueue.isEmpty()) {
+			String str = buildQueue.poll();
 
+//			GameObject obj =
+//					new GameObject(eye.pick(e.getX(), e.getY()), str, "TAG?",
+//							"Group?", "Type?");
+//			level.getGameObjects().add(obj);
+		}
 	}
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		startPress = e.getPoint();
+		endPress = e.getPoint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		endPress = e.getPoint();
+		endPress = null;
 		startPress = null;
 	}
 

@@ -2,4 +2,5 @@
 <SpriteSheet>
 <texture>sprites\spritesheet.png</texture>
 <rect key="Player">5, 7, 73, 84</rect>
+<rect key="Grass">96, 1, 31, 31</rect>
 </SpriteSheet>

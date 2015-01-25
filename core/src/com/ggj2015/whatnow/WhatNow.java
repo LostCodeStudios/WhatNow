@@ -41,8 +41,10 @@ public class WhatNow extends Game {
 		
 		getScreenManager().addScreen(new MainMenuScreen(this, spriteBatch));
 		
-		if(editing)
+		if(editing) {
+			EditorMain.generateTestLevel();		
 			EditorMain.runEditor();
+		}
 	}
 
 	@Override

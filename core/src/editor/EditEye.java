@@ -13,6 +13,7 @@ public class EditEye {
 
 	public EditEye(Dimension screen) {
 		this.screen = screen;
+		this.pos = new Vector3(0, 0, 0);
 	}
 
 	public Point toScreen(Vector3 v) {
