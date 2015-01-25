@@ -50,14 +50,14 @@ public class AnimateSpriteSystem extends ComponentSystem {
 			as.rHandSprite.setOrigin(new Vector2(h2, s4 ));
 
 			as.rotationTo =
-					(float) Math.toRadians(b.getLinearVelocity().angle());
+					(float)( Math.toRadians(b.getLinearVelocity().angle()) - Math.PI/2.0f);
 
 		}
 		else {
-			as.lFootSprite.setOrigin(new Vector2(+offset, -h2 / 2));
-			as.rFootSprite.setOrigin(new Vector2(+offset, h2 / 2));
-			as.lHandSprite.setOrigin(new Vector2(0, -h2));
-			as.rHandSprite.setOrigin(new Vector2(0, h2));
+			as.lFootSprite.setOrigin(new Vector2( -h2 / 2, +offset));
+			as.rFootSprite.setOrigin(new Vector2( h2 / 2, +offset));
+			as.lHandSprite.setOrigin(new Vector2( -h2,0));
+			as.rHandSprite.setOrigin(new Vector2( h2,0));
 		}
 
 		while (as.rotationTo - as.rotation > Math.PI)
