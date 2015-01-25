@@ -30,17 +30,15 @@ public class GameObject {
 	 * @param layer
 	 * @param scale
 	 */
-	public GameObject(Vector3 position, String spriteKey, String tag,
-			String group, String type, String template, int layer, float scale) {
-		super();
-		this.position = position;
+	public GameObject(String template, String spriteKey) {
 		this.spriteKey = spriteKey;
-		this.tag = tag;
-		this.group = group;
-		this.type = type;
 		this.template = template;
-		this.layer = layer;
-		this.scale = scale;
+
+	}
+	
+	protected GameObject(){
+		this.spriteKey = "";
+		this.template = "";
 	}
 	
 	//GETTERSETTER
