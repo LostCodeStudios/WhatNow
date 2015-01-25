@@ -50,6 +50,7 @@ public class MainMenuScreen extends DialogScreen {
 									MainMenuScreen.this.spriteBatch, "dragon-in-battle", false, true));
 				}
 				else if (choice.equals("Test fight")) {
+					
 				}
 				else if (choice.equals("Options")) {
 					// TODO make an options screen
