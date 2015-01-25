@@ -1,5 +1,7 @@
 package com.ggj2015.whatnow.states.combat;
 
+import java.util.Scanner;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -8,18 +10,14 @@ import com.ggj2015.whatnow.states.DialogMenu;
 import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.lostcode.javalib.utils.Random;
 
 public class ItemDialog extends DialogMenu {
 
 	static class ItemData {
-		static enum EffectType {
-			Heal,
-			Damage
-		}
-		
 		public String name = "";
 		public String description = "";
-		public EffectType type = EffectType.Heal;
+		public String type = "";
 		public int minEffect = 0;
 		public int maxEffect = 0;
 	}
@@ -34,8 +32,28 @@ public class ItemDialog extends DialogMenu {
 	
 	private static final DialogStyle style = DialogStyle.DEFAULT;
 	
+	private static final Random RAND = new Random();
+	
 	static {
 		String itemFile = Gdx.files.internal("combat/items.txt").readString();
+		
+		Scanner scanner = new Scanner(itemFile);
+		
+		while (scanner.hasNext()) {
+			ItemData item = new ItemData();
+			
+			item.name = scanner.nextLine();
+			item.description = scanner.nextLine();
+			item.type = scanner.nextLine();
+			item.minEffect = scanner.nextInt();
+			item.maxEffect = scanner.nextInt();
+			
+			items.put(item.name, item);
+			options.add(item.name);
+			
+			if (scanner.hasNext())
+				scanner.nextLine();
+		}
 		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);
@@ -54,8 +72,9 @@ public class ItemDialog extends DialogMenu {
 		if (choice.equals("__CANCEL__")) {
 			screen.showDialog(new CombatDialog(screen));
 		} else {
-			screen.setPlayerChoice(choice);
-			screen.startState(CombatState.PlayerAction);
+			ItemData item = items.get(choice);
+			screen.useItem(item.type, RAND.nextInt(item.minEffect, item.maxEffect));
+			screen.showDialog(new ActionDialog(screen, item.description, CombatState.EnemyAction));
 		}
 	}
 
