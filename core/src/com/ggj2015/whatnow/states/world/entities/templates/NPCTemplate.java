@@ -42,7 +42,8 @@ public class NPCTemplate implements EntityTemplate {
 		int layer = (Integer)args[3];
 		
 		String dialogTree = (String) args[4];
-		e.addComponent(new DialogComponent((DialogScreen) ((NowWorld)world).getGame().getScreenManager().getActiveScreen(), dialogTree));
+		if (!dialogTree.isEmpty())
+			e.addComponent(new DialogComponent((DialogScreen) ((NowWorld)world).getGame().getScreenManager().getActiveScreen(), dialogTree));
 		
 		AnimatedSprite s = AnimatedSprite.newSprite((NowWorld)world, "", "", "generic");
 		s.setScale(scale, scale);
@@ -67,23 +68,24 @@ public class NPCTemplate implements EntityTemplate {
 		
 		e.addComponent(new Body(world,e,bd,fd));
 		
-		e.addComponent(new Sensor(e) {
-
-			@Override
-			public void onDetected(Entity e1, EntityWorld world) {
-				NowWorld nw = (NowWorld) world;
+		if (!dialogTree.isEmpty())
+			e.addComponent(new Sensor(e) {
+	
+				@Override
+				public void onDetected(Entity e1, EntityWorld world) {
+					NowWorld nw = (NowWorld) world;
+					
+					nw.npcActivationSystem.touchingEntity = e;
+				}
+	
+				@Override
+				public void onEscaped(Entity e1, EntityWorld world) {
+					NowWorld nw = (NowWorld) world;
+					
+					nw.npcActivationSystem.touchingEntity = null;
+				}
 				
-				nw.npcActivationSystem.touchingEntity = e;
-			}
-
-			@Override
-			public void onEscaped(Entity e1, EntityWorld world) {
-				NowWorld nw = (NowWorld) world;
-				
-				nw.npcActivationSystem.touchingEntity = null;
-			}
-			
-		});
+			});
 		
 		return e;
 	}
