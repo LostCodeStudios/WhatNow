@@ -10,6 +10,7 @@ import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.dialog.DialogMenu;
 import com.ggj2015.whatnow.states.dialog.DialogNode;
 import com.ggj2015.whatnow.states.dialog.DialogStyle;
+import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.utils.Random;
 
 public class SpellDialog extends DialogMenu {
@@ -30,6 +31,9 @@ public class SpellDialog extends DialogMenu {
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
 	
 	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
+	
+	private String enemyName;
+	private boolean enemyInvincible;
 	
 	private static final ObjectMap<String, SpellData> spells = 
 			new ObjectMap<String, SpellData>();
@@ -63,26 +67,31 @@ public class SpellDialog extends DialogMenu {
 		
 		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 250);
 	}
-	public SpellDialog(CombatScreen screen) {
+	public SpellDialog(CombatScreen screen, String enemyName, boolean enemyInvincible) {
 		super(style, new DialogNode(text, options, optionsEnabled));
-		
 		this.screen = screen;
+		this.enemyName = enemyName;
+		this.enemyInvincible = enemyInvincible;
 	}
 
 	@Override
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
-			screen.showDialog(new CombatDialog(screen));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
 		}
 		else if (choice.equals("Cancel")) {
-			screen.showDialog(new CombatDialog(screen));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
 		}
 		else {
 			SpellData spell = spells.get(choice);
 			int dmg = RAND.nextInt(spell.minDamage, spell.maxDamage);
-			//if (Enemy.invincible) { dmg = 0; }
-			//if (Enemy.name.equals("farm") && spell.name.equals("Fireball") { dmg = 2 * RAND.nextInt(spell.minDamage, spell.maxDamage) }
-			//if (Enemy.name.equals("bucketWell") && spell.name.equals("Magic Missile") {dmg = 5; Player.addItem("Filled Bucket");}
+			if (enemyInvincible) { dmg = 0; }
+			if (enemyName.equals("farm") && spell.name.equals("Fireball"))
+				dmg = 2 * RAND.nextInt(spell.minDamage, spell.maxDamage);
+					
+			if (enemyName.equals("bucketWell") && spell.name.equals("Magic Missile"))
+				dmg = 5; Player.addItem("Filled Bucket");
+
 			screen.damageEnemy(dmg);
 			spell.description += ", dealing " + dmg + " damage!";
 			screen.showDialog(new ActionDialog(screen, spell.description, CombatState.EnemyAction));

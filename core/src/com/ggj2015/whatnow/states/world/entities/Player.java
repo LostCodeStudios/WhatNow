@@ -12,9 +12,10 @@ import java.util.HashMap;
 public final class Player {
 	
 	//FIELDS
-	public static float AGE = 0;
-	public static int HEALTH = 0;
+	public static int HEALTH = 5000;
 	public static int MONEY = 87000;
+	public static float HUNGER = 0;  //Scales logarithmically from 1 to 100, determines chances of random hunger encounter
+	public static float THIRST = 0;
 	public static HashMap<String, Integer> ITEMS = new HashMap<String, Integer>();
 	
 	//METHODS

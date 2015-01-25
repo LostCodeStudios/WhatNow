@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector2;
+import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.components.physical.Body;
 import com.lostcode.javalib.entities.systems.InputSystem;
@@ -26,14 +27,34 @@ public class PlayerControlSystem extends InputSystem {
 		if(bd != null){
 			//MOVEMENT
 			Vector2 vel = new Vector2(0,0);
-			if(keyMap.get(Keys.W)== true)
+			boolean movementFlag = false;
+			if(keyMap.get(Keys.W)== true) {
 				vel.add(0, 1);
-			if(keyMap.get(Keys.A) == true)
+				movementFlag = true;
+			}
+			if(keyMap.get(Keys.A) == true) {
 				vel.add(-1, 0);
-			if(keyMap.get(Keys.S) == true)
+				movementFlag = true;
+			}
+			if(keyMap.get(Keys.S) 	 == true) {
 				vel.add(0, -1);
-			if(keyMap.get(Keys.D) == true)
+				movementFlag = true;
+			}
+			if(keyMap.get(Keys.D) == true) {
 				vel.add(1, 0);
+				movementFlag = true;
+			}
+			
+			if (movementFlag /*&& !World.equals(walk_back)*/) {
+				//Scale player hunger and thirst
+				if (Player.HUNGER < 99 )
+					Player.HUNGER += (.01 / (100 - Player.HUNGER));
+				if (Player.THIRST < 99)
+					Player.THIRST += (.01 / (100 - Player.THIRST));
+				
+				//TODO add hunger/thirst encounters
+			}
+			
 			vel.scl(5);
 			bd.setLinearVelocity(vel);
 			

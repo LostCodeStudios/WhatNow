@@ -1,4 +1,4 @@
-Health potion
+Health Potion
 You quaff a health potion
 Heal
 20 40

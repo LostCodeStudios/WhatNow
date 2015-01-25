@@ -25,12 +25,17 @@ public class CombatScreen extends DialogScreen {
 	
 	Texture battlefieldTexture;
 	
-	public CombatScreen(Game game, SpriteBatch spriteBatch) {
+	private String enemyName;
+	private boolean enemyInvincible;
+	
+	public CombatScreen(Game game, SpriteBatch spriteBatch, String enemyName, boolean enemyInvincible) {
 		super(game, spriteBatch);
 		
 		battlefieldTexture = new Texture(Gdx.files.internal("sprites/battlefield.png"));
 		
 		startState(CombatState.PlayerChoice);
+		this.enemyName = enemyName;
+		this.enemyInvincible = enemyInvincible;
 	}
 	
 	public Game getGame() {
@@ -49,7 +54,7 @@ public class CombatScreen extends DialogScreen {
 		
 		switch (state) {
 		case PlayerChoice:
-			this.showDialog(new CombatDialog(this));
+			this.showDialog(new CombatDialog(this, enemyName, enemyInvincible));
 			break;
 		case PlayerAction:
 			this.showDialog(new ActionDialog(this, playerChoice, CombatState.EnemyAction));

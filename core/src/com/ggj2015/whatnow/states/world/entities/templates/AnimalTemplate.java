@@ -13,9 +13,6 @@ import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.entities.components.physical.Body;
 import com.lostcode.javalib.entities.components.render.Sprite;
-import com.lostcode.javalib.entities.processes.DelayProcess;
-import com.lostcode.javalib.entities.processes.Process;
-import com.lostcode.javalib.entities.processes.ProcessState;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
 import com.lostcode.javalib.utils.Convert;
 import com.lostcode.javalib.utils.Random;
@@ -48,7 +45,8 @@ public class AnimalTemplate implements EntityTemplate {
 
 		//BODY STUFF
 		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,1));
-
+		spr.setLayer(layer);
+		
 		BodyDef bd = new BodyDef();
 		bd.position.set(pos.x,pos.y);
 		bd.type = BodyType.DynamicBody;
