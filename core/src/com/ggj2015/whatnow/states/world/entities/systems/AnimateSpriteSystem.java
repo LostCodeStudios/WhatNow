@@ -15,38 +15,26 @@ public class AnimateSpriteSystem extends ComponentSystem {
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
 	@Override
 	protected void process(Entity e) {
-		AnimatedSprite as = (AnimatedSprite) e.getComponent(AnimatedSprite.class);
-		
-		as.clearChildren();
-		
+		AnimatedSprite as =
+				(AnimatedSprite) e.getComponent(AnimatedSprite.class);
+
 		Body b = (Body) e.getComponent(Body.class);
-		
+
 		as.animating = b.getLinearVelocity().len() > 0.05f;
-		
+
 		if (as.animating) {
 			as.elapsedSec += deltaSeconds();
-			
-			if (as.elapsedSec > as.frameTime) {
-				as.elapsedSec -= as.frameTime;
-				
-				as.frame = !as.frame;
-			}
-			
-			as.addChild(as.movingFootSprites.get(as.frame));
-			as.addChild(as.movingHandSprites.get(as.frame));
-		} else {
-			as.addChild(as.footSprite);
-			as.addChild(as.handSprite);
 		}
-		
+
 		as.reorder(new Array<Integer>(new Integer[] { 1, 2, 0 }));
-		
-		as.setRotation((float)Math.toDegrees(b.getRotation()));
+
+		as.setRotation((float) Math.toDegrees(as.rotation));
+		as.rotation += (as.rotationTo - as.rotation) * 0.1f;
 	}
 
 }
