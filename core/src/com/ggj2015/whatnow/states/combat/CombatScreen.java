@@ -1,5 +1,7 @@
 package com.ggj2015.whatnow.states.combat;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,15 +29,19 @@ public class CombatScreen extends DialogScreen {
 	
 	private String enemyName;
 	private boolean enemyInvincible;
+	private int enemyHealth;
+	private static Random RAND = new Random();
 	
-	public CombatScreen(Game game, SpriteBatch spriteBatch, String enemyName, boolean enemyInvincible) {
+	public CombatScreen(Game game, SpriteBatch spriteBatch, String enemyName, boolean enemyInvincible, int enemyHealth) {
 		super(game, spriteBatch);
 		
 		battlefieldTexture = new Texture(Gdx.files.internal("sprites/battlefield.png"));
 		
-		startState(CombatState.PlayerChoice);
 		this.enemyName = enemyName;
 		this.enemyInvincible = enemyInvincible;
+		this.enemyHealth = enemyHealth; 
+		
+		startState(CombatState.PlayerChoice);
 	}
 	
 	public Game getGame() {
@@ -60,9 +66,30 @@ public class CombatScreen extends DialogScreen {
 			this.showDialog(new ActionDialog(this, playerChoice, CombatState.EnemyAction));
 			break;
 		case EnemyAction:
-			this.showDialog(new ActionDialog(this, "The enemy fights back!", CombatState.PlayerChoice));
+			String toPrint = getEnemyText();
+			this.showDialog(new ActionDialog(this, toPrint, CombatState.PlayerChoice));
 			break;
 		}
+	}
+	
+	private String getEnemyText() {
+		if (enemyName.equals("Farm"))
+			return "The farm stares blankly at you!";
+		if (enemyName.equals("Dust"))
+			return "You inhale all the dust swirling around you, causing you to take " + RAND.nextInt(20) + " damage!";
+		if (enemyName.equals("Hunger"))
+			return "Your stomach growls hungrily, inflicting " + (RAND.nextInt(40) + 10) + " damage!";
+		if (enemyName.equals("Thirst"))
+			return "Your mouth is so dry, you take " + (RAND.nextInt(40) + 10) + " damage!";
+		if (enemyName.equals("Well"))
+			return "The well continues to squat on the ground!";
+		if (enemyName.equals("Winch-less Well"))
+			return "The well continues to squat on the ground (without a winch)!";
+		if (enemyName.equals("Slime"))
+			return "The slime dances happily, not bothering you!";
+		if (enemyName.equals("Dragon"))
+			return "The Dragon blasts you with his most powerful attack, dealing an incredible " + (RAND.nextInt(500) + 500) + " damage!";
+		return "Nothing interesting happens!"; //Catch-all
 	}
 
 	@Override
@@ -95,7 +122,10 @@ public class CombatScreen extends DialogScreen {
 	}
 	
 	public void damageEnemy(int amount) {
-		// TODO damage enemy!
+		enemyHealth -= amount;
+		if (enemyHealth < 0)
+			return;
+		//TODO Add results of killing enemy
 	}
 	
 	public void useItem(String type, int amount) {

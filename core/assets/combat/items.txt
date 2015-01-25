@@ -3,7 +3,7 @@ You quaff a health potion
 Heal
 20 40
 None
-0 0
+0 1
 Broom
 You begin maniacally sweeping with your broom
 Damage
