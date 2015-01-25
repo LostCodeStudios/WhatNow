@@ -40,8 +40,7 @@ public class TileTemplate implements EntityTemplate {
 		System.out.println(pos);
 		System.out.println(spriteKey);
 		
-		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,layer));
-
+		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,layer));		
 
 		e.addComponent(new Particle(e,new Vector2(pos.x,pos.y),0f));
 
