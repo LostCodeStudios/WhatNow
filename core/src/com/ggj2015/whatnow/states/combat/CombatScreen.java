@@ -61,7 +61,7 @@ public class CombatScreen extends DialogScreen {
 		this.fullParty = fullParty;
 		
 		try {
-			sheet = SpriteSheet.fromXML(Gdx.files.internal("master-sheet.xml"));
+			sheet = SpriteSheet.fromXML(Gdx.files.internal("spritesheet.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
