@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SpriteSheet>
 <texture>sprites\sprite_sheet.png</texture>
+<rect key="fighter-young-body">206, 1300, 110, 63</rect>
 <rect key="slime-battle">3560, 324, 146, 181</rect>
 <rect key="wood-floor">297, 348, 128, 128</rect>
 <rect key="brick">290, 206, 128, 128</rect>
 <rect key="handsR">881, 1393, 40, 36</rect>
 <rect key="rock">512, 956, 103, 96</rect>
-<rect key="well">2926, 279, 194, 231</rect>
 <rect key="house">2859, 1360, 619, 662</rect>
+<rect key="well">2926, 279, 194, 231</rect>
 <rect key="handsL">794, 1419, 34, 33</rect>
-<rect key="farm">3133, 339, 357, 153</rect>
 <rect key="fuck-fence">355, 874, 83, 340</rect>
+<rect key="farm">3133, 339, 357, 153</rect>
 <rect key="volcano">148, 347, 127, 129</rect>
 <rect key="thief-handsL">403, 1405, 30, 36</rect>
 <rect key="wizard-feetL">596, 1481, 35, 52</rect>
@@ -18,20 +19,25 @@
 <rect key="feetL">808, 1468, 52, 71</rect>
 <rect key="dragon-corpse">1546, 1903, 565, 216</rect>
 <rect key="dirt">148, 204, 128, 128</rect>
+<rect key="generic-body">787, 1289, 131, 84</rect>
 <rect key="bowl">3727, 375, 127, 99</rect>
+<rect key="thief-body">402, 1305, 103, 69</rect>
 <rect key="feetR">864, 1461, 36, 75</rect>
+<rect key="fighter-old-body">1289, 1338, 91, 61</rect>
 <rect key="cereal-bowl">3713, 572, 165, 106</rect>
 <rect key="grass">4, 205, 128, 128</rect>
 <rect key="tree-trunk">203, 888, 135, 156</rect>
 <rect key="wizard-feetR">635, 1479, 24, 54</rect>
-<rect key="thief-handsR">472, 1404, 33, 34</rect>
 <rect key="wizard-handsL">576, 1407, 29, 36</rect>
+<rect key="thief-handsR">472, 1404, 33, 34</rect>
 <rect key="smoke">489, 1070, 159, 144</rect>
 <rect key="tree-top">825, 175, 579, 493</rect>
 <rect key="priest-handsL">48, 1402, 25, 29</rect>
 <rect key="wizard-handsR">651, 1408, 31, 33</rect>
 <rect key="lava">4, 350, 128, 128</rect>
-<rect key="priest-handsR">124, 1397, 33, 35</rect>
 <rect key="fighter-handsR">280, 1366, 43, 77</rect>
+<rect key="priest-handsR">124, 1397, 33, 35</rect>
+<rect key="wizard-body">577, 1292, 114, 75</rect>
 <rect key="fighter-handsL">215, 1409, 30, 31</rect>
+<rect key="priest-body">59, 1298, 101, 61</rect>
 </SpriteSheet>
