@@ -9,6 +9,7 @@ import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.components.physical.Body;
 import com.lostcode.javalib.entities.systems.InputSystem;
+import com.lostcode.javalib.utils.SoundManager;
 
 public class PlayerControlSystem extends InputSystem {	
 	HashMap<Integer, Boolean> keyMap = new HashMap<Integer, Boolean>();
@@ -36,7 +37,7 @@ public class PlayerControlSystem extends InputSystem {
 				vel.add(-1, 0);
 				movementFlag = true;
 			}
-			if(keyMap.get(Keys.S) 	 == true) {
+			if(keyMap.get(Keys.S) == true) {
 				vel.add(0, -1);
 				movementFlag = true;
 			}
@@ -53,6 +54,19 @@ public class PlayerControlSystem extends InputSystem {
 					Player.THIRST += (.01 / (100 - Player.THIRST));
 				
 				//TODO add hunger/thirst encounters
+				
+				// play sound effect
+				elapsedWalk += deltaSeconds();
+				
+				if (elapsedWalk >= 0.6f) {
+					// walk sound interval
+					
+					elapsedWalk -= 0.6f;
+					
+					SoundManager.playSound("footstep", 1f);
+				}
+			} else {
+				elapsedWalk = 0f;
 			}
 			
 			vel.scl(5);
@@ -63,6 +77,8 @@ public class PlayerControlSystem extends InputSystem {
 		
 		super.process(e);
 	}
+	
+	float elapsedWalk = 0f;
 
 	@Override
 	public boolean canProcess(Entity e) {
