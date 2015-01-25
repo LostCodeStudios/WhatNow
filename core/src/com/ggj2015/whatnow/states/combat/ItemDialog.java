@@ -10,6 +10,7 @@ import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.dialog.DialogMenu;
 import com.ggj2015.whatnow.states.dialog.DialogNode;
 import com.ggj2015.whatnow.states.dialog.DialogStyle;
+import com.ggj2015.whatnow.states.world.entities.Player;
 import com.lostcode.javalib.utils.Random;
 
 public class ItemDialog extends DialogMenu {
@@ -38,7 +39,6 @@ public class ItemDialog extends DialogMenu {
 	static {
 		String itemFile = Gdx.files.internal("combat/items.txt").readString();
 		
-		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(itemFile);
 		
 		while (scanner.hasNext()) {
@@ -58,8 +58,10 @@ public class ItemDialog extends DialogMenu {
 				item.maxEffect = scanner.nextInt();
 			}
 			
-			items.put(item.name, item);
-			options.add(item.name);
+			if (Player.ITEMS.containsKey(item.name)) {
+				items.put(item.name, item);
+				options.add(item.name);
+			}
 			
 			if (scanner.hasNext())
 				scanner.nextLine();
@@ -72,7 +74,7 @@ public class ItemDialog extends DialogMenu {
 			optionsEnabled.add(true);
 		}
 		
-		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 300);
+		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 250);
 	}
 	public ItemDialog(CombatScreen screen) {
 		super(style, new DialogNode(text, options, optionsEnabled));
@@ -90,11 +92,19 @@ public class ItemDialog extends DialogMenu {
 		else {
 			ItemData item = items.get(choice);
 			int dmg = RAND.nextInt(item.minEffect, item.maxEffect);
+			//if (!(item.favEnemy.equals(Enemy.name)) && Enemy.invincible) {dmg = 0;}
+			
 			screen.useItem(item.type, dmg);
 			if (item.type == "Damage")
 				item.description += ", dealing " + dmg + " damage!";
 			else
 				item.description += ", healing you for " + dmg + " health!";
+			
+			if (item.name.equals("Plow") && RAND.percent(20f)) {
+				Player.removeItem("Plow");
+				item.description += " The plow broke!";
+			}
+			
 			screen.showDialog(new ActionDialog(screen, item.description, CombatState.EnemyAction));
 		}
 	}
