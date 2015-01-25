@@ -119,9 +119,9 @@ public abstract class DialogMenu implements InputProcessor {
 			}
 			
 			optionFont.setColor(color);
-			optionFont.draw(spriteBatch, option, x, y);
+			TextBounds size = optionFont.drawWrapped(spriteBatch, option, x, y, style.bounds.width - 4 * style.textMargin);
 			
-			y -= optionFont.getLineHeight();
+			y -= size.height;
 		}
 		
 		// TODO polish: render a selection next to the current option

@@ -45,7 +45,7 @@ public class MainMenuScreen extends DialogScreen {
 		Json json = new Json();
 		System.out.println(json.prettyPrint(menuNode));
 		
-		DialogTree tree = new DialogTree("text.json");
+		DialogTree tree = new DialogTree("wizard.json");
 		tree.run(this);
 		
 //		showDialog(new DialogMenu(DialogStyle.DEFAULT, menuNode) {
