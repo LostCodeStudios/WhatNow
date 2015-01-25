@@ -40,7 +40,7 @@ public class CombatDialog extends DialogMenu {
 	
 	public CombatDialog(CombatScreen screen, String enemyName, boolean enemyInvincible) {
 
-		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
+		super(style, new DialogNode(text, options, optionsEnabled));
 		this.screen = screen;
 		this.enemyName = enemyName;
 		this.enemyInvincible = enemyInvincible;
