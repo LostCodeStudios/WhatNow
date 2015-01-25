@@ -6,19 +6,18 @@ package com.ggj2015.whatnow.states.world.entities.templates;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.ggj2015.whatnow.states.world.entities.NowWorld;
 import com.ggj2015.whatnow.states.world.entities.components.AnimatedSprite;
+import com.ggj2015.whatnow.states.world.entities.components.DialogComponent;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
-import com.lostcode.javalib.entities.components.ComponentManager;
 import com.lostcode.javalib.entities.components.physical.Body;
-import com.lostcode.javalib.entities.components.physical.Collidable;
 import com.lostcode.javalib.entities.components.physical.Particle;
 import com.lostcode.javalib.entities.components.physical.Sensor;
-import com.lostcode.javalib.entities.components.render.Sprite;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
 import com.lostcode.javalib.utils.Convert;
 
@@ -41,7 +40,9 @@ public class NPCTemplate implements EntityTemplate {
 		String spriteKey = (String)args[1];
 		float scale = (Float)args[2];
 		int layer = (Integer)args[3];
-
+		
+		String dialogTree = (String) args[4];
+		e.addComponent(new DialogComponent((DialogScreen) ((NowWorld)world).getGame().getScreenManager().getActiveScreen(), dialogTree));
 		
 		AnimatedSprite s = AnimatedSprite.newSprite((NowWorld)world, "", "", "generic");
 		s.setScale(scale, scale);

@@ -2,6 +2,7 @@ package com.ggj2015.whatnow.states.world.entities.systems;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
+import com.ggj2015.whatnow.states.world.entities.components.DialogComponent;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.systems.InputSystem;
 
@@ -27,7 +28,8 @@ public class NPCActivationSystem extends InputSystem {
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.SPACE) {
 			if (touchingEntity != null) {
-				// TODO activate the entity the player is touching
+				DialogComponent dialog = (DialogComponent) touchingEntity.getComponent(DialogComponent.class);
+				dialog.showDialog();
 				
 				return true;
 			}

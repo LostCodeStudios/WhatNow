@@ -5,10 +5,12 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
+import com.ggj2015.whatnow.states.world.WorldScreen;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimateSpriteSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.NPCActivationSystem;
@@ -115,6 +117,10 @@ public class NowWorld extends EntityWorld {
 		
 	}
 
+	public WorldScreen myScreen;
+	public SpriteBatch getSpriteBatch() {
+		return myScreen.getSpriteBatch();
+	}
 
 
 	@Override
