@@ -9,8 +9,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
 import com.lostcode.javalib.utils.SpriteSheet;
@@ -32,8 +33,9 @@ public class EditorPanel extends JPanel implements MouseListener,
 	Point startPress, endPress;
 	EditEye eye;
 
-	ArrayList<GameObject> selected = new ArrayList<GameObject>();
+	Vector3 frozenCamera;// for scrolling purpose
 
+	HashSet<GameObject> selected = new HashSet<GameObject>();
 	Queue<String> buildQueue = new LinkedList<String>();
 
 	// all of the data lives here.
@@ -50,7 +52,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		side_panel = new CreationPanel(this);
 		eye = new EditEye(EditorMain.SCREEN);
 
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
@@ -62,10 +64,14 @@ public class EditorPanel extends JPanel implements MouseListener,
 	private void init() {
 		BufferedImage full = null;
 		try {
+			System.out.println(new File(
+					"..\\core\\assets\\"
+							+ level.getSpriteSheet().getTexturePath())
+					.getAbsolutePath());
 			full =
 					ImageIO.read(new File(
-							"C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"
-									+ level.getSpriteSheetFile()));
+							"..\\core\\assets\\"
+									+ level.getSpriteSheet().getTexturePath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -79,7 +85,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 			try {
 				Thread.sleep(20);
 			} catch (Exception e) {}
-
+			eye.update();
 			repaint();
 		}
 	}
@@ -91,34 +97,43 @@ public class EditorPanel extends JPanel implements MouseListener,
 		SpriteSheet ss = level.getSpriteSheet();
 
 		int offset = 0;
+
 		for (String s : buildQueue) {
 			g.setColor(Color.RED);
-			g.fillOval(10 + offset, 5, 25, 25);
+			g.drawOval(10 + offset, 5, 25, 25);
 			offset += 30;
 		}
 
 		for (GameObject o : level.getGameObjects()) {
 			Point p = eye.toScreen(o.getPosition());
 			TextureRegion r = ss.getRegion(o.getSpriteKey());
+
+			if (r == null)
+				continue;
+
 			float s = o.getScale();
-			s = 10;
 			int w = r.getRegionWidth(), h = r.getRegionHeight();
+			int x = r.getRegionX(), y = r.getRegionY();
 
-			System.out.printf("%d, %d, %d, %d\n", p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
-
-			g.fillRect(p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h));
 			g.drawImage(fullImage, p.x - (int) (s * w / 2), p.y
-					- (int) (s * h / 2), (int) (s * w), (int) (s * h),
-					r.getRegionX(), r.getRegionY(), w, h, this);
+					- (int) (s * h / 2), p.x + (int) (s * w / 2), p.y
+					+ (int) (s * h / 2),
+					x, y, x + w, y + h, this);
 			// draw region from sprite sheet
+
+			data.get(o).drawX = p.x;
+			data.get(o).drawY = p.y;
+
+			if (selected.contains(o)) {
+				g.setColor(Methods.getColor(selectColor, 200));
+				g.fillOval(p.x - 5, p.y - 5, 10, 10);
+			}
 		}
 
 		// draw pressed stuff
 
 		// and pressing mechanism
-		if (startPress != null && endPress != null) {
+		if (startPress != null && endPress != null && frozenCamera == null) {
 			g.setColor(Methods.getColor(selectColor, 255));
 			int a = Math.min(startPress.x, endPress.x), b =
 					Math.min(startPress.y, endPress.y), c =
@@ -133,46 +148,71 @@ public class EditorPanel extends JPanel implements MouseListener,
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		endPress = e.getPoint();
+		if (e.isMetaDown())
+			eye.posTo =
+					frozenCamera.cpy().sub((endPress.x - startPress.x)
+							/ EditEye.FACTOR,
+							(endPress.y - startPress.y) / EditEye.FACTOR, 0);
 	}
-
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (!buildQueue.isEmpty()) {
-			String str = buildQueue.poll();
 
-//			GameObject obj =
-//					new GameObject(eye.pick(e.getX(), e.getY()), str, "TAG?",
-//							"Group?", "Type?");
-//			level.getGameObjects().add(obj);
-		}
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
+
 		startPress = e.getPoint();
 		endPress = e.getPoint();
+		if (e.isMetaDown())
+			frozenCamera = eye.pos.cpy();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		if (!e.isMetaDown() && !e.isAltDown()) {
+			selected.clear();
+			side_panel.properties.update();
+		}
+
+		if (!e.isMetaDown()) {
+			for (GameObject o : level.getGameObjects()) {
+				GObjEditData dat = data.get(o);
+
+				if (Methods.in(dat.drawX, startPress.x, endPress.x)
+						&& Methods.in(dat.drawY, startPress.y, endPress.y)) {
+					selected.add(o);
+				}
+			}
+		}
+
+		side_panel.properties.update();
+
 		endPress = null;
+		frozenCamera = null;
 		startPress = null;
+
+		if (!buildQueue.isEmpty()) {
+			String str = buildQueue.poll();
+
+			GameObject obj = new GameObject(str, str);
+
+			obj.setPosition(eye.pick(e.getX(), e.getY()));
+			if (side_panel.align.isSelected()) {
+				obj.getPosition().x = (int) Math.round(obj.getPosition().x);
+				obj.getPosition().y = (int) Math.round(obj.getPosition().y);
+			}
+
+			GObjEditData datum = new GObjEditData();
+			data.put(obj, datum);
+
+			level.getGameObjects().add(obj);
+		}
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.ggj2015.whatnow.states.DialogScreen;
+import com.ggj2015.whatnow.states.dialog.DialogScreen;
 import com.lostcode.javalib.Game;
 
 public class CombatScreen extends DialogScreen {
@@ -55,7 +55,7 @@ public class CombatScreen extends DialogScreen {
 			this.showDialog(new ActionDialog(this, playerChoice, CombatState.EnemyAction));
 			break;
 		case EnemyAction:
-			this.showDialog(new ActionDialog(this, "Enemy attack", CombatState.PlayerChoice));
+			this.showDialog(new ActionDialog(this, "The enemy fights back!", CombatState.PlayerChoice));
 			break;
 		}
 	}

@@ -579,4 +579,8 @@ public class Methods {
 		return newA;
 	}
 
+	public static boolean in(int x, int min, int max) {
+		return (x < min && x > max) || (x > min && x < max);
+	}
+
 }

@@ -9,14 +9,20 @@ public class EditEye {
 	public static final float FACTOR = 32.0f;
 
 	Dimension screen;
-	Vector3 pos;
+	Vector3 pos, posTo;
 
 	public EditEye(Dimension screen) {
 		this.screen = screen;
-		this.pos = new Vector3(0, 0, 0);
+		this.pos = new Vector3(0, 0, 1);
+		this.posTo = new Vector3(0,0,1);
+	}
+	
+	public void update() {
+		pos.lerp(posTo, 0.3f);
 	}
 
 	public Point toScreen(Vector3 v) {
+		System.out.println(v.z);
 		return new Point((int) (FACTOR * (v.x - pos.x) / (pos.z - v.z))
 				+ screen.width / 2,
 				(int) (FACTOR * (v.y - pos.y) / (pos.z - v.z)) + screen.height

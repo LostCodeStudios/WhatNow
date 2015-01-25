@@ -2,10 +2,10 @@ package com.ggj2015.whatnow.states.combat;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.ggj2015.whatnow.states.DialogMenu;
-import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
-import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogMenu;
+import com.ggj2015.whatnow.states.dialog.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogStyle;
 
 public class ActionDialog extends DialogMenu {
 
@@ -15,7 +15,7 @@ public class ActionDialog extends DialogMenu {
 	private static final Array<String> options = new Array<String>();
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
 	
-	private static final DialogStyle style = DialogStyle.DEFAULT;
+	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
 
 	static {
 		options.add("OK.");

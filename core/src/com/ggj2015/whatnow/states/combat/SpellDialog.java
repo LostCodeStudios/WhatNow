@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.ggj2015.whatnow.states.DialogMenu;
-import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
-import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogMenu;
+import com.ggj2015.whatnow.states.dialog.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogStyle;
 import com.lostcode.javalib.utils.Random;
 
 public class SpellDialog extends DialogMenu {
@@ -29,7 +29,7 @@ public class SpellDialog extends DialogMenu {
 	private static final Array<String> options = new Array<String>();
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
 	
-	private static final DialogStyle style = DialogStyle.DEFAULT;
+	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
 	
 	private static final ObjectMap<String, SpellData> spells = 
 			new ObjectMap<String, SpellData>();

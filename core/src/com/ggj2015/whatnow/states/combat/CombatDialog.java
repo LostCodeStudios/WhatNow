@@ -2,10 +2,10 @@ package com.ggj2015.whatnow.states.combat;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.ggj2015.whatnow.states.DialogMenu;
-import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
-import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogMenu;
+import com.ggj2015.whatnow.states.dialog.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogStyle;
 import com.lostcode.javalib.utils.Random;
 
 public class CombatDialog extends DialogMenu {
@@ -15,11 +15,12 @@ public class CombatDialog extends DialogMenu {
 	CombatScreen screen;
 	
 	private static final Random RAND = new Random();
+
 	private static final Array<String> text = new Array<String>();
 	private static final Array<String> options = new Array<String>();
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
 	
-	private static final DialogStyle style = DialogStyle.DEFAULT;
+	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
 	
 	static {
 		options.add("Attack");
@@ -35,6 +36,7 @@ public class CombatDialog extends DialogMenu {
 	}
 	
 	public CombatDialog(CombatScreen screen) {
+
 		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
 		this.screen = screen;
 	}
