@@ -28,6 +28,7 @@ import com.ggj2015.whatnow.states.world.level.Level;
 import com.lostcode.javalib.Game;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
+import com.lostcode.javalib.entities.systems.generic.TrackingCameraSystem;
 import com.lostcode.javalib.utils.SpriteSheet;
 
 public class NowWorld extends EntityWorld {
@@ -85,6 +86,8 @@ public class NowWorld extends EntityWorld {
 		
 		npcActivationSystem = new NPCActivationSystem(this.input);
 		systems.addSystem(npcActivationSystem);
+		
+		systems.addSystem(new TrackingCameraSystem("Player", camera));
 	}
 
 	public boolean closeFlag = false;
