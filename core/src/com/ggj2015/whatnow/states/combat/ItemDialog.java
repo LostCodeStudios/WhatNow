@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.ggj2015.whatnow.states.DialogMenu;
-import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
-import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogMenu;
+import com.ggj2015.whatnow.states.dialog.DialogNode;
+import com.ggj2015.whatnow.states.dialog.DialogStyle;
 import com.lostcode.javalib.utils.Random;
 
 public class ItemDialog extends DialogMenu {
@@ -30,7 +30,7 @@ public class ItemDialog extends DialogMenu {
 	
 	private static final ObjectMap<String, ItemData> items = new ObjectMap<String, ItemData>();
 	
-	private static final DialogStyle style = DialogStyle.DEFAULT;
+	private static final DialogStyle style = DialogStyle.DEFAULT.cpy();
 	
 	private static final Random RAND = new Random();
 	
@@ -54,6 +54,7 @@ public class ItemDialog extends DialogMenu {
 			if (scanner.hasNext())
 				scanner.nextLine();
 		}
+		scanner.close();
 		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);

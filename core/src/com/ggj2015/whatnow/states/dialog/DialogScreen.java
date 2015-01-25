@@ -1,4 +1,4 @@
-package com.ggj2015.whatnow.states;
+package com.ggj2015.whatnow.states.dialog;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

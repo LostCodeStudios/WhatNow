@@ -1,4 +1,4 @@
-package com.ggj2015.whatnow.states.world.level;
+package com.ggj2015.whatnow.states.dialog;
 
 import com.badlogic.gdx.utils.Array;
 import com.sun.istack.internal.Nullable;
@@ -20,7 +20,5 @@ public class DialogNode {
 	public Array<Boolean> optionsEnabled = new Array<Boolean>(); // whether options are enabled (1-1 correspondence)
 	
 	@Nullable
-	public Array<DialogNode> next = new Array<DialogNode>();
-	// these can be null, and are in 1-1 correspondence
-	// to the "options" array. 
+	public Array<String> next = new Array<String>(); // response next nodes
 }

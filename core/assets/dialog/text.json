@@ -1,0 +1,37 @@
+node0
+{
+	text: [
+		"Hey sup dawg"
+	],
+	options: [
+		"Fuck off",
+		"kill yourself bitch"
+	],
+	next: [
+		"node1",
+		"node2"
+	]
+}
+---node0
+{
+	text: [
+		"that's not nice"
+	],
+	options: [
+		OK
+	],
+	next: [
+	]
+}
+---node1
+{
+	text: [
+		"maybe I will"
+	],
+	options: [
+		"OK"
+	],
+	next: [
+	]
+}
+---node2
