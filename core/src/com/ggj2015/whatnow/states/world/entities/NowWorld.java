@@ -58,9 +58,15 @@ public class NowWorld extends EntityWorld {
 		
 		//Initialize the game objects or entities :)
 		for(GameObject obj : level.getGameObjects()){
-			Entity e = this.createEntity(obj.getTemplate(),
+			String template = obj.getTemplate();
+			if(!this.containsTemplate(template))
+				template = "Tile";
+			
+			Entity e = this.createEntity(template,
 					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer());
 			e.init(obj.getTag(), obj.getGroup(),obj.getType());
+			if(e.getTag() == null)
+				System.out.println("FUCK");
 		}
 	}
 	

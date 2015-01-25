@@ -25,7 +25,7 @@ public class EditorMain {
 						"Untitled",
 						new Rectangle(-50, -50, 100, 100),
 						new Vector2(0, 0),
-						"sprite_sheet.xml",
+						"spritesheet.xml",
 						new Vector2(0f, 0f));
 		EditorPanel ep = new EditorPanel(base);
 

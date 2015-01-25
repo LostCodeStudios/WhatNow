@@ -94,7 +94,8 @@ public class CombatScreen extends DialogScreen {
 	}
 	
 	public void useItem(String type, int amount) {
-		// TODO use an item!
+		if (type.equals("damage"))
+			damageEnemy(amount);
 	}
 
 }
