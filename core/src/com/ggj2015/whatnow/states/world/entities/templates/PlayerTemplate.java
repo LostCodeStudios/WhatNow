@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.ggj2015.whatnow.states.world.entities.NowWorld;
+import com.ggj2015.whatnow.states.world.entities.components.AnimatedSprite;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.entities.components.ComponentManager;
@@ -44,8 +46,11 @@ public class PlayerTemplate implements EntityTemplate {
 		int layer = (Integer)args[3];
 
 		
-		Sprite spr = (Sprite) e.addComponent(new Sprite(world.getSpriteSheet(),spriteKey,scale,1));
-
+		AnimatedSprite as = AnimatedSprite.newSprite((NowWorld)world, "wizard", "wizard", "wizard");
+		as.setScale(scale, scale);
+		as.setLayer(layer);
+		e.addComponent(as);
+		
 		BodyDef bd = new BodyDef();
 		bd.position.set(pos.x,pos.y);
 		bd.type = BodyType.DynamicBody;
@@ -56,7 +61,7 @@ public class PlayerTemplate implements EntityTemplate {
 		
 		FixtureDef fd = new FixtureDef();
 		fd.shape = new CircleShape();
-		fd.shape.setRadius(Convert.pixelsToMeters(spr.getWidth()/2f));
+		fd.shape.setRadius(Convert.pixelsToMeters(as.getWidth()/2f));
 		
 		e.addComponent(new Body(world,e,bd,fd));
 		

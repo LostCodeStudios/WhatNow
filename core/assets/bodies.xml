@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SpriteSheet>
+<texture>sprites\bodies.png</texture>
+<rect key="generic">62, 26, 301, 456</rect>
+<rect key="priest">98, 495, 260, 353</rect>
+<rect key="wizard">814, 23, 304, 424</rect>
+<rect key="thief">444, 46, 270, 365</rect>
+<rect key="fighter">481, 464, 253, 413</rect>
+</SpriteSheet>
