@@ -46,7 +46,7 @@ public class PlayerTemplate implements EntityTemplate {
 		int layer = (Integer)args[3];
 
 		
-		AnimatedSprite as = AnimatedSprite.newSprite((NowWorld)world, "", "fighter", "fighter");
+		AnimatedSprite as = AnimatedSprite.newSprite((NowWorld)world, "wizard", "wizard", "wizard");
 		e.addComponent(as);
 		
 		BodyDef bd = new BodyDef();
