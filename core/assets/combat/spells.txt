@@ -1,9 +1,9 @@
 Magic missile
-You launch a magic missile!
+You launch a magic missile
 4 5
+Electric Blast
+You blast your target with a burst of electricity
+250 1000
 Fireball
-You hurl a burninating fireball!
-250 500
-Instant death
-Your magic mercilessly slaughters the enemy.
-5000 7000
+You hurl a giant fireball
+2500 5000

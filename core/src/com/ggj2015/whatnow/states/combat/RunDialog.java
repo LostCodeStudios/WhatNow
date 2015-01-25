@@ -13,6 +13,7 @@ public class RunDialog extends DialogMenu {
 	CombatScreen screen;
 	
 	private static final String SUCCESS_TEXT = "You successfully flee the enemy.";
+	private static final String FAIL_TEXT = "You fail to escape the enemy!";
 	
 	private static final Array<String> successText = new Array<String>();
 	private static final Array<String> failText = new Array<String>();
@@ -28,7 +29,7 @@ public class RunDialog extends DialogMenu {
 	
 	static {
 		successText.add(SUCCESS_TEXT);
-		failText.add("You can't escape the enemy!");
+		failText.add(FAIL_TEXT);
 		
 		options.add("OK.");
 		
@@ -39,7 +40,7 @@ public class RunDialog extends DialogMenu {
 		style.bounds = new Rectangle(128, 40, 1280 - 256, 250);
 	}
 	public RunDialog(CombatScreen screen) {
-		super(style, new DialogNode(RANDOM.percent(25f) ? successText : failText, options, optionsEnabled));
+		super(style, new DialogNode(RANDOM.percent(50f) ? successText : failText, options, optionsEnabled));
 		
 		success = node.text.get(0).equals(SUCCESS_TEXT);
 		
@@ -52,7 +53,8 @@ public class RunDialog extends DialogMenu {
 			screen.getGame().getScreenManager().closeActiveScreen(); // end combat
 			
 			// TODO pick up the pieces
-		} else {
+		} 
+		else {
 			screen.startState(CombatState.EnemyAction);
 		}
 	}

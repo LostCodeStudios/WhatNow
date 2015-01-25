@@ -1,4 +1,4 @@
-package com.ggj2015.whatnow.states.world.entities;
+package com.ggj2015.whatnow.states.world.entities.templates;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.ggj2015.whatnow.states.world.WorldScreen;
+import com.ggj2015.whatnow.states.world.entities.NowWorld;
 import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.entities.components.physical.Body;

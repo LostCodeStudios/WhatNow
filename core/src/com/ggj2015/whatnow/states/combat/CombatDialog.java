@@ -15,7 +15,7 @@ public class CombatDialog extends DialogMenu {
 	CombatScreen screen;
 	
 	private static final Random RAND = new Random();
-	
+
 	private static final Array<String> text = new Array<String>();
 	private static final Array<String> options = new Array<String>();
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
@@ -36,21 +36,28 @@ public class CombatDialog extends DialogMenu {
 	}
 	
 	public CombatDialog(CombatScreen screen) {
-		super(style, new DialogNode(text, options, optionsEnabled));
-		
+
+		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
 		this.screen = screen;
 	}
 
 	@Override
 	public void onDialogChoice(String choice) {
 		if (choice.equals("Attack")) {
-			screen.damageEnemy(RAND.nextInt(10, 25));
-			screen.showDialog(new ActionDialog(screen, "You attack!", CombatState.EnemyAction));
-		} else if (choice.equals("Spell")) {
+			int dmg = RAND.nextInt(14000, 20000);
+			//If (Enemy.invincible) {dmg = 0;}
+			String damageText = "You swing your sword, dealing " + dmg + " damage! (Critical strike!!)";
+			screen.damageEnemy(dmg);
+			screen.setPlayerChoice(damageText);
+			screen.startState(CombatState.PlayerAction);
+		} 
+		else if (choice.equals("Spell")) {
 			screen.showDialog(new SpellDialog(screen));
-		} else if (choice.equals("Item")) {
+		} 
+		else if (choice.equals("Item")) {
 			screen.showDialog(new ItemDialog(screen));
-		} else if (choice.equals("Run")) {
+		}
+		else if (choice.equals("Run")) {
 			screen.showDialog(new RunDialog(screen));
 		}
 	}
