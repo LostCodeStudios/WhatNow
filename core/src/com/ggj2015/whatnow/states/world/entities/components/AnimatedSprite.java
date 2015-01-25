@@ -14,14 +14,10 @@ public class AnimatedSprite extends MultiRenderable {
 	}
 	
 	public float elapsedSec = 0f;
-	public float frameTime = 0.75f;
 	public boolean animating = false;
-	public boolean frame = false; // alternate this
 	
 	public Sprite handSprite;
 	public Sprite footSprite;
-	public ObjectMap<Boolean, Sprite> movingHandSprites = new ObjectMap<Boolean, Sprite>();
-	public ObjectMap<Boolean, Sprite> movingFootSprites = new ObjectMap<Boolean, Sprite>();
 	
 	public static AnimatedSprite newSprite(NowWorld world, String feetPrefix, String handPrefix, String bodyKey) {
 		String feetKeyStub = feetPrefix;

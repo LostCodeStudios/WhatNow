@@ -192,6 +192,9 @@ public class CreationPanel extends JPanel implements ActionListener {
 								.getAbsolutePath(), FileType.Absolute);
 				Json jsonObject = new Json();
 				fh.writeString(jsonObject.toJson(parent.level), false);
+				JOptionPane.showMessageDialog(this, "File saved to "
+						+ jfc.getSelectedFile().getAbsolutePath());
+
 			}
 		} else if (evt.getSource() == load) {
 			JFileChooser jfc = new JFileChooser();
@@ -215,12 +218,12 @@ public class CreationPanel extends JPanel implements ActionListener {
 				parent.level = lvl;
 
 				this.updateFields();
-
-				JOptionPane.showMessageDialog(this, "File saved to "
+				JOptionPane.showMessageDialog(this, "File opened: "
 						+ jfc.getSelectedFile().getAbsolutePath());
+
 			}
 			else
-				JOptionPane.showMessageDialog(this, "Save cancelled...");
+				JOptionPane.showMessageDialog(this, "Open cancelled...");
 
 		} else if (evt.getSource() == title) {
 			parent.level.setName(title.getText());
