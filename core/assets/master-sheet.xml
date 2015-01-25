@@ -40,4 +40,8 @@
 	<rect key="fighter-handsR">280, 1366, 43, 77</rect>
 	<rect key="fighter-handsL">215, 1409, 30, 31</rect>
 	<rect key="dragon-in-battle">2855, 681, 739, 429</rect>
+	<rect key="table">147, 2964, 266, 275</rect>
+	<rect key="brick-pillow">857, 2960, 70, 138</rect>
+	<rect key="bed">1112, 2926, 224, 351</rect>
+	<rect key="carpet">1430, 2937, 215, 247</rect>
 </SpriteSheet>
