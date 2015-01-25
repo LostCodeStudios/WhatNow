@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
+import com.lostcode.javalib.entities.Entity;
 import com.lostcode.javalib.entities.EntityWorld;
 
 public class NowWorld extends EntityWorld {
@@ -34,12 +35,10 @@ public class NowWorld extends EntityWorld {
 		
 		//Initialize the game objects or entities :)
 		for(GameObject obj : level.getGameObjects()){
-			
+			Entity e = this.createEntity(obj.getTemplate(),
+					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer());
+			e.init(obj.getTag(), obj.getGroup(),obj.getType());
 		}
-		
-		
-		
-		
 	}
 	
 	@Override

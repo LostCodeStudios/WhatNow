@@ -22,7 +22,7 @@ public class Level {
 	Vector2 gravity;
 	String spriteSheetFile;
 	Vector2 cameraInitial;
-	SpriteSheet spriteSheet;
+	transient SpriteSheet spriteSheet;
 	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
 	/**
@@ -45,6 +45,15 @@ public class Level {
 		this.gravity = gravity;
 		setSpriteSheet(spriteSheet);
 		this.cameraInitial = cameraInitial;
+	}
+	
+	public Level(){
+		this.name = "";
+		this.bounds = new Rectangle();
+		this.gravity = Vector2.Zero.cpy();
+		this.spriteSheet = null;
+		this.cameraInitial= Vector2.Zero.cpy();
+		this.mode = false;
 	}
 	/**
 	 * @return the name
