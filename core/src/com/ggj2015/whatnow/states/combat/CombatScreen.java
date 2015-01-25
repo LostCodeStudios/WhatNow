@@ -51,7 +51,7 @@ public class CombatScreen extends DialogScreen {
 
 		super(game, spriteBatch);
 
-		enemyScales.put("dragon-in-battle", 0.25f);
+		enemyScales.put("dragon-in-battle", .7f);
 		
 		battlefieldTexture = new Texture(Gdx.files.internal("sprites/battlefield.png"));
 		
