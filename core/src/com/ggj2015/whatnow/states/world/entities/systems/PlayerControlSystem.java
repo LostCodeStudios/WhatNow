@@ -58,8 +58,8 @@ public class PlayerControlSystem extends InputSystem {
 			vel.scl(5);
 			bd.setLinearVelocity(vel);
 			
-			if (vel.len() > 0.05f)
-				bd.setRotation((float)Math.toRadians(vel.angle()));
+//			if (vel.len() > 0.05f)
+//				bd.setRotation((float)Math.toRadians(vel.angle()));
 		}
 		//TODO: Interaction section
 		
