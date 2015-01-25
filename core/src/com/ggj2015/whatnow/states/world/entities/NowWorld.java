@@ -11,9 +11,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimateSpriteSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.NPCActivationSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.PlayerControlSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.PropActivationSystem;
 import com.ggj2015.whatnow.states.world.entities.templates.AnimalTemplate;
+import com.ggj2015.whatnow.states.world.entities.templates.DragonTemplate;
+import com.ggj2015.whatnow.states.world.entities.templates.NPCTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PlayerTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PortalTemplate;
 import com.ggj2015.whatnow.states.world.entities.templates.PropTemplate;
@@ -61,6 +64,8 @@ public class NowWorld extends EntityWorld {
 		}
 	}
 	
+	public NPCActivationSystem npcActivationSystem;
+	
 	@Override
 	protected void buildSystems() {
 		super.buildSystems();
@@ -70,6 +75,9 @@ public class NowWorld extends EntityWorld {
 		systems.addSystem(new AnimalSystem());
 		systems.addSystem(new PropActivationSystem(this.input));
 		systems.addSystem(new AnimateSpriteSystem());
+		
+		npcActivationSystem = new NPCActivationSystem(this.input);
+		systems.addSystem(npcActivationSystem);
 	}
 
 	public boolean closeFlag = false;
@@ -95,6 +103,9 @@ public class NowWorld extends EntityWorld {
 		this.addTemplate("Animal", new AnimalTemplate());
 		this.addTemplate("Portal", new PortalTemplate());
 		this.addTemplate("Prop", new PropTemplate());
+		
+		this.addTemplate("Dragon", new DragonTemplate());
+		this.addTemplate("NPC", new NPCTemplate());
 		
 	}
 
