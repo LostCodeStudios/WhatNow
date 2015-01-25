@@ -47,14 +47,13 @@ public class NowWorld extends EntityWorld {
 		Json jsonParser = new Json();
 		Level level = jsonParser.fromJson(Level.class, Gdx.files.internal(levelDataFile));
 		
-		//Establish basic world charactersitics.
+		//Establish basic world characteristics.
 		this.camera.position.set(new Vector3(level.getCameraInitial(),0));
 		this.physicsWorld.setGravity(level.getGravity());
 		this.bounds = level.getBounds();
 		try {
 			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal(level.getSpriteSheetFile()));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -65,7 +64,7 @@ public class NowWorld extends EntityWorld {
 				template = "Tile";
 			
 			Entity e = this.createEntity(template,
-					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer());
+					 obj.getPosition(), obj.getSpriteKey(), obj.getScale(), obj.getLayer(), obj.getTag(), obj.getGroup(), obj.getType());
 			e.init(obj.getTag(), obj.getGroup(),obj.getType());
 			if(e.getTag() == null)
 				System.out.println("FUCK");

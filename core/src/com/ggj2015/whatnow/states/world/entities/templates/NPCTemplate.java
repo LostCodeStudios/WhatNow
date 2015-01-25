@@ -41,11 +41,11 @@ public class NPCTemplate implements EntityTemplate {
 		float scale = (Float)args[2];
 		int layer = (Integer)args[3];
 		
-		String dialogTree = (String) args[4];
+		String dialogTree = (String) args[4]+".json";
 		if (!dialogTree.isEmpty())
 			e.addComponent(new DialogComponent((DialogScreen) ((NowWorld)world).getGame().getScreenManager().getActiveScreen(), dialogTree));
 		
-		AnimatedSprite s = AnimatedSprite.newSprite((NowWorld)world, "", "", "generic");
+		AnimatedSprite s = AnimatedSprite.newSprite((NowWorld)world, "", "", spriteKey);
 		s.setScale(scale, scale);
 		s.setLayer(layer);
 		e.addComponent(s);
