@@ -1,0 +1,8 @@
+Throw rock
+You throw a jagged rock at your foe!
+Damage
+1 3
+Health potion
+You quaff a health potion from your bag of infinite restoration.
+Heal
+20 40
