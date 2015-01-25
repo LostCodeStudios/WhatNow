@@ -24,7 +24,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
-import com.lostcode.javalib.utils.SpriteSheet;
+import com.lostcode.javalib.utils.AbstractSpriteSheet;
 
 public class EditorPanel extends JPanel implements MouseListener,
 		MouseMotionListener, Runnable {
@@ -102,7 +102,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		SpriteSheet ss = level.getSpriteSheet();
+		AbstractSpriteSheet ss = level.getSpriteSheet();
 		Rectangle b = level.getBounds();
 
 		for (int i = (int) b.x; i <= b.width + b.x; i++)
@@ -186,10 +186,16 @@ public class EditorPanel extends JPanel implements MouseListener,
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		for (GameObject o : level.getGameObjects()) {
+			GObjEditData dat = data.get(o);
+			if (e.getPoint().distance(dat.drawX, dat.drawY) < 30)
+				selected.add(o);
+		}
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
+		dragType = 1;
+
 		startPress = e.getPoint();
 		endPress = e.getPoint();
 
@@ -205,6 +211,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 			frozenCamera = eye.pos.cpy();
 			dragType = 2;
 		}
+
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -232,15 +239,19 @@ public class EditorPanel extends JPanel implements MouseListener,
 		startPress = null;
 
 		if (e.getClickCount() == 2 && !e.isMetaDown()) {
+			System.out.println("ADDING");
 			String str = (String) side_panel.type.getSelectedItem();
 
-			GameObject obj = new GameObject(str, str);
+			GameObject obj = new GameObject("Tile", str);
 
 			obj.setPosition(eye.pick(e.getX(), e.getY()));
 			if (side_panel.align.isSelected()) {
 				obj.getPosition().x = (int) Math.round(obj.getPosition().x);
 				obj.getPosition().y = (int) Math.round(obj.getPosition().y);
 			}
+			obj.setGroup("");
+			obj.setTag("");
+			obj.setType("");
 
 			GObjEditData datum = new GObjEditData();
 			data.put(obj, datum);

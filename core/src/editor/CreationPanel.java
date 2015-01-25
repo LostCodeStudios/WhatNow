@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -43,7 +44,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 
 	JComboBox<String> type;
 	JCheckBox align;
-	JButton load, export;
+	JButton load, export, delete, jiggle;
 
 	JTextField title, boundX, boundY, boundW, boundH, spriteSheetFile;
 
@@ -51,7 +52,6 @@ public class CreationPanel extends JPanel implements ActionListener {
 			new HashMap<GameObject, PropertyPanel>();
 
 	private Set<String> sprite_keys;
-
 	public PropertyPanel properties;
 
 	// also need to have a bunch of property fields that can be edited.
@@ -90,6 +90,10 @@ public class CreationPanel extends JPanel implements ActionListener {
 		align = createCheckBox(25, 560, 100, 25, "Snap to Grid");
 
 		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
+		delete = createButton(120, 455, 150, 25, "Delete Selected Objects");
+		delete.setBackground(properties.color);
+		jiggle = createButton(20, 455, 110, 25, "Separate");
+		jiggle.setBackground(properties.color);
 		makeLabel(5, 600, 100, 30, "Object types");
 		type =
 				createBox(105, 600, 190, 30,
@@ -202,7 +206,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 				Level lvl = json.fromJson(Level.class, fh);
 
 				// ***************** TODO: GET THIS TO WORK via other thread.
-				lvl.setSpriteSheet(lvl.getSpriteSheetFile());
+				lvl.setSpriteSheet(lvl.getSpriteSheetFile(), false);
 
 				parent.selected.clear();
 				parent.data.clear();
@@ -211,7 +215,12 @@ public class CreationPanel extends JPanel implements ActionListener {
 				parent.level = lvl;
 
 				this.updateFields();
+
+				JOptionPane.showMessageDialog(this, "File saved to "
+						+ jfc.getSelectedFile().getAbsolutePath());
 			}
+			else
+				JOptionPane.showMessageDialog(this, "Save cancelled...");
 
 		} else if (evt.getSource() == title) {
 			parent.level.setName(title.getText());
@@ -232,13 +241,20 @@ public class CreationPanel extends JPanel implements ActionListener {
 					Float.parseFloat(boundH.getText());
 			boundH.setBackground(Color.ORANGE);
 		} else if (evt.getSource() == spriteSheetFile) {
-			parent.level.setSpriteSheet(spriteSheetFile.getText());
+			// TODO: get this to work in other file
+			parent.level.setSpriteSheet(spriteSheetFile.getText(), false);
 			parent.initImage();
 			spriteSheetFile.setBackground(Color.ORANGE);
+		} else if (evt.getSource() == delete) {
+			parent.level.getGameObjects().removeAll(parent.selected);
+		} else if (evt.getSource() == jiggle) {
+			for (GameObject obj : parent.selected)
+				obj.getPosition().add((float) (Math.random() - 0.5),
+						(float) (Math.random() - 0.5), 0);
 		}
 	}
 
-	class PropertyPanel extends JPanel implements ActionListener,
+	public class PropertyPanel extends JPanel implements ActionListener,
 			ChangeListener {
 		private static final long serialVersionUID = -4977325514786287885L;
 
