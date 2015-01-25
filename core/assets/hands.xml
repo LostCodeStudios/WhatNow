@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SpriteSheet>
+<texture>sprites\hands.png</texture>
+<rect key="wizard-hands1">462, 6, 307, 427</rect>
+<rect key="fighter-hands2">848, 438, 324, 422</rect>
+<rect key="hands1">28, 4, 207, 420</rect>
+<rect key="fighter-hands3">851, 858, 413, 420</rect>
+<rect key="hands2">10, 437, 234, 410</rect>
+<rect key="hands3">6, 860, 273, 404</rect>
+<rect key="fighter-hands1">887, 2, 345, 427</rect>
+<rect key="wizard-hands3">435, 861, 391, 415</rect>
+<rect key="wizard-hands2">448, 428, 305, 425</rect>
+</SpriteSheet>

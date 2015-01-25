@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.ggj2015.whatnow.states.world.entities.systems.AnimalSystem;
+import com.ggj2015.whatnow.states.world.entities.systems.AnimateSpriteSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.PlayerControlSystem;
 import com.ggj2015.whatnow.states.world.entities.systems.PropActivationSystem;
 import com.ggj2015.whatnow.states.world.entities.templates.AnimalTemplate;
@@ -34,8 +35,6 @@ public class NowWorld extends EntityWorld {
 		super(input, camera, Vector2.Zero.cpy());
 		this.game = game;
 		buildLevel(levelData);
-		
-		
 	}
 
 	
@@ -70,6 +69,7 @@ public class NowWorld extends EntityWorld {
 		systems.addSystem(new PlayerControlSystem(this.input));
 		systems.addSystem(new AnimalSystem());
 		systems.addSystem(new PropActivationSystem(this.input));
+		systems.addSystem(new AnimateSpriteSystem());
 	}
 
 	public boolean closeFlag = false;
@@ -110,9 +110,20 @@ public class NowWorld extends EntityWorld {
 		return game;
 	}
 	
+	public SpriteSheet feetSheet;
+	public SpriteSheet handsSheet;
+	public SpriteSheet bodiesSheet;
+	
 	@Override
 	protected void buildSpriteSheet() {
-		
+		try {
+			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal("sprite_sheet.xml"));
+			feetSheet = SpriteSheet.fromXML(Gdx.files.internal("feet.xml"));
+			handsSheet = SpriteSheet.fromXML(Gdx.files.internal("hands.xml"));
+			bodiesSheet = SpriteSheet.fromXML(Gdx.files.internal("bodies.xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
