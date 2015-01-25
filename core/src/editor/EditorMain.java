@@ -25,9 +25,8 @@ public class EditorMain {
 						"Untitled",
 						new Rectangle(-50, -50, 100, 100),
 						new Vector2(0, 0),
-
 						"spritesheet.xml",
-						new Vector2(0f, 0f));
+						new Vector2(0f, 0f), true);
 		EditorPanel ep = new EditorPanel(base);
 
 		frame.add(ep, BorderLayout.CENTER);
