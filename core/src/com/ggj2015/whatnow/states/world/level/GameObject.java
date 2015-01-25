@@ -15,6 +15,7 @@ public class GameObject {
 	String tag;
 	String group;
 	String type;
+	String template;
 	float scale = 1.0f;
 
 	// Object Oriented Obligations
@@ -33,6 +34,20 @@ public class GameObject {
 	 */
 	public Vector3 getPosition() {
 		return position;
+	}
+
+	/**
+	 * @return the template
+	 */
+	public String getTemplate() {
+		return template;
+	}
+
+	/**
+	 * @param template the template to set
+	 */
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
 	/**

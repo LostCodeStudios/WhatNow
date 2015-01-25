@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -25,12 +27,14 @@ public class EditorPanel extends JPanel implements MouseListener,
 		MouseMotionListener, Runnable {
 	private static final long serialVersionUID = 1982999939519987834L;
 
-	Color selectColor = new Color(255, 255, 180, 100);
+	Color selectColor = new Color(255, 205, 160, 100);
 	BufferedImage fullImage;
 	Point startPress, endPress;
 	EditEye eye;
 
 	ArrayList<GameObject> selected = new ArrayList<GameObject>();
+	
+	Queue<String> buildQueue = new LinkedList<String>();
 
 	// all of the data lives here.
 	Level level;
@@ -38,8 +42,19 @@ public class EditorPanel extends JPanel implements MouseListener,
 	Map<GameObject, GObjEditData> data =
 			new HashMap<GameObject, GObjEditData>();
 
+	CreationPanel side_panel;
+
 	public EditorPanel(Level l) {
 		this.level = l;
+		
+		side_panel = new CreationPanel(this);
+		eye = new EditEye(EditorMain.SCREEN);
+
+		setBackground(Color.BLACK);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+
+		new Thread(this).start();
 
 		init();
 	}
@@ -47,8 +62,10 @@ public class EditorPanel extends JPanel implements MouseListener,
 	private void init() {
 		BufferedImage full = null;
 		try {
-			System.out.println("C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"+level.getSpriteSheetFile());
-			full = ImageIO.read(new File("C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"+level.getSpriteSheetFile()));
+			full =
+					ImageIO.read(new File(
+							"C:\\Users\\Oliver\\git\\whatnow\\core\\assets\\"
+									+ level.getSpriteSheetFile()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -88,12 +105,15 @@ public class EditorPanel extends JPanel implements MouseListener,
 		// draw pressed stuff
 
 		// and pressing mechanism
-		if (startPress != null) {
+		if (startPress != null && endPress != null) {
+			g.setColor(Methods.getColor(selectColor, 255));
+			int a = Math.min(startPress.x, endPress.x), b =
+					Math.min(startPress.y, endPress.y), c =
+					Math.abs(startPress.x - endPress.x), d =
+					Math.abs(startPress.y - endPress.y);
+			g.drawRoundRect(a, b, c, d, 10, 10);
 			g.setColor(selectColor);
-			g.drawRoundRect(Math.min(startPress.x, endPress.x),
-					Math.min(startPress.y, endPress.y),
-					Math.abs(startPress.x - endPress.x),
-					Math.abs(startPress.y - endPress.y), 10, 10);
+			g.fillRoundRect(a, b, c, d, 10, 10);
 		}
 
 	}
@@ -122,6 +142,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		endPress = e.getPoint();
+		startPress = null;
 	}
 
 	@Override

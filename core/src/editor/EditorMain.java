@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -14,22 +15,22 @@ public class EditorMain {
 			.getScreenSize();
 
 	public static void runEditor() {
-		JFrame frame = new JFrame("LingeringEditor ");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame frame = new JFrame("Lingering Editor");
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setSize(SCREEN);
 
-		
 		Level base =
 				new Level(
 						"Untitled",
 						new Rectangle(0, 0, 100, 100),
 						new Vector2(0, 0),
 						"spritesheet.xml",
-						new Vector2(0f, 0f), false);
+						new Vector2(0f, 0f));
 		EditorPanel ep = new EditorPanel(base);
 
-		frame.add(ep);
+		frame.add(ep, BorderLayout.CENTER);
+		frame.add(ep.side_panel, BorderLayout.EAST);
 
 		frame.setVisible(true);
 	}
