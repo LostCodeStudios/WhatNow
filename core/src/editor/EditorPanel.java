@@ -201,9 +201,10 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		for (GameObject o : level.getGameObjects()) {
 			GObjEditData dat = data.get(o);
+			dat.frozen = o.getPosition();
+
 			if (e.getPoint().distance(dat.drawX, dat.drawY) < 30) {
 				dragType = 10;
-				dat.frozen = o.getPosition();
 				selected.add(o);
 			}
 		}
@@ -215,7 +216,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (!e.isMetaDown() && !e.isAltDown()) {
+		if (dragType == 1) {
 			selected.clear();
 			side_panel.properties.update();
 		}
