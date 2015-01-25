@@ -55,6 +55,8 @@ public class SpellDialog extends DialogMenu {
 		
 		scanner.close();
 		
+		options.add("Cancel");
+		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);
 		}
@@ -71,9 +73,17 @@ public class SpellDialog extends DialogMenu {
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
 			screen.showDialog(new CombatDialog(screen));
-		} else {
+		}
+		else if (choice.equals("Cancel")) {
+			screen.showDialog(new CombatDialog(screen));
+		}
+		else {
 			SpellData spell = spells.get(choice);
-			screen.damageEnemy(RAND.nextInt(spell.minDamage, spell.maxDamage));
+			int dmg = RAND.nextInt(spell.minDamage, spell.maxDamage);
+			//if (Enemy.invincible) { dmg = 0; }
+			//if (Enemy.name.equals("farm") && spell.name.equals("Fireball") { dmg = 2 * RAND.nextInt(spell.minDamage, spell.maxDamage) }
+			screen.damageEnemy(dmg);
+			spell.description += ", dealing " + dmg + " damage!";
 			screen.showDialog(new ActionDialog(screen, spell.description, CombatState.EnemyAction));
 		}
 	}

@@ -2,7 +2,6 @@ package com.ggj2015.whatnow.states.combat;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.ggj2015.whatnow.states.DialogMenu;
 import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
@@ -30,7 +29,6 @@ public class ActionDialog extends DialogMenu {
 	
 	public ActionDialog(CombatScreen screen, String action, CombatState nextState) {
 		super(style, new DialogNode(new Array<String>(new String[] { action }), options, optionsEnabled));
-		
 		this.screen = screen;
 		this.nextState = nextState;
 	}

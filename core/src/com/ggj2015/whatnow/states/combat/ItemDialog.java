@@ -20,6 +20,7 @@ public class ItemDialog extends DialogMenu {
 		public String type = "";
 		public int minEffect = 0;
 		public int maxEffect = 0;
+		public String favEnemy = "";
 	}
 	
 	CombatScreen screen;
@@ -37,6 +38,7 @@ public class ItemDialog extends DialogMenu {
 	static {
 		String itemFile = Gdx.files.internal("combat/items.txt").readString();
 		
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(itemFile);
 		
 		while (scanner.hasNext()) {
@@ -47,6 +49,14 @@ public class ItemDialog extends DialogMenu {
 			item.type = scanner.nextLine();
 			item.minEffect = scanner.nextInt();
 			item.maxEffect = scanner.nextInt();
+			scanner.nextLine();
+			item.favEnemy = scanner.nextLine();
+			item.favEnemy = item.favEnemy.trim();
+			if (!item.favEnemy.equals("None")) {
+				item.type = "Damage";
+				item.minEffect = scanner.nextInt();
+				item.maxEffect = scanner.nextInt();
+			}
 			
 			items.put(item.name, item);
 			options.add(item.name);
@@ -55,15 +65,16 @@ public class ItemDialog extends DialogMenu {
 				scanner.nextLine();
 		}
 		
+		options.add("Cancel");
+		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);
 		}
 		
-		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 250);
+		style.bounds = new Rectangle(1280 / 2 + 60, 40 + 60, 1280 / 3, 300);
 	}
 	public ItemDialog(CombatScreen screen) {
 		super(style, new DialogNode(text, options, optionsEnabled));
-		
 		this.screen = screen;
 	}
 
@@ -71,9 +82,18 @@ public class ItemDialog extends DialogMenu {
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
 			screen.showDialog(new CombatDialog(screen));
-		} else {
+		}
+		else if (choice.equals("Cancel")) {
+			screen.showDialog(new CombatDialog(screen));
+		}
+		else {
 			ItemData item = items.get(choice);
-			screen.useItem(item.type, RAND.nextInt(item.minEffect, item.maxEffect));
+			int dmg = RAND.nextInt(item.minEffect, item.maxEffect);
+			screen.useItem(item.type, dmg);
+			if (item.type == "Damage")
+				item.description += ", dealing " + dmg + " damage!";
+			else
+				item.description += ", healing you for " + dmg + " health!";
 			screen.showDialog(new ActionDialog(screen, item.description, CombatState.EnemyAction));
 		}
 	}

@@ -1,8 +1,42 @@
-Throw rock
-You throw a jagged rock at your foe!
-Damage
-1 3
 Health potion
-You quaff a health potion from your bag of infinite restoration.
+You quaff a health potion
 Heal
 20 40
+None
+0 0
+Broom
+You begin maniacally sweeping with your broom
+Damage
+0 2
+Dust
+200 400
+Bucket
+You throw your bucket
+Damage
+2 4
+Well
+20 40
+Filled Bucket
+You throw your bucket, splashing water everywhere
+Damage
+2 5
+Farm
+300 700
+Plow
+You scrape the ground with your plow
+Damage
+1 2
+Farm
+50 100
+Food
+You voraciously tear off a few bites of delicious food
+Heal
+5 10
+Hunger
+100 300
+Water
+You gulp down copious amounts of water
+Heal
+1 2
+Thirst
+100 200
