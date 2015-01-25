@@ -48,6 +48,7 @@ public class EditorPanel extends JPanel implements MouseListener,
 		this.level = l;
 		
 		side_panel = new CreationPanel(this);
+		eye = new EditEye(EditorMain.SCREEN);
 
 		setBackground(Color.BLACK);
 		addMouseListener(this);

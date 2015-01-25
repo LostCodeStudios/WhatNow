@@ -1,0 +1,9 @@
+Magic missile
+You launch a magic missile!
+4 5
+Fireball
+You hurl a burninating fireball!
+250 500
+Instant death
+Your magic mercilessly slaughters the enemy.
+5000 7000

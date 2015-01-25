@@ -9,6 +9,8 @@ import com.ggj2015.whatnow.states.world.level.DialogNode;
 
 public class CombatDialog extends DialogMenu {
 
+	// TODO dialog box bounds get messed up!
+	
 	CombatScreen screen;
 	
 	private static final Array<String> text = new Array<String>();
