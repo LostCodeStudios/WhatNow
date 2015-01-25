@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.ggj2015.whatnow.states.world.level.GameObject;
 import com.ggj2015.whatnow.states.world.level.Level;
@@ -98,6 +99,22 @@ public class EditorPanel extends JPanel implements MouseListener,
 
 		int offset = 0;
 
+		Rectangle b = level.getBounds();
+
+		for (int i = (int) b.x; i < b.width + b.x; i++)
+		{
+			Vector3 p1 = new Vector3(i, b.y, 0), p2 =
+					new Vector3(i, b.y + b.height, 0);
+			Point s1 = eye.toScreen(p1), s2 = eye.toScreen(p2);
+			g.drawLine(s1.x, s1.y, s2.x, s2.y);
+		}
+		for (int j = (int) b.y; j < b.height + b.y; j++) {
+			Vector3 p1 = new Vector3(b.x, j, 0), p2 =
+					new Vector3(b.x + b.width, j, 0);
+			Point s1 = eye.toScreen(p1), s2 = eye.toScreen(p2);
+			g.drawLine(s1.x, s1.y, s2.x, s2.y);
+		}
+
 		for (String s : buildQueue) {
 			g.setColor(Color.RED);
 			g.drawOval(10 + offset, 5, 25, 25);
@@ -135,13 +152,13 @@ public class EditorPanel extends JPanel implements MouseListener,
 		// and pressing mechanism
 		if (startPress != null && endPress != null && frozenCamera == null) {
 			g.setColor(Methods.getColor(selectColor, 255));
-			int a = Math.min(startPress.x, endPress.x), b =
+			int a = Math.min(startPress.x, endPress.x), q =
 					Math.min(startPress.y, endPress.y), c =
 					Math.abs(startPress.x - endPress.x), d =
 					Math.abs(startPress.y - endPress.y);
-			g.drawRoundRect(a, b, c, d, 10, 10);
+			g.drawRoundRect(a, q, c, d, 10, 10);
 			g.setColor(selectColor);
-			g.fillRoundRect(a, b, c, d, 10, 10);
+			g.fillRoundRect(a, q, c, d, 10, 10);
 		}
 
 	}

@@ -22,7 +22,7 @@ public class EditEye {
 	}
 
 	public Point toScreen(Vector3 v) {
-		System.out.println(v.z);
+//		System.out.println(v.z);
 		return new Point((int) (FACTOR * (v.x - pos.x) / (pos.z - v.z))
 				+ screen.width / 2,
 				(int) (FACTOR * (v.y - pos.y) / (pos.z - v.z)) + screen.height
