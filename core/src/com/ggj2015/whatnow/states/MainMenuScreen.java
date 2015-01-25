@@ -48,8 +48,6 @@ public class MainMenuScreen extends DialogScreen {
 					MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch, "overworld.lol"));
 				}
 				else if (choice.equals("Test fight")) {
-					MainMenuScreen.this.game.getScreenManager().addScreen(
-							new CombatScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch, "dragon-in-battle", false, true));
 				}
 				else if (choice.equals("Options")) {
 					// TODO make an options screen
