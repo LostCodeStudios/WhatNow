@@ -37,7 +37,7 @@ public class CombatDialog extends DialogMenu {
 	
 	public CombatDialog(CombatScreen screen) {
 
-		super(DialogStyle.DEFAULT, new DialogNode(text, options, optionsEnabled));
+		super(style, new DialogNode(text, options, optionsEnabled));
 		this.screen = screen;
 	}
 

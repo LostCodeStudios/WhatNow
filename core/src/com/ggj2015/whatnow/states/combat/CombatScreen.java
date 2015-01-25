@@ -64,7 +64,7 @@ public class CombatScreen extends DialogScreen {
 	public void render(float delta) {
 		renderBackground();
 		
-		Vector2 playerFieldPos = new Vector2(128, 50); // TODO adjust this
+		Vector2 playerFieldPos = new Vector2(128, -50); // TODO adjust this
 		Vector2 enemyFieldPos = new Vector2(1280 - 128 - 580, 720 - 300); // TODO adjust this
 		renderBattlefield(playerFieldPos);
 		renderBattlefield(enemyFieldPos);
