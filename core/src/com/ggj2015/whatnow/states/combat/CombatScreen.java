@@ -71,7 +71,6 @@ public class CombatScreen extends DialogScreen {
 		
 		// TODO render characters
 		// TODO render health bars
-		// TODO render animation effects
 		
 		super.render(delta); // render dialogs last
 	}

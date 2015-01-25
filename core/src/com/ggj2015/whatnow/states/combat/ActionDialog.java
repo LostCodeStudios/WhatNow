@@ -29,7 +29,6 @@ public class ActionDialog extends DialogMenu {
 	
 	public ActionDialog(CombatScreen screen, String action, CombatState nextState) {
 		super(style, new DialogNode(new Array<String>(new String[] { action }), options, optionsEnabled));
-		
 		this.screen = screen;
 		this.nextState = nextState;
 	}
