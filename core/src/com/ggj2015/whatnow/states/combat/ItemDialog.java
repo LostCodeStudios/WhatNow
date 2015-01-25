@@ -1,24 +1,59 @@
 package com.ggj2015.whatnow.states.combat;
 
+import java.util.Scanner;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.ggj2015.whatnow.states.DialogMenu;
 import com.ggj2015.whatnow.states.DialogStyle;
 import com.ggj2015.whatnow.states.combat.CombatScreen.CombatState;
 import com.ggj2015.whatnow.states.world.level.DialogNode;
+import com.lostcode.javalib.utils.Random;
 
 public class ItemDialog extends DialogMenu {
 
+	static class ItemData {
+		public String name = "";
+		public String description = "";
+		public String type = "";
+		public int minEffect = 0;
+		public int maxEffect = 0;
+	}
+	
 	CombatScreen screen;
 	
 	private static final Array<String> text = new Array<String>();
 	private static final Array<String> options = new Array<String>();
 	private static final Array<Boolean> optionsEnabled = new Array<Boolean>();
 	
+	private static final ObjectMap<String, ItemData> items = new ObjectMap<String, ItemData>();
+	
 	private static final DialogStyle style = DialogStyle.DEFAULT;
 	
+	private static final Random RAND = new Random();
+	
 	static {
-		options.add("Throw rock");
+		String itemFile = Gdx.files.internal("combat/items.txt").readString();
+		
+		Scanner scanner = new Scanner(itemFile);
+		
+		while (scanner.hasNext()) {
+			ItemData item = new ItemData();
+			
+			item.name = scanner.nextLine();
+			item.description = scanner.nextLine();
+			item.type = scanner.nextLine();
+			item.minEffect = scanner.nextInt();
+			item.maxEffect = scanner.nextInt();
+			
+			items.put(item.name, item);
+			options.add(item.name);
+			
+			if (scanner.hasNext())
+				scanner.nextLine();
+		}
 		
 		for (int i = 0; i < options.size; i++) {
 			optionsEnabled.add(true);
@@ -37,8 +72,9 @@ public class ItemDialog extends DialogMenu {
 		if (choice.equals("__CANCEL__")) {
 			screen.showDialog(new CombatDialog(screen));
 		} else {
-			screen.setPlayerChoice(choice);
-			screen.startState(CombatState.PlayerAction);
+			ItemData item = items.get(choice);
+			screen.useItem(item.type, RAND.nextInt(item.minEffect, item.maxEffect));
+			screen.showDialog(new ActionDialog(screen, item.description, CombatState.EnemyAction));
 		}
 	}
 
