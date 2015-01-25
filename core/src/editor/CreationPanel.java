@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -49,6 +50,8 @@ public class CreationPanel extends JPanel implements ActionListener {
 	HashMap<GameObject, PropertyPanel> props =
 			new HashMap<GameObject, PropertyPanel>();
 
+	private Set<String> sprite_keys;
+
 	public PropertyPanel properties;
 
 	// also need to have a bunch of property fields that can be edited.
@@ -85,8 +88,12 @@ public class CreationPanel extends JPanel implements ActionListener {
 		add(properties);
 
 		align = createCheckBox(25, 560, 100, 25, "Snap to Grid");
-		Set<String> set = parent.level.getSpriteSheet().getRegions("").keySet();
-		type = createBox(5, 600, 190, 30, set.toArray(new String[set.size()]));
+
+		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
+		makeLabel(5, 600, 100, 30, "Object types");
+		type =
+				createBox(105, 600, 190, 30,
+						sprite_keys.toArray(new String[sprite_keys.size()]));
 
 		export = createButton(105, EditorMain.SCREEN.height - 40,
 				190, 30, "EXPORT");
@@ -102,6 +109,9 @@ public class CreationPanel extends JPanel implements ActionListener {
 		boundH.setText(parent.level.getBounds().height + "");
 
 		title.setText(parent.level.getName());
+		sprite_keys = parent.level.getSpriteSheet().getRegions("").keySet();
+		type.setModel(new DefaultComboBoxModel<String>(sprite_keys
+				.toArray(new String[sprite_keys.size()])));
 
 		spriteSheetFile.setText(parent.level.getSpriteSheetFile());
 	}
@@ -171,7 +181,7 @@ public class CreationPanel extends JPanel implements ActionListener {
 		if (evt.getSource() == export) {
 			JFileChooser jfc = new JFileChooser();
 			jfc.setCurrentDirectory(new File("..\\core\\assets"));
-			
+
 			if (jfc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
 				FileHandle fh =
 						Gdx.files.getFileHandle(jfc.getSelectedFile()
@@ -189,15 +199,14 @@ public class CreationPanel extends JPanel implements ActionListener {
 								.getAbsolutePath(), FileType.Absolute);
 				Json json = new Json();
 
-				
 				Level lvl = json.fromJson(Level.class, fh);
-				
+
 				// ***************** TODO: GET THIS TO WORK via other thread.
 				lvl.setSpriteSheet(lvl.getSpriteSheetFile());
-				
+
 				parent.selected.clear();
 				parent.data.clear();
-				for(GameObject obj : lvl.getGameObjects())
+				for (GameObject obj : lvl.getGameObjects())
 					parent.data.put(obj, new GObjEditData());
 				parent.level = lvl;
 
