@@ -15,7 +15,6 @@ import com.lostcode.javalib.entities.EntityWorld;
 import com.lostcode.javalib.entities.components.ComponentManager;
 import com.lostcode.javalib.entities.components.physical.Body;
 import com.lostcode.javalib.entities.components.physical.Collidable;
-import com.lostcode.javalib.entities.components.render.Sprite;
 import com.lostcode.javalib.entities.templates.EntityTemplate;
 import com.lostcode.javalib.utils.Convert;
 
@@ -46,8 +45,8 @@ public class PlayerTemplate implements EntityTemplate {
 		int layer = (Integer)args[3];
 
 		
-		AnimatedSprite as = AnimatedSprite.newSprite((NowWorld)world, "wizard", "wizard", "wizard");
-		as.setScale(0.1f, 0.1f);
+		AnimatedSprite as = AnimatedSprite.newSprite((NowWorld)world, "", "", "pig");
+//		as.setScale(1f, 1f);
 		as.setLayer(layer);
 		e.addComponent(as);
 		

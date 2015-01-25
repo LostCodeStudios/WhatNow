@@ -77,24 +77,21 @@ public class SpellDialog extends DialogMenu {
 	@Override
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else if (choice.equals("Cancel")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else {
 			SpellData spell = spells.get(choice);
 			int dmg = RAND.nextInt(spell.minDamage, spell.maxDamage);
 			if (enemyInvincible) { dmg = 0; }
-			if (enemyName.equals("farm") && spell.name.equals("Fireball"))
+			if (enemyName.equals("Farm") && spell.name.equals("Fireball"))
 				dmg = 2 * RAND.nextInt(spell.minDamage, spell.maxDamage);
-					
-			if (enemyName.equals("bucketWell") && spell.name.equals("Magic Missile"))
-				dmg = 5; Player.addItem("Filled Bucket");
 
 			screen.damageEnemy(dmg);
-			spell.description += ", dealing " + dmg + " damage!";
-			screen.showDialog(new ActionDialog(screen, spell.description, CombatState.EnemyAction));
+			String tempDes = spell.description + ", dealing " + dmg + " damage!";
+			screen.showDialog(new ActionDialog(screen, tempDes, CombatState.EnemyAction));
 		}
 	}
 

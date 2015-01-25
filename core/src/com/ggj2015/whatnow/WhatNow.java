@@ -5,6 +5,7 @@ import com.ggj2015.whatnow.states.MainMenuScreen;
 import com.lostcode.javalib.Game;
 import com.lostcode.javalib.utils.Convert;
 import com.lostcode.javalib.utils.LogManager;
+import com.lostcode.javalib.utils.SoundManager;
 import com.lostcode.javalib.utils.LogManager.LogType;
 
 import editor.EditorMain;
@@ -49,7 +50,12 @@ public class WhatNow extends Game {
 
 	@Override
 	protected void loadSounds() {
+		SoundManager.addSong("Combat", Gdx.files.internal("music/Battle_1.mp3"));
+		SoundManager.addSong("Combat-intro", Gdx.files.internal("music/Battle_Intro.mp3"));
+		SoundManager.addSong("Shop", Gdx.files.internal("music/Shop_Music.mp3"));
+		SoundManager.addSong("Walk", Gdx.files.internal("music/Walk_Back.wav"));
 		
+		SoundManager.setMusicVolume(1f);
 	}
 
 }

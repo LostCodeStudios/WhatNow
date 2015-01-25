@@ -9,8 +9,6 @@ import com.ggj2015.whatnow.states.dialog.DialogStyle;
 import com.lostcode.javalib.utils.Random;
 
 public class CombatDialog extends DialogMenu {
-
-	// TODO dialog box bounds get messed up!
 	
 	CombatScreen screen;
 	
@@ -38,9 +36,12 @@ public class CombatDialog extends DialogMenu {
 		style.bounds = new Rectangle(1280 / 2, 40, 1280 / 3, 250);
 	}
 	
-	public CombatDialog(CombatScreen screen, String enemyName, boolean enemyInvincible) {
+	public CombatDialog(CombatScreen screen, String enemyName, boolean enemyInvincible, boolean canRun) {
 
 		super(style, new DialogNode(text, options, optionsEnabled));
+		
+		node.optionsEnabled.set(3, canRun);
+		
 		this.screen = screen;
 		this.enemyName = enemyName;
 		this.enemyInvincible = enemyInvincible;
@@ -50,7 +51,8 @@ public class CombatDialog extends DialogMenu {
 	public void onDialogChoice(String choice) {
 		if (choice.equals("Attack")) {
 			int dmg = RAND.nextInt(14000, 20000);
-			//If (Enemy.invincible) {dmg = 0;}
+			if (enemyInvincible)
+				dmg = 0;
 			String damageText = "You swing your sword, dealing " + dmg + " damage! (Critical strike!!)";
 			screen.damageEnemy(dmg);
 			screen.setPlayerChoice(damageText);

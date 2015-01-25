@@ -133,17 +133,10 @@ public class NowWorld extends EntityWorld {
 		return game;
 	}
 	
-	public SpriteSheet feetSheet;
-	public SpriteSheet handsSheet;
-	public SpriteSheet bodiesSheet;
-	
 	@Override
 	protected void buildSpriteSheet() {
 		try {
 			this.spriteSheet = SpriteSheet.fromXML(Gdx.files.internal("spritesheet.xml"));
-			feetSheet = SpriteSheet.fromXML(Gdx.files.internal("feet.xml"));
-			handsSheet = SpriteSheet.fromXML(Gdx.files.internal("hands.xml"));
-			bodiesSheet = SpriteSheet.fromXML(Gdx.files.internal("bodies.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

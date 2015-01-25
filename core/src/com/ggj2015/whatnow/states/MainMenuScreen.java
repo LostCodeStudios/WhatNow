@@ -24,7 +24,7 @@ public class MainMenuScreen extends DialogScreen {
 		Array<String> options = new Array<String>();
 		options.add("New Game");
 		options.add("Load Last Save");
-		options.add("Test fight"); // TODO remove this
+//		options.add("Test fight"); // TODO remove this
 		//options.add("Options");
 		options.add("Quit");
 		
@@ -44,11 +44,13 @@ public class MainMenuScreen extends DialogScreen {
 			@Override
 			public void onDialogChoice(String choice) {
 				if (choice.equals("Load Last Save")) {
-					// TODO make the world for real
-					MainMenuScreen.this.game.getScreenManager().addScreen(new WorldScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch, "overworld.lol"));
+					MainMenuScreen.this.game.getScreenManager().addScreen(
+							new CombatScreen(
+									MainMenuScreen.this.game, 
+									MainMenuScreen.this.spriteBatch, "dragon-in-battle", false, true, 5000));
 				}
 				else if (choice.equals("Test fight")) {
-					MainMenuScreen.this.game.getScreenManager().addScreen(new CombatScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch, "BOWL", false));
+					MainMenuScreen.this.game.getScreenManager().addScreen(new CombatScreen(MainMenuScreen.this.game, MainMenuScreen.this.spriteBatch, "Thirst", true, false, 500));
 				}
 				else if (choice.equals("Options")) {
 					// TODO make an options screen

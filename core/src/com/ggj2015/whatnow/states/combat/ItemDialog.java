@@ -57,14 +57,13 @@ public class ItemDialog extends DialogMenu {
 			scanner.nextLine();
 			item.favEnemy = scanner.nextLine();
 			item.favEnemy = item.favEnemy.trim();
-			item.type = "Damage";
-			item.minEffect = scanner.nextInt();
-			item.maxEffect = scanner.nextInt();
+			item.favMin = scanner.nextInt();
+			item.favMax = scanner.nextInt();
 			
-			if (Player.ITEMS.containsKey(item.name) || (item.name == "Water" && Player.ITEMS.containsKey("Filled Bucket"))) {
+			//if (Player.ITEMS.containsKey(item.name) || (item.name.equals("Water") && Player.ITEMS.containsKey("Filled Bucket"))) {
 				items.put(item.name, item);
 				options.add(item.name);
-			}
+			//}
 			
 			if (scanner.hasNext())
 				scanner.nextLine();
@@ -90,23 +89,26 @@ public class ItemDialog extends DialogMenu {
 	@Override
 	public void onDialogChoice(String choice) {
 		if (choice.equals("__CANCEL__")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else if (choice.equals("Cancel")) {
-			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible));
+			screen.showDialog(new CombatDialog(screen, enemyName, enemyInvincible, true));
 		}
 		else {
 			ItemData item = items.get(choice);
 			int dmg = RAND.nextInt(item.minEffect, item.maxEffect);
-			if (item.favEnemy.equals(enemyName))
+			if (item.favEnemy.equals(enemyName)) {
+				item.type = "Damage";
 				dmg = RAND.nextInt(item.favMin, item.favMax);
-			else if (enemyInvincible) {dmg = 0;}
+			}
+			else if (enemyInvincible && item.type.equals("Damage")) {dmg = 0;}
 			
 			screen.useItem(item.type, dmg);
-			if (item.type == "Damage")
-				item.description += ", dealing " + dmg + " damage!";
+			String tempDes;
+			if (item.type.equals("Damage"))
+				 tempDes = item.description + ", dealing " + dmg + " damage!";
 			else
-				item.description += ", healing you for " + dmg + " health!";
+				 tempDes = item.description + ", healing you for " + dmg + " health!";
 			
 			if (item.name.equals("Health Potion") || item.name.equals("Food") || item.name.equals("Winch"))
 				Player.removeItem(item.name);
@@ -123,10 +125,10 @@ public class ItemDialog extends DialogMenu {
 			
 			if (item.name.equals("Plow") && RAND.percent(20f)) {
 				Player.removeItem("Plow");
-				item.description += " The plow broke!";
+				tempDes += " The plow broke!";
 			}
 			
-			screen.showDialog(new ActionDialog(screen, item.description, CombatState.EnemyAction));
+			screen.showDialog(new ActionDialog(screen, tempDes, CombatState.EnemyAction));
 		}
 	}
 

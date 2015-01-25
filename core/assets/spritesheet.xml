@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SpriteSheet>
 <texture>sprites\sprite_sheet.png</texture>
-<rect key="bed">1150, 135, 83, 125</rect>
-<rect key="thief">1586, 217, 149, 113</rect>
-<rect key="bush">1275, 172, 44, 50</rect>
-<rect key="sold-out">1122, 40, 134, 37</rect>
-<rect key="bowl">12, 31, 65, 46</rect>
-<rect key="pig">387, 33, 78, 81</rect>
-<rect key="lava">1603, 430, 32, 32</rect>
-<rect key="feetL">460, 466, 84, 43</rect>
-<rect key="dragon-corpse">11, 648, 1128, 464</rect>
-<rect key="grass">719, 41, 32, 32</rect>
+<rect key="dragon-in-battle">1, 1126, 1466, 907</rect>
 <rect key="wood-floor">1412, 415, 32, 32</rect>
 <rect key="brick">125, 37, 32, 32</rect>
+<rect key="handsR">635, 562, 50, 38</rect>
+<rect key="wizard">1826, 382, 119, 147</rect>
+<rect key="carpet">832, 29, 226, 261</rect>
+<rect key="dragon-lair-tile">1124, 797, 486, 294</rect>
+<rect key="handsL">634, 462, 35, 32</rect>
+<rect key="green-thing">1317, 38, 32, 43</rect>
 <rect key="volcano">1416, 46, 32, 32</rect>
+<rect key="bush">1275, 172, 44, 50</rect>
+<rect key="feetL">460, 466, 84, 43</rect>
+<rect key="dragon-corpse">11, 648, 1128, 464</rect>
+<rect key="dirt">213, 37, 32, 32</rect>
+<rect key="bowl">12, 31, 65, 46</rect>
+<rect key="priest">1568, 9, 237, 128</rect>
+<rect key="feetR">459, 515, 83, 41</rect>
+<rect key="grass">719, 41, 32, 32</rect>
+<rect key="bed">1150, 135, 83, 125</rect>
+<rect key="fighter-young">1824, 203, 170, 126</rect>
 <rect key="fighter-old">1859, 32, 88, 93</rect>
-<rect key="dragon-in-battle">1, 1126, 1466, 907</rect>
 <rect key="table">517, 30, 140, 141</rect>
 <rect key="smoke">1417, 484, 32, 32</rect>
-<rect key="dirt">213, 37, 32, 32</rect>
-<rect key="feetR">459, 515, 83, 41</rect>
-<rect key="priest">1568, 9, 237, 128</rect>
-<rect key="handsL">634, 462, 35, 32</rect>
-<rect key="handsR">635, 562, 50, 38</rect>
-<rect key="carpet">832, 29, 226, 261</rect>
-<rect key="fighter-young">1824, 203, 170, 126</rect>
-<rect key="wizard">1826, 382, 119, 147</rect>
+<rect key="pig">387, 33, 78, 81</rect>
 <rect key="fence">311, 35, 23, 116</rect>
-<rect key="green-thing">1317, 38, 32, 43</rect>
-<rect key="dragon-lair-tile">1124, 797, 486, 294</rect>
+<rect key="lava">1603, 430, 32, 32</rect>
+<rect key="thief">1586, 217, 149, 113</rect>
+<rect key="sold-out">1122, 40, 134, 37</rect>
 </SpriteSheet>

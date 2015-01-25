@@ -1,4 +1,4 @@
-Magic missile
+Magic Missile
 You launch a magic missile
 4 5
 Electric Blast
